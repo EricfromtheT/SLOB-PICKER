@@ -13,5 +13,6 @@ pod 'FirebaseMessaging'
 pod 'Kingfisher'
 pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
+pod 'SwiftLint'
 
 end
