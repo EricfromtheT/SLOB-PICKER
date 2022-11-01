@@ -21,6 +21,9 @@
 		37DE8AF4290FD67600F737A7 /* SPConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AF3290FD67600F737A7 /* SPConstant.swift */; };
 		37DE8AF6290FF02700F737A7 /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AF5290FF02700F737A7 /* KingFisherWrapper.swift */; };
 		37DE8AF82910047100F737A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37DE8AF72910047100F737A7 /* GoogleService-Info.plist */; };
+		37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */; };
+		37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFC2910B22F00F737A7 /* PickObject.swift */; };
+		37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFF2910C70E00F737A7 /* DateHelper.swift */; };
 		CDCCED94BD824C2880F3CCF9 /* Pods_SlobPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +44,9 @@
 		37DE8AF3290FD67600F737A7 /* SPConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPConstant.swift; sourceTree = "<group>"; };
 		37DE8AF5290FF02700F737A7 /* KingFisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherWrapper.swift; sourceTree = "<group>"; };
 		37DE8AF72910047100F737A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		37DE8AFC2910B22F00F737A7 /* PickObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickObject.swift; sourceTree = "<group>"; };
+		37DE8AFF2910C70E00F737A7 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		3A183DDFBE50ADA2DBC30D2B /* Pods-SlobPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlobPicker.debug.xcconfig"; path = "Target Support Files/Pods-SlobPicker/Pods-SlobPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		3B3A68163028A6C8CE69C6B6 /* Pods-SlobPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlobPicker.release.xcconfig"; path = "Target Support Files/Pods-SlobPicker/Pods-SlobPicker.release.xcconfig"; sourceTree = "<group>"; };
 		D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SlobPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,9 +85,10 @@
 		37DE8AA2290C15C900F737A7 /* SlobPicker */ = {
 			isa = PBXGroup;
 			children = (
-				37DE8ADF290EA5E300F737A7 /* Extension */,
-				37DE8ADE290EA5DA00F737A7 /* Resources */,
+				37DE8AFE2910C6FE00F737A7 /* Helper */,
 				37DE8ADD290EA5C900F737A7 /* Third Party Wrapper */,
+				37DE8AF929100D5B00F737A7 /* Network */,
+				37DE8ADE290EA5DA00F737A7 /* Resources */,
 				37DE8ADC290EA55D00F737A7 /* Model */,
 				37DE8ADB290EA55800F737A7 /* View */,
 				37DE8ADA290EA55000F737A7 /* Controller */,
@@ -115,6 +122,7 @@
 		37DE8ADC290EA55D00F737A7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				37DE8AFC2910B22F00F737A7 /* PickObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -137,13 +145,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		37DE8ADF290EA5E300F737A7 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
 		37DE8AEA290FCC3000F737A7 /* PickView */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +153,22 @@
 				37DE8AF1290FCCAE00F737A7 /* AdditionCell.swift */,
 			);
 			path = PickView;
+			sourceTree = "<group>";
+		};
+		37DE8AF929100D5B00F737A7 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		37DE8AFE2910C6FE00F737A7 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				37DE8AFF2910C70E00F737A7 /* DateHelper.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		91CC7ECF0DD89D90EBEB568E /* Pods */ = {
@@ -308,11 +325,14 @@
 			files = (
 				37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */,
 				37DE8AF2290FCCAE00F737A7 /* AdditionCell.swift in Sources */,
+				37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */,
+				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
 				37DE8AEC290FCC5000F737A7 /* TitleCell.swift in Sources */,
 				37DE8AEE290FCC7200F737A7 /* ChooseCell.swift in Sources */,
 				37DE8AF6290FF02700F737A7 /* KingFisherWrapper.swift in Sources */,
 				37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */,
+				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,
 				37DE8AF4290FD67600F737A7 /* SPConstant.swift in Sources */,
 			);

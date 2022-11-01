@@ -15,7 +15,8 @@ class ViewController: UIViewController {
     
     @IBAction func toTest() {
         let storyboard = UIStoryboard(name: "Functions", bundle: nil)
-        let viewc = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)") as! PickViewController
+        let viewc = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
+        as! PickViewController
         show(viewc, sender: self)
     }
 }

@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum PickType {
+    case imageType
+    case textType
+}
+
 class PickViewController: UIViewController {
     @IBOutlet weak var pickTableView: UITableView! {
         didSet {
@@ -14,12 +19,8 @@ class PickViewController: UIViewController {
             pickTableView.delegate = self
         }
     }
-    private enum PickType {
-        case imageType
-        case textType
-    }
-    
-    private var type: PickType? = .imageType
+
+    var type: PickType? = .imageType
     var options: [String]? = [
         "https://api.appworks-school.tw/assets/201807202157/0.jpg",
         "https://api.appworks-school.tw/assets/201807202157/1.jpg",
