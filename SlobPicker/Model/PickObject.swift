@@ -14,15 +14,16 @@ struct Pick: Codable {
     var type: Int
     var contents: [String]
     var createdTime: Int64?
-    var comments: Comments?
+    var comments: [Comment]?
+    var results: [Int: Int]?
     
     enum CodingKeys: String, CodingKey {
-        case title, description, type, contents, comments, id
+        case title, description, type, contents, comments, id, results
         case createdTime = "created_time"
     }
 }
 
-struct Comments: Codable {
+struct Comment: Codable {
     var userID: String
     var type: Int
     var contents: String
@@ -33,5 +34,15 @@ struct Comments: Codable {
         case type
         case contents
         case createdTime = "created_time"
+    }
+    
+    func toDict() -> [String: Any] {
+        let dict: [String: Any] = [
+            "user_id": userID,
+            "type": type,
+            "contents": contents,
+            "created_time": createdTime
+        ]
+        return dict
     }
 }

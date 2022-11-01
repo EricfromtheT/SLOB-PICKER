@@ -12,3 +12,8 @@ struct SPConstant {
     static let screenWidth = UIScreen.main.bounds.width
     static let screenHeight = UIScreen.main.bounds.height
 }
+
+struct FakeUserInfo {
+    static let userID = "5487549"
+    static let userNmae = "Eric"
+}

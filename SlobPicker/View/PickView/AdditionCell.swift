@@ -9,7 +9,16 @@ import UIKit
 
 class AdditionCell: UITableViewCell {
     @IBOutlet weak var additionTextField: UITextField!
+    var completion: ((String) -> ())?
     
     func configure() {
+    }
+}
+
+extension AdditionCell: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text {
+            completion?(text)
+        }
     }
 }
