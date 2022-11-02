@@ -22,10 +22,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func toTest() {
+//        let storyboard = UIStoryboard(name: "Functions", bundle: nil)
+//        let viewController = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
+//        as! PickViewController
+//        viewController.pickerID = "880dTxKg8jfkIyOslBCs"
+//        show(viewController, sender: self)
         let storyboard = UIStoryboard(name: "Functions", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
-        as! PickViewController
-        viewController.pickerID = "880dTxKg8jfkIyOslBCs"
-        show(viewController, sender: self)
+        guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickEditorViewController.self)") as? PickEditorViewController else { return }
+        show(editorVC, sender: self)
     }
 }

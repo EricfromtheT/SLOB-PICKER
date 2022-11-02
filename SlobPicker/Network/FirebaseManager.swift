@@ -7,10 +7,13 @@
 
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseStorage
 
 class FirebaseManager {
     static let shared = FirebaseManager()
     private let database = Firestore.firestore()
+    let storageRef = Storage.storage().reference().child("imagesForPickers")
+    
     
     // fetch picker info for picking
     func fetchPrivatePickInfo(pickerID: String, completion: @escaping (Result<Pick, Error>) -> Void) {
