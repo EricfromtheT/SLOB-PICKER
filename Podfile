@@ -8,10 +8,14 @@ target 'SlobPicker' do
   # Pods for SlobPicker
 pod 'FirebaseFirestore'
 pod 'FirebaseFirestoreSwift'
+pod 'FirebaseStorage'
 pod 'FirebaseAuth'
 pod 'FirebaseMessaging'
 pod 'Kingfisher'
 pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
+pod 'SwiftLint'
+pod 'ProgressHUD'
+pod 'DropDown'
 
 end
