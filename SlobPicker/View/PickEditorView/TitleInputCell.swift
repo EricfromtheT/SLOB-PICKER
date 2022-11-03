@@ -22,6 +22,11 @@ class TitleInputCell: UITableViewCell {
     
     weak var delegate: TitleInputDelegate?
     
+    func configure() {
+        titleTextField.delegate = self
+        dpTextView.delegate = self
+    }
+    
     @IBAction func changeMode(_ sender: UISegmentedControl) {
         let tag = sender .selectedSegmentIndex
         if tag == 0 {

@@ -194,18 +194,18 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="輸入答覆四" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ojr-12-VaJ">
-                                                    <rect key="frame" x="45" y="192" width="300" height="34"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="300" id="hkd-oy-uyh"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="輸入答覆三" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uFE-8v-BJ3">
                                                     <rect key="frame" x="45" y="133" width="300" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="300" id="uMf-oS-Owo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="輸入答覆四" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ojr-12-VaJ">
+                                                    <rect key="frame" x="45" y="192" width="300" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="300" id="hkd-oy-uyh"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -223,6 +223,12 @@
                                                 <constraint firstItem="Ojr-12-VaJ" firstAttribute="centerX" secondItem="krA-es-GlQ" secondAttribute="centerX" id="xNy-2X-1Iw"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outletCollection property="textFields" destination="qjf-4c-2rK" collectionClass="NSMutableArray" id="hHD-QT-3bz"/>
+                                            <outletCollection property="textFields" destination="3nj-wx-N1S" collectionClass="NSMutableArray" id="Ltu-IO-Gcm"/>
+                                            <outletCollection property="textFields" destination="uFE-8v-BJ3" collectionClass="NSMutableArray" id="AXa-nA-xrc"/>
+                                            <outletCollection property="textFields" destination="Ojr-12-VaJ" collectionClass="NSMutableArray" id="EFB-9K-Dq9"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ImageOptionsCell" id="r3V-nN-WXR" customClass="ImageOptionsCell" customModule="SlobPicker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="553.66667175292969" width="390" height="223.33332824707031"/>

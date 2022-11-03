@@ -12,6 +12,7 @@
 		372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FE29126088007D677B /* ImageOptionsCell.swift */; };
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
 		37B5D8972911FC1800A7BC98 /* PickEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickEditorViewController.swift */; };
+		37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575802913A1C600DC344D /* PickerSelection.storyboard */; };
 		37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA3290C15C900F737A7 /* AppDelegate.swift */; };
 		37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */; };
 		37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA7290C15C900F737A7 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 		372AE30029127616007D677B /* TargetSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetSettingCell.swift; sourceTree = "<group>"; };
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B5D8962911FC1800A7BC98 /* PickEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickEditorViewController.swift; sourceTree = "<group>"; };
+		37D575802913A1C600DC344D /* PickerSelection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickerSelection.storyboard; sourceTree = "<group>"; };
 		37DE8AA0290C15C900F737A7 /* SlobPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlobPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37DE8AA3290C15C900F737A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				37B5D8982911FD2F00A7BC98 /* PickEditorView */,
 				37DE8AEA290FCC3000F737A7 /* PickView */,
 				37DE8AA9290C15C900F737A7 /* Main.storyboard */,
+				37D575802913A1C600DC344D /* PickerSelection.storyboard */,
 				37DE8AE0290EBC0F00F737A7 /* Functions.storyboard */,
 				37DE8AAE290C15CA00F737A7 /* LaunchScreen.storyboard */,
 			);
@@ -277,6 +280,7 @@
 				37DE8AE1290EBC0F00F737A7 /* Functions.storyboard in Resources */,
 				37DE8AB0290C15CA00F737A7 /* LaunchScreen.storyboard in Resources */,
 				37DE8AF82910047100F737A7 /* GoogleService-Info.plist in Resources */,
+				37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */,
 				37DE8AAD290C15CA00F737A7 /* Assets.xcassets in Resources */,
 				37DE8AAB290C15C900F737A7 /* Main.storyboard in Resources */,
 			);
@@ -514,7 +518,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=*]" = "";
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SlobPicker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
