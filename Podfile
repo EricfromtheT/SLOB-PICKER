@@ -15,5 +15,7 @@ pod 'Kingfisher'
 pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
 pod 'SwiftLint'
+pod 'ProgressHUD'
+pod 'DropDown'
 
 end

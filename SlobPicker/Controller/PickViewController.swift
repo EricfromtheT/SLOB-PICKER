@@ -7,11 +7,6 @@
 
 import UIKit
 
-enum PickType {
-    case textType
-    case imageType
-}
-
 class PickViewController: UIViewController {
     @IBOutlet weak var pickTableView: UITableView! {
         didSet {

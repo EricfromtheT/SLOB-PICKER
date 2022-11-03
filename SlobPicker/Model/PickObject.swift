@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum PickType {
+    case textType
+    case imageType
+}
+
 struct Pick: Codable {
     var id: String?
     var title: String
