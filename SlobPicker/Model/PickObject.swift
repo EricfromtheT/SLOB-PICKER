@@ -19,12 +19,14 @@ struct Pick: Codable {
     var type: Int
     var contents: [String]
     var createdTime: Int64?
-    var comments: [Comment]?
-    var results: [Int: Int]?
+    var authorID: String
+    var authorName: String
     
     enum CodingKeys: String, CodingKey {
-        case title, description, type, contents, comments, id, results
+        case title, description, type, contents, id
         case createdTime = "created_time"
+        case authorID = "author_id"
+        case authorName = "author_name"
     }
 }
 

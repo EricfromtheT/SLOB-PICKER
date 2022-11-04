@@ -32,6 +32,25 @@ class FirebaseManager {
         }
     }
     
+    func fetchAllPrivatePickers(completion: @escaping (Result<[Pick], Error>) -> Void) {
+        database.collection("privatePickers").getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                do {
+                    if let documents = querySnapshot?.documents {
+                        let pickers = try documents.map { document in
+                            try document.data(as: Pick.self)
+                        }
+                        completion(.success(pickers))
+                    }
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
     // publish a new picker
     func publishPrivatePick(pick: inout Pick, completion: @escaping (Result<String, Error>) -> Void) {
         let document = database.collection("privatePickers").document()

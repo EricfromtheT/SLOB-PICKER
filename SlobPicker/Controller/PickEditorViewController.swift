@@ -24,7 +24,7 @@ class PickEditorViewController: UIViewController {
     let group = DispatchGroup()
     
     // Image mode properties
-    var imageUploadCompletely: ((String, Int) -> ())?
+    var imageUploadCompletely: ((String, Int) -> Void)?
     var clickIndex: Int?
     
     // MARK: Life Cycle
@@ -82,7 +82,7 @@ class PickEditorViewController: UIViewController {
                 type = 1
                 contents = urls
             }
-            var privatePicker = Pick(title: title, description: description, type: type, contents: contents)
+            var privatePicker = Pick(title: title, description: description, type: type, contents: contents, authorID: FakeUserInfo.userID, authorName: FakeUserInfo.userNmae)
             FirebaseManager.shared.publishPrivatePick(pick: &privatePicker, completion: { result in
                 switch result {
                 case .success(let success):
