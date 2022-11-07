@@ -17,5 +17,6 @@ pod 'IQKeyboardManagerSwift'
 pod 'SwiftLint'
 pod 'ProgressHUD'
 pod 'DropDown'
+pod 'MJRefresh'
 
 end

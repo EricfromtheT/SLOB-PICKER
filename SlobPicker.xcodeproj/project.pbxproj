@@ -7,15 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3708B0312918157C00397035 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B0302918157C00397035 /* LoginViewController.swift */; };
+		3711415029169CFB00C567EF /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711414F29169CFB00C567EF /* Group.swift */; };
+		371C17582916572E00B3B115 /* FriendSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C17572916572E00B3B115 /* FriendSelectCell.swift */; };
 		372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FA29126055007D677B /* TitleInputCell.swift */; };
 		372AE2FD2912606D007D677B /* TextOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FC2912606D007D677B /* TextOptionsCell.swift */; };
 		372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FE29126088007D677B /* ImageOptionsCell.swift */; };
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
-		37B5D8972911FC1800A7BC98 /* PickEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickEditorViewController.swift */; };
+		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
 		37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575802913A1C600DC344D /* PickerSelection.storyboard */; };
 		37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575832913AFEA00DC344D /* PickSelectionCell.swift */; };
-		37D575862913B02900DC344D /* PickSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575852913B02900DC344D /* PickSelectionViewController.swift */; };
+		37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575852913B02900DC344D /* PickerSelectionViewController.swift */; };
 		37D575882914B51F00DC344D /* Relationship.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575872914B51F00DC344D /* Relationship.storyboard */; };
+		37D5758A2914C25300DC344D /* PickResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575892914C25300DC344D /* PickResultCell.swift */; };
+		37D5758C2914DFF800DC344D /* PickResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5758B2914DFF800DC344D /* PickResultViewController.swift */; };
+		37D5758E2914EA8200DC344D /* PickCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5758D2914EA8200DC344D /* PickCommentsCell.swift */; };
+		37D5759029153AAF00DC344D /* SearchIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5758F29153AAF00DC344D /* SearchIDViewController.swift */; };
+		37D5759229153F0600DC344D /* FriendSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759129153F0600DC344D /* FriendSelectViewController.swift */; };
+		37D5759429153F3F00DC344D /* GroupCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759329153F3F00DC344D /* GroupCreateViewController.swift */; };
+		37D5759629154B1E00DC344D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759529154B1E00DC344D /* Result.swift */; };
+		37D5759829154B3400DC344D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759729154B3400DC344D /* User.swift */; };
 		37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA3290C15C900F737A7 /* AppDelegate.swift */; };
 		37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */; };
 		37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA7290C15C900F737A7 /* ViewController.swift */; };
@@ -37,16 +48,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3708B0302918157C00397035 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3711414F29169CFB00C567EF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		371C17572916572E00B3B115 /* FriendSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSelectCell.swift; sourceTree = "<group>"; };
 		372AE2FA29126055007D677B /* TitleInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleInputCell.swift; sourceTree = "<group>"; };
 		372AE2FC2912606D007D677B /* TextOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptionsCell.swift; sourceTree = "<group>"; };
 		372AE2FE29126088007D677B /* ImageOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOptionsCell.swift; sourceTree = "<group>"; };
 		372AE30029127616007D677B /* TargetSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetSettingCell.swift; sourceTree = "<group>"; };
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		37B5D8962911FC1800A7BC98 /* PickEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickEditorViewController.swift; sourceTree = "<group>"; };
+		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
 		37D575802913A1C600DC344D /* PickerSelection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickerSelection.storyboard; sourceTree = "<group>"; };
 		37D575832913AFEA00DC344D /* PickSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSelectionCell.swift; sourceTree = "<group>"; };
-		37D575852913B02900DC344D /* PickSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSelectionViewController.swift; sourceTree = "<group>"; };
+		37D575852913B02900DC344D /* PickerSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSelectionViewController.swift; sourceTree = "<group>"; };
 		37D575872914B51F00DC344D /* Relationship.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Relationship.storyboard; sourceTree = "<group>"; };
+		37D575892914C25300DC344D /* PickResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultCell.swift; sourceTree = "<group>"; };
+		37D5758B2914DFF800DC344D /* PickResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultViewController.swift; sourceTree = "<group>"; };
+		37D5758D2914EA8200DC344D /* PickCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickCommentsCell.swift; sourceTree = "<group>"; };
+		37D5758F29153AAF00DC344D /* SearchIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIDViewController.swift; sourceTree = "<group>"; };
+		37D5759129153F0600DC344D /* FriendSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSelectViewController.swift; sourceTree = "<group>"; };
+		37D5759329153F3F00DC344D /* GroupCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCreateViewController.swift; sourceTree = "<group>"; };
+		37D5759529154B1E00DC344D /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		37D5759729154B3400DC344D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		37DE8AA0290C15C900F737A7 /* SlobPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlobPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37DE8AA3290C15C900F737A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,9 +119,20 @@
 		37D575822913AFD700DC344D /* PickSelection */ = {
 			isa = PBXGroup;
 			children = (
+				37D575802913A1C600DC344D /* PickerSelection.storyboard */,
 				37D575832913AFEA00DC344D /* PickSelectionCell.swift */,
+				37D575892914C25300DC344D /* PickResultCell.swift */,
+				37D5758D2914EA8200DC344D /* PickCommentsCell.swift */,
 			);
 			path = PickSelection;
+			sourceTree = "<group>";
+		};
+		37D57599291656CB00DC344D /* FriendSelectView */ = {
+			isa = PBXGroup;
+			children = (
+				371C17572916572E00B3B115 /* FriendSelectCell.swift */,
+			);
+			path = FriendSelectView;
 			sourceTree = "<group>";
 		};
 		37DE8A97290C15C900F737A7 = {
@@ -141,9 +174,14 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AA7290C15C900F737A7 /* ViewController.swift */,
-				37D575852913B02900DC344D /* PickSelectionViewController.swift */,
+				37D5758B2914DFF800DC344D /* PickResultViewController.swift */,
+				3708B0302918157C00397035 /* LoginViewController.swift */,
+				37D575852913B02900DC344D /* PickerSelectionViewController.swift */,
 				37DE8AE2290EBC3300F737A7 /* PickViewController.swift */,
-				37B5D8962911FC1800A7BC98 /* PickEditorViewController.swift */,
+				37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */,
+				37D5758F29153AAF00DC344D /* SearchIDViewController.swift */,
+				37D5759129153F0600DC344D /* FriendSelectViewController.swift */,
+				37D5759329153F3F00DC344D /* GroupCreateViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -151,11 +189,11 @@
 		37DE8ADB290EA55800F737A7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				37D57599291656CB00DC344D /* FriendSelectView */,
 				37D575822913AFD700DC344D /* PickSelection */,
 				37B5D8982911FD2F00A7BC98 /* PickEditorView */,
 				37DE8AEA290FCC3000F737A7 /* PickView */,
 				37DE8AA9290C15C900F737A7 /* Main.storyboard */,
-				37D575802913A1C600DC344D /* PickerSelection.storyboard */,
 				37DE8AE0290EBC0F00F737A7 /* Interaction.storyboard */,
 				37D575872914B51F00DC344D /* Relationship.storyboard */,
 				37DE8AAE290C15CA00F737A7 /* LaunchScreen.storyboard */,
@@ -167,6 +205,9 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AFC2910B22F00F737A7 /* PickObject.swift */,
+				37D5759529154B1E00DC344D /* Result.swift */,
+				37D5759729154B3400DC344D /* User.swift */,
+				3711414F29169CFB00C567EF /* Group.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,7 +286,6 @@
 				37DE8A9D290C15C900F737A7 /* Frameworks */,
 				37DE8A9E290C15C900F737A7 /* Resources */,
 				49AEB7B209886244577059D7 /* [CP] Embed Pods Frameworks */,
-				37DE8AE9290FC21100F737A7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -329,23 +369,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		37DE8AE9290FC21100F737A7 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n\n";
-		};
 		49AEB7B209886244577059D7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -371,23 +394,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */,
+				371C17582916572E00B3B115 /* FriendSelectCell.swift in Sources */,
+				37D5759429153F3F00DC344D /* GroupCreateViewController.swift in Sources */,
 				37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */,
 				37DE8AF2290FCCAE00F737A7 /* AdditionCell.swift in Sources */,
 				37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */,
+				37D5759829154B3400DC344D /* User.swift in Sources */,
 				372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */,
+				37D5758A2914C25300DC344D /* PickResultCell.swift in Sources */,
 				372AE30129127616007D677B /* TargetSettingCell.swift in Sources */,
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
 				37DE8AEC290FCC5000F737A7 /* TitleCell.swift in Sources */,
 				37DE8AEE290FCC7200F737A7 /* ChooseCell.swift in Sources */,
 				37DE8AF6290FF02700F737A7 /* KingFisherWrapper.swift in Sources */,
+				37D5758E2914EA8200DC344D /* PickCommentsCell.swift in Sources */,
+				37D5759629154B1E00DC344D /* Result.swift in Sources */,
 				37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */,
+				3708B0312918157C00397035 /* LoginViewController.swift in Sources */,
 				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,
-				37B5D8972911FC1800A7BC98 /* PickEditorViewController.swift in Sources */,
-				37D575862913B02900DC344D /* PickSelectionViewController.swift in Sources */,
+				37D5758C2914DFF800DC344D /* PickResultViewController.swift in Sources */,
+				37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */,
+				3711415029169CFB00C567EF /* Group.swift in Sources */,
+				37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */,
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
+				37D5759229153F0600DC344D /* FriendSelectViewController.swift in Sources */,
 				37DE8AF4290FD67600F737A7 /* SPConstant.swift in Sources */,
+				37D5759029153AAF00DC344D /* SearchIDViewController.swift in Sources */,
 				372AE2FD2912606D007D677B /* TextOptionsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,25 +569,28 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SlobPicker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -567,7 +604,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -575,16 +612,19 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

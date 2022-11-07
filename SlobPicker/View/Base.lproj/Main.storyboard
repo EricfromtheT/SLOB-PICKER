@@ -4,6 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,6 +27,59 @@
             </objects>
             <point key="canvasLocation" x="266" y="28"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="lfT-d7-Yqs">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="Yuo-5I-LsW" customClass="LoginViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kvl-WZ-x0b">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="userName" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f9c-e4-t1d">
+                                <rect key="frame" x="45" y="301" width="300" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Iyg-Lk-Rdl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="userID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Ya-ZV-tl6">
+                                <rect key="frame" x="45" y="167" width="300" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="sKO-c8-aTf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dye-xI-sih">
+                                <rect key="frame" x="157.66666666666666" y="411" width="75" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="done" destination="Yuo-5I-LsW" eventType="touchUpInside" id="d9y-B6-yYe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="b1e-Ei-UxQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2Ya-ZV-tl6" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="1Zu-nU-1Kk"/>
+                            <constraint firstItem="Dye-xI-sih" firstAttribute="centerY" secondItem="b1e-Ei-UxQ" secondAttribute="centerY" id="cFb-Pm-NEA"/>
+                            <constraint firstItem="Dye-xI-sih" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="h4l-WG-0AU"/>
+                            <constraint firstItem="2Ya-ZV-tl6" firstAttribute="top" secondItem="b1e-Ei-UxQ" secondAttribute="top" constant="120" id="iya-um-tJw"/>
+                            <constraint firstItem="f9c-e4-t1d" firstAttribute="top" secondItem="2Ya-ZV-tl6" secondAttribute="bottom" constant="100" id="sZ8-W8-2Kj"/>
+                            <constraint firstItem="f9c-e4-t1d" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="zhn-DI-eGk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="idField" destination="2Ya-ZV-tl6" id="bLu-bE-Un4"/>
+                        <outlet property="nameField" destination="f9c-e4-t1d" id="8Ku-T4-7qp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H2p-hL-peb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1728" y="28"/>
+        </scene>
         <!--PickerSelection-->
         <scene sceneID="2n3-QN-fRg">
             <objects>
@@ -36,4 +91,9 @@
             <point key="canvasLocation" x="987" y="-209"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

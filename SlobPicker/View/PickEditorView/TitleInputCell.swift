@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TitleInputDelegate: AnyObject{
-    func segmentModeHasChanged(mode: PickType)
+    func segmentModeHasChanged(mode: PickerType)
     
     func titleHasChanged(title: String)
     
@@ -30,9 +30,9 @@ class TitleInputCell: UITableViewCell {
     @IBAction func changeMode(_ sender: UISegmentedControl) {
         let tag = sender .selectedSegmentIndex
         if tag == 0 {
-            delegate?.segmentModeHasChanged(mode: PickType.textType)
+            delegate?.segmentModeHasChanged(mode: PickerType.textType)
         } else {
-            delegate?.segmentModeHasChanged(mode: PickType.imageType)
+            delegate?.segmentModeHasChanged(mode: PickerType.imageType)
         }
     }
 }

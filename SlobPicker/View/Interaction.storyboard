@@ -35,7 +35,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="問題敘述" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hs6-Uc-wUN">
-                                                    <rect key="frame" x="20" y="39.333333333333336" width="69.333333333333329" height="20.333333333333336"/>
+                                                    <rect key="frame" x="20" y="39.333333333333336" width="350" height="20.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -47,6 +47,7 @@
                                                 <constraint firstItem="Hs6-Uc-wUN" firstAttribute="top" secondItem="Th4-Lz-iTb" secondAttribute="bottom" constant="8" symbolic="YES" id="Lr6-gI-Oca"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Hs6-Uc-wUN" secondAttribute="bottom" constant="10" id="Utd-eT-b1k"/>
                                                 <constraint firstItem="Hs6-Uc-wUN" firstAttribute="leading" secondItem="Th4-Lz-iTb" secondAttribute="leading" id="Zga-OC-W5a"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hs6-Uc-wUN" secondAttribute="trailing" constant="20" id="yx5-ow-2Bb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -105,10 +106,10 @@
             </objects>
             <point key="canvasLocation" x="-772" y="58"/>
         </scene>
-        <!--Pick Editor View Controller-->
+        <!--Picker Editor View Controller-->
         <scene sceneID="OeD-ae-w7W">
             <objects>
-                <viewController storyboardIdentifier="PickEditorViewController" id="gmZ-ES-kYG" customClass="PickEditorViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickerEditorViewController" id="gmZ-ES-kYG" customClass="PickerEditorViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lvD-oE-76X">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

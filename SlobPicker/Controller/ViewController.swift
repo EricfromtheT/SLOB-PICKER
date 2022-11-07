@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 //        viewController.pickerID = "880dTxKg8jfkIyOslBCs"
 //        show(viewController, sender: self)
         let storyboard = UIStoryboard(name: "Functions", bundle: nil)
-        guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickEditorViewController.self)") as? PickEditorViewController else { return }
+        guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)") as? PickerEditorViewController else { return }
         show(editorVC, sender: self)
     }
 }

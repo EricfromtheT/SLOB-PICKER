@@ -1,5 +1,5 @@
 //
-//  PickEditorViewController.swift
+//  PickerEditorViewController.swift
 //  SlobPicker
 //
 //  Created by 孔令傑 on 2022/11/2.
@@ -8,10 +8,19 @@
 import UIKit
 import PhotosUI
 
-class PickEditorViewController: UIViewController {
+class PickerEditorViewController: UIViewController {
     @IBOutlet weak var editorTableView: UITableView! {
         didSet {
             editorTableView.dataSource = self
+            FirebaseManager.shared.fetchUserCurrentGroups { result in
+                switch result {
+                case .success(let groupInfos):
+                    self.groupInfos = groupInfos
+                    self.editorTableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .none)
+                case .failure(let error):
+                    print(error, "ERROR of getting user's current groups")
+                }
+            }
         }
     }
     
@@ -20,12 +29,17 @@ class PickEditorViewController: UIViewController {
     private var inputTitle: String?
     private var inputDp: String?
     private var urlStrings: [String]? = []
-    private var mode: PickType = .textType
+    private var mode: PickerType = .textType
     let group = DispatchGroup()
+    let semaphore = DispatchSemaphore(value: 0)
     
     // Image mode properties
     var imageUploadCompletely: ((String, Int) -> Void)?
     var clickIndex: Int?
+    
+    // others' properties
+    var groupInfos: [GroupInfo] = []
+    var selectedGroupIndex: Int?
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -34,12 +48,11 @@ class PickEditorViewController: UIViewController {
     }
     
     func setUpNavigation() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .done, target: self, action: #selector(publishPicker))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .done, target: self, action: #selector(uploadImages))
     }
     
-    @objc func publishPicker() {
+    @objc func uploadImages() {
         guard let data = willBeUploadedImages else { fatalError("UIImages have not been found") }
-        // TODO: GCD group management
         for image in data {
             // transform image file type
             if let uploadData = image.jpegData(compressionQuality: 0.001) {
@@ -65,15 +78,15 @@ class PickEditorViewController: UIViewController {
             }
         }
         group.notify(queue: DispatchQueue.main) {
-            self.packPickerInfo()
+            self.publishPicker()
         }
     }
     
-    func packPickerInfo() {
-        if let title = inputTitle, let description = inputDp, let urls = urlStrings,
-           let strings = willBeUploadedStrings {
+    func publishPicker() {
+        if let title = inputTitle, let urls = urlStrings, let strings = willBeUploadedStrings, let index = selectedGroupIndex {
             var contents: [String] = []
             var type = 0
+            var membersID: [String] = []
             if mode == .textType {
                 contents = strings.filter { string in
                     !string.isEmpty
@@ -82,20 +95,43 @@ class PickEditorViewController: UIViewController {
                 type = 1
                 contents = urls
             }
-            var privatePicker = Pick(title: title, description: description, type: type, contents: contents, authorID: FakeUserInfo.userID, authorName: FakeUserInfo.userNmae)
-            FirebaseManager.shared.publishPrivatePick(pick: &privatePicker, completion: { result in
+            print(groupInfos[index].groupID) // 確定有東西
+            // fetch group's member list
+            // 1
+            var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, group: groupInfos[index].groupID)
+            FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID, completion: {
+                result in
+                print("==========")
                 switch result {
-                case .success(let success):
-                    print(success)
+                case .success(let groupInfo):
+                    membersID = groupInfo.members
+                    privatePicker.membersIDs = membersID
+                    self.publish(picker: &privatePicker)
                 case .failure(let error):
-                    print(error, "ERROR")
+                    print(error, "拿單一群組資料有問題")
                 }
             })
+            
+
+        }
+    }
+    
+    func publish(picker: inout Picker) {
+        FirebaseManager.shared.publishPrivatePicker(pick: &picker) { result in
+            switch result {
+            case .success(let success):
+                print(success)
+            case .failure(let error):
+                print(error, "ERROR")
+            }
+            DispatchQueue.main.async {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         }
     }
 }
 // MARK: TableViewDataSource
-extension PickEditorViewController: UITableViewDataSource {
+extension PickerEditorViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         if row == 0 {
@@ -127,6 +163,9 @@ extension PickEditorViewController: UITableViewDataSource {
                                                                 "\(ImageOptionsCell.self)", for: indexPath) as? ImageOptionsCell else {
                     fatalError("ERROR: ImageOptionsCell broke")
                 }
+//                let names = groupInfos.map {
+//                    $0.name
+//                }
                 cell.configure(superVC: self)
                 return cell
             }
@@ -137,7 +176,13 @@ extension PickEditorViewController: UITableViewDataSource {
                                                             "\(TargetSettingCell.self)", for: indexPath) as? TargetSettingCell else {
                 fatalError("ERROR: TargetSettingCell broke")
             }
-            cell.setUp()
+            let names = groupInfos.map {
+                $0.groupName
+            }
+            cell.setUp(groups: names)
+            cell.completion = { index in
+                self.selectedGroupIndex = index
+            }
             return cell
         }
     }
@@ -148,8 +193,8 @@ extension PickEditorViewController: UITableViewDataSource {
 }
 
 // MARK: TitleInputDelegate
-extension PickEditorViewController: TitleInputDelegate {
-    func segmentModeHasChanged(mode: PickType) {
+extension PickerEditorViewController: TitleInputDelegate {
+    func segmentModeHasChanged(mode: PickerType) {
         self.mode = mode
         editorTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
     }
@@ -164,7 +209,7 @@ extension PickEditorViewController: TitleInputDelegate {
 }
 
 // MARK: PHPickerViewControllerDelegate
-extension PickEditorViewController: PHPickerViewControllerDelegate {
+extension PickerEditorViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         let result = results.first

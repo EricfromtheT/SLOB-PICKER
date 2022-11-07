@@ -1,0 +1,97 @@
+//
+//  PickResultViewController.swift
+//  SlobPicker
+//
+//  Created by 孔令傑 on 2022/11/4.
+//
+
+import UIKit
+
+class PickResultViewController: UIViewController {
+    @IBOutlet weak var resultTableView: UITableView! {
+        didSet {
+            resultTableView.dataSource = self
+        }
+    }
+    var pickerResults: [PickResult] = []
+    var pickerComments: [Comment] = []
+    var voteResults: [VoteResult] = []
+    var group = DispatchGroup()
+    var pickInfo: Picker? {
+        didSet {
+            if let pickInfo = pickInfo, let pickID = pickInfo.id {
+                group.enter()
+                FirebaseManager.shared.fetchPickerResults(pickerID: pickID) { result in
+                    switch result {
+                    case .success(let results):
+                        self.pickerResults = results
+                        self.organizeResult(data: self.pickerResults)
+                    case .failure(let error):
+                        print(error, "ERROR of getting picker results")
+                    }
+                    self.group.leave()
+                }
+                group.enter()
+                FirebaseManager.shared.fetchPickerComments(pickerID: pickID) { result in
+                    switch result {
+                    case .success(let comments):
+                        self.pickerComments = comments
+                    case .failure(let error):
+                        print(error, "ERROR of getting picker comments")
+                    }
+                    self.group.leave()
+                }
+                group.notify(queue: DispatchQueue.main) {
+                    self.resultTableView.reloadData()
+                }
+            } else {
+                print("ERROR: pickInfo or pickID is nil")
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    func organizeResult(data: [PickResult]) {
+        if let pickInfo = pickInfo {
+            for index in 0..<pickInfo.contents.count {
+                let result = data.filter { datum in
+                    datum.choice == index
+                }
+                let vote = VoteResult(choice: index, votes: result.count)
+                voteResults.append(vote)
+            }
+        } else {
+            print("ERROR: pickinfo is nil")
+        }
+    }
+}
+
+// MARK: TableView DataSource
+extension PickResultViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickResultCell.self)", for: indexPath) as? PickResultCell else {
+                fatalError("ERROR of dequeuing pickResultCell")
+            }
+            if let pickInfo = pickInfo {
+                cell.configure(results: voteResults, data: pickInfo)
+            } else {
+                print("ERROR: pickInfo is nil")
+            }
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickCommentsCell.self)", for: indexPath) as? PickCommentsCell else {
+                fatalError("ERROR of dequeuing pickResultCell")
+            }
+            cell.configure(data: pickerComments[indexPath.row - 1])
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        pickerComments.count + 1
+    }
+}

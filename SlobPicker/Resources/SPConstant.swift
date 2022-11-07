@@ -14,6 +14,7 @@ struct SPConstant {
 }
 
 struct FakeUserInfo {
-    static let userID = "5487549"
-    static let userNmae = "Eric"
+    static var shared = FakeUserInfo()
+    var userID: String = UserDefaults.standard.string(forKey: "userID") ?? ""
+    var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
 }

@@ -11,9 +11,9 @@ import PhotosUI
 class ImageOptionsCell: UITableViewCell {
     @IBOutlet var imageNameLabels: [UILabel]!
     @IBOutlet var imagePickButtons: [UIButton]!
-    weak var superVC: PickEditorViewController?
+    weak var superVC: PickerEditorViewController?
     
-    func configure(superVC: PickEditorViewController) {
+    func configure(superVC: PickerEditorViewController) {
         self.superVC = superVC
         for (idx, button) in imagePickButtons.enumerated() {
             button.addTarget(self, action: #selector(pickPic), for: .touchUpInside)

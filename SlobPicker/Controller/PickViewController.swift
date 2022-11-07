@@ -14,6 +14,7 @@ class PickViewController: UIViewController {
             pickTableView.dataSource = self
         }
     }
+    
     var pickerID: String? {
         didSet {
             guard let pickerID = pickerID else { fatalError("pickerID was wrong") }
@@ -29,8 +30,8 @@ class PickViewController: UIViewController {
             }
         }
     }
-    private var pickInfo: Pick?
-    private var type: PickType?
+    private var pickInfo: Picker?
+    private var type: PickerType?
     private var chosenIndex: Int?
     private var additionalComment: String?
     
@@ -44,11 +45,12 @@ class PickViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .done, target: self, action: #selector(donePick))
     }
     
+    // confirm your selecting result
     @objc func donePick() {
         if let chosenIndex = chosenIndex, let pickerID = pickerID {
             FirebaseManager.shared.updatePrivateResult(index: chosenIndex, pickerID: pickerID)
-            if let comment = additionalComment, comment != "" {
-                let commentInfo = Comment(userID: FakeUserInfo.userID, type: 0, contents: comment, createdTime: Date().millisecondsSince1970)
+            if let comment = additionalComment, !comment.isEmpty {
+                let commentInfo = Comment(userID: FakeUserInfo.shared.userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
                 FirebaseManager.shared.updatePrivateComment(comment: commentInfo, pickerID: pickerID)
             }
         } else {
@@ -56,6 +58,7 @@ class PickViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .cancel))
             present(alert, animated: true)
         }
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 

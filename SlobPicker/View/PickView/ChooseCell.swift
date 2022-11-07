@@ -51,9 +51,10 @@ class ChooseCell: UITableViewCell {
         self.contentView.addSubview(stackView)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(choose))
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
         for unit in 0..<optionsURLString.count {
             let imageView = UIImageView()
+            imageView.isUserInteractionEnabled = true
             stackView.addArrangedSubview(imageView)
             // Attribute
             imageView.contentMode = .scaleAspectFit
@@ -74,6 +75,20 @@ class ChooseCell: UITableViewCell {
     }
     
     @objc func choose(_ sender: UIButton) {
+        if !isFirstClick {
+            chosenImageView.removeFromSuperview()
+        }
+        self.contentView.addSubview(chosenImageView)
+        chosenImageView.translatesAutoresizingMaskIntoConstraints = false
+        chosenImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        chosenImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        chosenImageView.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
+        chosenImageView.centerYAnchor.constraint(equalTo: sender.centerYAnchor).isActive = true
+        isFirstClick = false
+        completion?(sender.tag)
+    }
+    
+    @objc func chooseImage(_ sender: UIImageView) {
         if !isFirstClick {
             chosenImageView.removeFromSuperview()
         }

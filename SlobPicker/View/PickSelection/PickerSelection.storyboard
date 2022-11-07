@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Pick Selection View Controller-->
+        <!--Picker Selection View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="PickSelectionViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickerSelectionViewController" id="Y6W-OH-hqX" customClass="PickerSelectionViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -29,7 +29,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dc-V9-P28">
-                                                    <rect key="frame" x="37" y="11" width="33" height="21"/>
+                                                    <rect key="frame" x="37" y="10.999999999999998" width="33" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -52,11 +52,17 @@
                                                     <rect key="frame" x="60" y="92" width="57" height="35"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Pick"/>
+                                                    <connections>
+                                                        <action selector="goToPick:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="GxP-L3-94c"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6T-QJ-Pgh">
                                                     <rect key="frame" x="236" y="92" width="94" height="35"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="查看結果"/>
+                                                    <connections>
+                                                        <action selector="goToResult:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Fky-TT-ElW"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -71,11 +77,21 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="authorLabel" destination="0ng-DU-nbd" id="czC-hf-H1h"/>
+                                            <outlet property="pickButton" destination="U41-sy-p3d" id="cUv-tD-x08"/>
+                                            <outlet property="resultButton" destination="e6T-QJ-Pgh" id="0Os-mw-SLL"/>
                                             <outlet property="titleLabel" destination="0dc-V9-P28" id="hLv-gU-8ak"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="edit" translatesAutoresizingMaskIntoConstraints="NO" id="QNa-Y1-jNQ">
+                                <rect key="frame" x="330" y="671" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QNa-Y1-jNQ" secondAttribute="height" multiplier="1:1" id="m0B-uB-2Id"/>
+                                    <constraint firstAttribute="width" constant="40" id="zUK-Fs-Zel"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -83,11 +99,14 @@
                             <constraint firstItem="Vyi-kg-gF7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="0YP-fF-s8J"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Vyi-kg-gF7" secondAttribute="trailing" id="MJo-cW-8zO"/>
                             <constraint firstItem="Vyi-kg-gF7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Ms4-Ky-70y"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="QNa-Y1-jNQ" secondAttribute="bottom" constant="50" id="Pqa-Ce-bSP"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="QNa-Y1-jNQ" secondAttribute="trailing" constant="20" id="SsF-CS-uaT"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Vyi-kg-gF7" secondAttribute="bottom" id="ucV-31-EQb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bzI-zd-8P5"/>
                     <connections>
+                        <outlet property="composeImageView" destination="QNa-Y1-jNQ" id="F8d-5F-Qap"/>
                         <outlet property="pickersTableView" destination="Vyi-kg-gF7" id="krd-y3-Yog"/>
                     </connections>
                 </viewController>
@@ -114,8 +133,82 @@
             </objects>
             <point key="canvasLocation" x="-943" y="-31"/>
         </scene>
+        <!--Pick Result View Controller-->
+        <scene sceneID="Hts-e2-e4Q">
+            <objects>
+                <viewController storyboardIdentifier="PickResultViewController" id="gct-z6-JwY" customClass="PickResultViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EdP-hN-mgU">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7WZ-aR-rOs">
+                                <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickResultCell" id="ni9-94-3CM" customClass="PickResultCell" customModule="SlobPicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ni9-94-3CM" id="goz-xy-qKI">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickCommentsCell" id="tJo-2J-FEj" customClass="PickCommentsCell" customModule="SlobPicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="93.666667938232422" width="390" height="43.333332061767578"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tJo-2J-FEj" id="f49-uy-alw">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.333332061767578"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="upC-Wa-HDf">
+                                                    <rect key="frame" x="20" y="11.000000000000002" width="35" height="20.666666666666671"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="留言內容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taa-i1-ddE">
+                                                    <rect key="frame" x="75" y="11" width="70" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="taa-i1-ddE" firstAttribute="centerY" secondItem="upC-Wa-HDf" secondAttribute="centerY" id="Fiw-5a-Lhj"/>
+                                                <constraint firstItem="taa-i1-ddE" firstAttribute="leading" secondItem="upC-Wa-HDf" secondAttribute="trailing" constant="20" id="IIz-rC-oQ2"/>
+                                                <constraint firstItem="upC-Wa-HDf" firstAttribute="leading" secondItem="f49-uy-alw" secondAttribute="leading" constant="20" symbolic="YES" id="JQ7-xD-Pds"/>
+                                                <constraint firstAttribute="bottom" secondItem="upC-Wa-HDf" secondAttribute="bottom" constant="11.666667938232422" id="SJy-uP-Dd3"/>
+                                                <constraint firstItem="upC-Wa-HDf" firstAttribute="top" secondItem="f49-uy-alw" secondAttribute="top" constant="11" id="eJr-lE-0pL"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="commentLabel" destination="taa-i1-ddE" id="54a-F2-RYm"/>
+                                            <outlet property="nameLabel" destination="upC-Wa-HDf" id="KJH-rw-0eq"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="O1Y-Zf-Mrj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7WZ-aR-rOs" firstAttribute="top" secondItem="O1Y-Zf-Mrj" secondAttribute="top" id="2Jx-WM-biM"/>
+                            <constraint firstItem="O1Y-Zf-Mrj" firstAttribute="trailing" secondItem="7WZ-aR-rOs" secondAttribute="trailing" id="MKp-ng-zZ1"/>
+                            <constraint firstItem="7WZ-aR-rOs" firstAttribute="leading" secondItem="O1Y-Zf-Mrj" secondAttribute="leading" id="oYZ-5E-mGo"/>
+                            <constraint firstItem="O1Y-Zf-Mrj" firstAttribute="bottom" secondItem="7WZ-aR-rOs" secondAttribute="bottom" id="qWD-cb-eCB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="resultTableView" destination="7WZ-aR-rOs" id="AGd-UP-U8q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lgF-L2-v7c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="807.69230769230762" y="-31.279620853080566"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="edit" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
