@@ -21,6 +21,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="u4M-e1-Od1" kind="relationship" relationship="viewControllers" id="ipI-u0-0S6"/>
+                        <segue destination="oPL-CB-mn6" kind="relationship" relationship="viewControllers" id="ShO-dC-1z6"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7A-EX-4U5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -78,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2p-hL-peb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1728" y="28"/>
+            <point key="canvasLocation" x="1682" y="28"/>
         </scene>
         <!--PickerSelection-->
         <scene sceneID="2n3-QN-fRg">
@@ -89,6 +90,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkc-8j-V0E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="987" y="-209"/>
+        </scene>
+        <!--Public-->
+        <scene sceneID="VmZ-9l-84A">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Public" id="oPL-CB-mn6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="tAi-BO-4cm"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="irM-z3-yhL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1031" y="-72"/>
         </scene>
     </scenes>
     <resources>

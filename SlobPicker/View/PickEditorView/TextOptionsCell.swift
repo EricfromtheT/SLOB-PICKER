@@ -14,6 +14,7 @@ class TextOptionsCell: UITableViewCell {
     func configure() {
         for (idx, textField) in textFields.enumerated() {
             textField.delegate = self
+            textField.text = nil
             textField.tag = idx
         }
     }

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3708B0312918157C00397035 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B0302918157C00397035 /* LoginViewController.swift */; };
+		3708B0332918FC5700397035 /* Public.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3708B0322918FC5700397035 /* Public.storyboard */; };
+		3708B0352918FC6B00397035 /* PublicPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B0342918FC6B00397035 /* PublicPickerViewController.swift */; };
+		3708B0382919021B00397035 /* HotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B0372919021B00397035 /* HotCell.swift */; };
+		3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B03929192C4E00397035 /* HotPickersCell.swift */; };
 		3711415029169CFB00C567EF /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711414F29169CFB00C567EF /* Group.swift */; };
 		371C17582916572E00B3B115 /* FriendSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C17572916572E00B3B115 /* FriendSelectCell.swift */; };
 		372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FA29126055007D677B /* TitleInputCell.swift */; };
@@ -49,6 +53,10 @@
 
 /* Begin PBXFileReference section */
 		3708B0302918157C00397035 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3708B0322918FC5700397035 /* Public.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Public.storyboard; sourceTree = "<group>"; };
+		3708B0342918FC6B00397035 /* PublicPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPickerViewController.swift; sourceTree = "<group>"; };
+		3708B0372919021B00397035 /* HotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotCell.swift; sourceTree = "<group>"; };
+		3708B03929192C4E00397035 /* HotPickersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPickersCell.swift; sourceTree = "<group>"; };
 		3711414F29169CFB00C567EF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		371C17572916572E00B3B115 /* FriendSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSelectCell.swift; sourceTree = "<group>"; };
 		372AE2FA29126055007D677B /* TitleInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleInputCell.swift; sourceTree = "<group>"; };
@@ -105,6 +113,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3708B036291901E700397035 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				3708B0372919021B00397035 /* HotCell.swift */,
+				3708B03929192C4E00397035 /* HotPickersCell.swift */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
 		37B5D8982911FD2F00A7BC98 /* PickEditorView */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,7 +136,6 @@
 		37D575822913AFD700DC344D /* PickSelection */ = {
 			isa = PBXGroup;
 			children = (
-				37D575802913A1C600DC344D /* PickerSelection.storyboard */,
 				37D575832913AFEA00DC344D /* PickSelectionCell.swift */,
 				37D575892914C25300DC344D /* PickResultCell.swift */,
 				37D5758D2914EA8200DC344D /* PickCommentsCell.swift */,
@@ -174,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AA7290C15C900F737A7 /* ViewController.swift */,
+				3708B0342918FC6B00397035 /* PublicPickerViewController.swift */,
 				37D5758B2914DFF800DC344D /* PickResultViewController.swift */,
 				3708B0302918157C00397035 /* LoginViewController.swift */,
 				37D575852913B02900DC344D /* PickerSelectionViewController.swift */,
@@ -189,14 +206,17 @@
 		37DE8ADB290EA55800F737A7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3708B036291901E700397035 /* Public */,
 				37D57599291656CB00DC344D /* FriendSelectView */,
 				37D575822913AFD700DC344D /* PickSelection */,
 				37B5D8982911FD2F00A7BC98 /* PickEditorView */,
 				37DE8AEA290FCC3000F737A7 /* PickView */,
 				37DE8AA9290C15C900F737A7 /* Main.storyboard */,
+				37D575802913A1C600DC344D /* PickerSelection.storyboard */,
 				37DE8AE0290EBC0F00F737A7 /* Interaction.storyboard */,
 				37D575872914B51F00DC344D /* Relationship.storyboard */,
 				37DE8AAE290C15CA00F737A7 /* LaunchScreen.storyboard */,
+				3708B0322918FC5700397035 /* Public.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -341,6 +361,7 @@
 				37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */,
 				37DE8AAD290C15CA00F737A7 /* Assets.xcassets in Resources */,
 				37DE8AAB290C15C900F737A7 /* Main.storyboard in Resources */,
+				3708B0332918FC5700397035 /* Public.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +423,7 @@
 				37D5759829154B3400DC344D /* User.swift in Sources */,
 				372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */,
 				37D5758A2914C25300DC344D /* PickResultCell.swift in Sources */,
+				3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */,
 				372AE30129127616007D677B /* TargetSettingCell.swift in Sources */,
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
@@ -411,6 +433,8 @@
 				37D5758E2914EA8200DC344D /* PickCommentsCell.swift in Sources */,
 				37D5759629154B1E00DC344D /* Result.swift in Sources */,
 				37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */,
+				3708B0352918FC6B00397035 /* PublicPickerViewController.swift in Sources */,
+				3708B0382919021B00397035 /* HotCell.swift in Sources */,
 				3708B0312918157C00397035 /* LoginViewController.swift in Sources */,
 				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,

@@ -23,9 +23,10 @@ class PickerEditorViewController: UIViewController {
             }
         }
     }
-    
+    // TODO: can be refactor to struct
     private var willBeUploadedImages: [UIImage]? = []
     private var willBeUploadedStrings: [String]? = []
+    
     private var inputTitle: String?
     private var inputDp: String?
     private var urlStrings: [String]? = []
@@ -146,6 +147,7 @@ extension PickerEditorViewController: UITableViewDataSource {
         } else if row == 1 {
             switch mode {
             case .textType:
+                self.willBeUploadedImages = []
                 guard let cell = tableView.dequeueReusableCell(withIdentifier:
                                                                 "\(TextOptionsCell.self)", for: indexPath) as? TextOptionsCell else {
                     fatalError("ERROR: TextOptionsCell broke")
@@ -159,6 +161,7 @@ extension PickerEditorViewController: UITableViewDataSource {
                 }
                 return cell
             case .imageType:
+                self.willBeUploadedStrings = []
                 guard let cell = tableView.dequeueReusableCell(withIdentifier:
                                                                 "\(ImageOptionsCell.self)", for: indexPath) as? ImageOptionsCell else {
                     fatalError("ERROR: ImageOptionsCell broke")
@@ -171,7 +174,7 @@ extension PickerEditorViewController: UITableViewDataSource {
             }
             
         } else {
-            //TODO: chose group or friends
+            //TODO: choose group or friends
             guard let cell = tableView.dequeueReusableCell(withIdentifier:
                                                             "\(TargetSettingCell.self)", for: indexPath) as? TargetSettingCell else {
                 fatalError("ERROR: TargetSettingCell broke")

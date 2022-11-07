@@ -46,24 +46,32 @@ class ChooseCell: UITableViewCell {
         stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10).isActive = true
     }
     
+    // TODO: layout a button on imageview to detect selection
     func layoutWithImageType(optionsURLString: [String]) {
         let stackView = UIStackView()
         self.contentView.addSubview(stackView)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
         for unit in 0..<optionsURLString.count {
             let imageView = UIImageView()
+            let button = UIButton()
             imageView.isUserInteractionEnabled = true
             stackView.addArrangedSubview(imageView)
+            self.contentView.addSubview(button)
             // Attribute
             imageView.contentMode = .scaleAspectFit
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.loadImage(optionsURLString[unit])
-            imageView.addGestureRecognizer(gestureRecognizer)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("", for: .normal)
+            button.addTarget(self, action: #selector(choose), for: .touchUpInside)
             // Constraints
             imageView.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.7).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            button.widthAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
+            button.heightAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
+            button.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+            button.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
         }
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -75,20 +83,6 @@ class ChooseCell: UITableViewCell {
     }
     
     @objc func choose(_ sender: UIButton) {
-        if !isFirstClick {
-            chosenImageView.removeFromSuperview()
-        }
-        self.contentView.addSubview(chosenImageView)
-        chosenImageView.translatesAutoresizingMaskIntoConstraints = false
-        chosenImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        chosenImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        chosenImageView.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-        chosenImageView.centerYAnchor.constraint(equalTo: sender.centerYAnchor).isActive = true
-        isFirstClick = false
-        completion?(sender.tag)
-    }
-    
-    @objc func chooseImage(_ sender: UIImageView) {
         if !isFirstClick {
             chosenImageView.removeFromSuperview()
         }

@@ -18,6 +18,7 @@ class ImageOptionsCell: UITableViewCell {
         for (idx, button) in imagePickButtons.enumerated() {
             button.addTarget(self, action: #selector(pickPic), for: .touchUpInside)
             button.tag = idx
+            imageNameLabels[idx].text = "照片\(idx)"
         }
         superVC.imageUploadCompletely = { filename, index in
             self.imageNameLabels[index].text = filename
