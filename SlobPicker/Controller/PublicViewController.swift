@@ -1,5 +1,5 @@
 //
-//  PublicPickerViewController.swift
+//  PublicViewController.swift
 //  SlobPicker
 //
 //  Created by 孔令傑 on 2022/11/7.
@@ -39,8 +39,8 @@ class PublicViewController: UIViewController {
     }
     
     let group = DispatchGroup()
-    var newest: [PublicPicker] = []
-    var hottest: [PublicPicker] = []
+    var newest: [Picker] = []
+    var hottest: [Picker] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +60,7 @@ extension PublicViewController: UITableViewDataSource {
             cell.newestPickers = newest
             cell.mode = .newest
         }
+        cell.superVC = self
         return cell
     }
     

@@ -17,30 +17,35 @@ enum PublicMode {
     case newest
 }
 
-// TODO: 新增group ID 確認歸屬區
-struct PrivatePicker: Codable {
-    var id: String?
-    var title: String
-    var description: String
-    var type: Int
-    var contents: [String]
-    var createdTime: Int?
-    var authorID: String
-    var authorName: String
-    var group: String
-    var membersIDs: [String]?
-    
-    enum CodingKeys: String, CodingKey {
-        case title, description, type, contents, id
-        case createdTime = "created_time"
-        case authorID = "author_id"
-        case authorName = "author_name"
-        case group
-        case membersIDs = "members_ids"
-    }
+enum PrivacyMode {
+    case forPublic
+    case forPrivate
 }
 
-struct PublicPicker: Codable {
+// TODO: 新增group ID 確認歸屬區
+//struct Picker: Codable {
+//    var id: String?
+//    var title: String
+//    var description: String
+//    var type: Int
+//    var contents: [String]
+//    var createdTime: Int?
+//    var authorID: String
+//    var authorName: String
+//    var group: String
+//    var membersIDs: [String]?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case title, description, type, contents, id
+//        case createdTime = "created_time"
+//        case authorID = "author_id"
+//        case authorName = "author_name"
+//        case group
+//        case membersIDs = "members_ids"
+//    }
+//}
+
+struct Picker: Codable {
     var id: String?
     var title: String
     var description: String
@@ -49,9 +54,14 @@ struct PublicPicker: Codable {
     var createdTime: Int?
     var authorID: String
     var authorName: String
-    var likedCount: Int
-    var likedIDs: [String]
-    var pickedCount: Int
+    // for private
+    var group: String?
+    var membersIDs: [String]?
+    // for public
+    var likedCount: Int?
+    var likedIDs: [String]?
+    var pickedCount: Int?
+    var pickedIDs: [String]?
     
     enum CodingKeys: String, CodingKey {
         case title, description, type, contents, id
@@ -61,6 +71,9 @@ struct PublicPicker: Codable {
         case likedCount = "liked_count"
         case likedIDs = "liked_ids"
         case pickedCount = "picked_count"
+        case group
+        case membersIDs = "members_ids"
+        case pickedIDs = "picked_ids"
     }
 }
 

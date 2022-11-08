@@ -17,7 +17,7 @@ class HotCell: UITableViewCell {
     }
     
     let group = DispatchGroup()
-    var hottestPickers: [PublicPicker] = [] {
+    var hottestPickers: [Picker] = [] {
         didSet {
             let users = hottestPickers.map {
                 $0.authorID
@@ -25,7 +25,8 @@ class HotCell: UITableViewCell {
             fetchUser(userID: users)
         }
     }
-    var newestPickers: [PublicPicker] = [] {
+    
+    var newestPickers: [Picker] = [] {
         didSet {
             let users = newestPickers.map {
                 $0.authorID
@@ -35,6 +36,7 @@ class HotCell: UITableViewCell {
     }
     var mode: PublicMode = .hottest
     var usersInfo: [User] = []
+    var superVC: PublicViewController?
     
     func fetchUser(userID: [String]) {
         userID.forEach {
@@ -61,15 +63,15 @@ extension HotCell: UICollectionViewDataSource {
                 as? HotPickerCell else {
             fatalError("ERROR of instantiating HotPickerCell")
         }
-        var data: PublicPicker?
+        var data: Picker?
         switch mode {
         case .hottest:
             data = hottestPickers[indexPath.row]
         case .newest:
             data = newestPickers[indexPath.row]
         }
-        if let data = data {
-            cell.configure(data: data, imageURL: usersInfo[indexPath.row].profileURL, hasLiked: data.likedIDs.contains(FakeUserInfo.shared.userID))
+        if let data = data, let likedIDs = data.likedIDs, let pickedIDs = data.pickedIDs {
+            cell.configure(data: data, imageURL: usersInfo[indexPath.row].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID))
         }
         return cell
     }
@@ -91,6 +93,15 @@ extension HotCell: UICollectionViewDelegateFlowLayout {
 
 extension HotCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        guard let pickVC = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
+                as? PickViewController else {
+            print("PickViewController rendering error")
+            return
+        }
+        let data = mode == .hottest ? hottestPickers : newestPickers
+        pickVC.pickInfo = data[indexPath.row]
+        pickVC.mode = .forPublic
+        superVC?.show(pickVC, sender: self)
     }
 }

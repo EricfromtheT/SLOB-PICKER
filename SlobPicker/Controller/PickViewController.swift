@@ -16,7 +16,7 @@ class PickViewController: UIViewController {
     }
     
     var pickerID: String?
-    var pickInfo: PrivatePicker? {
+    var pickInfo: Picker? {
         didSet {
             self.type = pickInfo?.type == 0 ? .textType : .imageType
             self.pickerID = pickInfo?.id
@@ -25,6 +25,7 @@ class PickViewController: UIViewController {
     private var type: PickerType?
     private var chosenIndex: Int?
     private var additionalComment: String?
+    var mode: PrivacyMode?
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -39,10 +40,22 @@ class PickViewController: UIViewController {
     // confirm your selecting result
     @objc func donePick() {
         if let chosenIndex = chosenIndex, let pickerID = pickerID {
-            FirebaseManager.shared.updatePrivateResult(index: chosenIndex, pickerID: pickerID)
-            if let comment = additionalComment, !comment.isEmpty {
-                let commentInfo = Comment(userID: FakeUserInfo.shared.userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
-                FirebaseManager.shared.updatePrivateComment(comment: commentInfo, pickerID: pickerID)
+            switch mode {
+            case .forPrivate:
+                FirebaseManager.shared.updatePrivateResult(index: chosenIndex, pickerID: pickerID)
+                if let comment = additionalComment, !comment.isEmpty {
+                    let commentInfo = Comment(userID: FakeUserInfo.shared.userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
+                    FirebaseManager.shared.updatePrivateComment(comment: commentInfo, pickerID: pickerID)
+                }
+            case .forPublic:
+                FirebaseManager.shared.updatePublicResult(index: chosenIndex, pickerID: pickerID)
+                if let comment = additionalComment, !comment.isEmpty {
+                    let commentInfo = Comment(userID: FakeUserInfo.shared.userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
+                    FirebaseManager.shared.updatePublicComment(comment: commentInfo, pickerID: pickerID)
+                }
+                FirebaseManager.shared.pickPicker(pickerID: pickerID)
+            case .none:
+                print("something wrong with pick result uploading")
             }
         } else {
             let alert = UIAlertController(title: "vote", message: "you haven't vote", preferredStyle: .alert)

@@ -99,7 +99,7 @@ class PickerEditorViewController: UIViewController {
             print(groupInfos[index].groupID) // 確定有東西
             // fetch group's member list
             // 1
-            var privatePicker = PrivatePicker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, group: groupInfos[index].groupID)
+            var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, group: groupInfos[index].groupID)
             FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID, completion: {
                 result in
                 print("==========")
@@ -117,7 +117,7 @@ class PickerEditorViewController: UIViewController {
         }
     }
     
-    func publish(picker: inout PrivatePicker) {
+    func publish(picker: inout Picker) {
         FirebaseManager.shared.publishPrivatePicker(pick: &picker) { result in
             switch result {
             case .success(let success):

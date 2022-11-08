@@ -16,14 +16,15 @@ class HotPickerCell: UICollectionViewCell {
     @IBOutlet weak var pickCountLabel: UILabel!
     @IBOutlet weak var pickImageView: UIImageView!
     
-    func configure(data: PublicPicker, imageURL: String, hasLiked: Bool) {
+    func configure(data: Picker, imageURL: String, hasLiked: Bool, hasPicked: Bool) {
         profileImageView.loadImage(imageURL)
         userNameLabel.text = data.authorName
         titleLabel.text = data.title
-        let heartName = hasLiked ? "heart" : "empty-heart"
-        heartImageView.image = UIImage(named: heartName)
-        heartCountLabel.text = "\(data.likedCount)"
-        pickCountLabel.text = "\(data.pickedCount)"
-        pickImageView.image = UIImage(named: "picking")
+        let heartImageName = hasLiked ? "heart" : "empty-heart"
+        heartImageView.image = UIImage(named: heartImageName)
+        let pickImageName = hasPicked ? "picking" : "empty-picking"
+        pickImageView.image = UIImage(named: pickImageName)
+        heartCountLabel.text = "\(data.likedCount ?? 0 )"
+        pickCountLabel.text = "\(data.pickedCount ?? 0 )"
     }
 }

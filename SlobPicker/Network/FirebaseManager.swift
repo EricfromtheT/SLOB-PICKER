@@ -21,13 +21,13 @@ class FirebaseManager {
     private let groupRef = Firestore.firestore().collection("groups")
     
     // MARK: Private picker
-    func fetchPrivatePickInfo(pickerID: String, completion: @escaping (Result<PrivatePicker, Error>) -> Void) {
+    func fetchPrivatePickInfo(pickerID: String, completion: @escaping (Result<Picker, Error>) -> Void) {
         privatePickersRef.document(pickerID).getDocument { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 do {
-                    if let pickInfo = try querySnapshot?.data(as: PrivatePicker.self) {
+                    if let pickInfo = try querySnapshot?.data(as: Picker.self) {
                         completion(.success(pickInfo))
                     }
                 } catch {
@@ -37,7 +37,7 @@ class FirebaseManager {
         }
     }
     
-    func fetchAllPrivatePickers(completion: @escaping (Result<[PrivatePicker], Error>) -> Void) {
+    func fetchAllPrivatePickers(completion: @escaping (Result<[Picker], Error>) -> Void) {
         privatePickersRef.whereField("members_ids", arrayContains: FakeUserInfo.shared.userID).order(by: "created_time", descending: true).getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -45,7 +45,7 @@ class FirebaseManager {
                 do {
                     if let documents = querySnapshot?.documents {
                         let pickers = try documents.map { document in
-                            try document.data(as: PrivatePicker.self)
+                            try document.data(as: Picker.self)
                         }
                         completion(.success(pickers))
                     }
@@ -57,11 +57,15 @@ class FirebaseManager {
     }
     
     // publish a new picker
-    func publishPrivatePicker(pick: inout PrivatePicker, completion: @escaping (Result<String, Error>) -> Void) {
+    func publishPrivatePicker(pick: inout Picker, completion: @escaping (Result<String, Error>) -> Void) {
         let document = privatePickersRef.document()
         pick.id = document.documentID
         pick.createdTime = Date().millisecondsSince1970
-        updateGroupPickersID(groupID: pick.group, pickersID: document.documentID)
+        if let groupID = pick.group {
+            updateGroupPickersID(groupID: groupID, pickersID: document.documentID)
+        } else {
+            completion(.success("Failed to update group picker id"))
+        }
         do {
             try document.setData(from: pick)
             completion(.success("Success"))
@@ -281,7 +285,7 @@ class FirebaseManager {
     }
     
     // MARK: Public
-    func publishPublicPicker(pick: inout PublicPicker, completion: @escaping (Result<String, Error>) -> Void) {
+    func publishPublicPicker(pick: inout Picker, completion: @escaping (Result<String, Error>) -> Void) {
         let document = database.collection("publicPickers").document()
         pick.id = document.documentID
         pick.createdTime = Date().millisecondsSince1970
@@ -293,7 +297,7 @@ class FirebaseManager {
         }
     }
     
-    func fetchNewestPublicPicker(completion: @escaping (Result<[PublicPicker], Error>) -> Void) {
+    func fetchNewestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
         // newest picker
         database.collection("publicPickers").order(by: "created_time", descending: true).limit(to: 10)
             .getDocuments{ qrry, error in
@@ -302,7 +306,7 @@ class FirebaseManager {
             } else if let documents = qrry?.documents {
                 do {
                     let pickers = try documents.map {
-                        try $0.data(as: PublicPicker.self)
+                        try $0.data(as: Picker.self)
                     }
                     completion(.success(pickers))
                 } catch {
@@ -312,7 +316,7 @@ class FirebaseManager {
         }
     }
     
-    func fetchHottestPublicPicker(completion: @escaping (Result<[PublicPicker], Error>) -> Void) {
+    func fetchHottestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
         let calendar = Calendar.current
         let date = Date()
         let today = calendar.startOfDay(for: date)
@@ -323,7 +327,7 @@ class FirebaseManager {
             } else if let documents = qrry?.documents {
                 do {
                     let pickers = try documents.map {
-                        try $0.data(as: PublicPicker.self)
+                        try $0.data(as: Picker.self)
                     }
                     completion(.success(pickers))
                 } catch {
@@ -337,7 +341,15 @@ class FirebaseManager {
         let ref = database.collection("publicPickers").document(pickerID)
         ref.updateData([
             "liked_count": FieldValue.increment(Int64(1)),
-            "liked_users": FieldValue.arrayUnion([FakeUserInfo.shared.userID])
+            "liked_ids": FieldValue.arrayUnion([FakeUserInfo.shared.userID])
+        ])
+    }
+    
+    func pickPicker(pickerID: String) {
+        let ref = database.collection("publicPickers").document(pickerID)
+        ref.updateData([
+            "picked_count": FieldValue.increment(Int64(1)),
+            "picked_ids": FieldValue.arrayUnion([FakeUserInfo.shared.userID])
         ])
     }
     
