@@ -33,7 +33,7 @@ class PickerSelectionViewController: UIViewController {
         }
     }
     
-    var pickers: [Picker] = []
+    var pickers: [PrivatePicker] = []
     let dropDown = DropDown()
     let header = MJRefreshNormalHeader()
     
@@ -142,7 +142,7 @@ class PickerSelectionViewController: UIViewController {
             print("PickViewController rendering error")
             return
         }
-        pickVC.pickerID = pickers[sender.tag].id
+        pickVC.pickInfo = pickers[sender.tag]
         show(pickVC, sender: self)
     }
 }

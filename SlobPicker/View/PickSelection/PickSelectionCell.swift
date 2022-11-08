@@ -13,7 +13,7 @@ class PickSelectionCell: UITableViewCell {
     @IBOutlet weak var pickButton: UIButton!
     @IBOutlet weak var resultButton: UIButton!
     
-    func configure(data: Picker, index: Int) {
+    func configure(data: PrivatePicker, index: Int) {
         titleLabel.text = data.title
         authorLabel.text = data.authorName
         pickButton.tag = index

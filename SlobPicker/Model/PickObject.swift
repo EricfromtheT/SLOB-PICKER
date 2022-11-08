@@ -12,8 +12,13 @@ enum PickerType {
     case imageType
 }
 
+enum PublicMode {
+    case hottest
+    case newest
+}
+
 // TODO: 新增group ID 確認歸屬區
-struct Picker: Codable {
+struct PrivatePicker: Codable {
     var id: String?
     var title: String
     var description: String
@@ -22,7 +27,7 @@ struct Picker: Codable {
     var createdTime: Int?
     var authorID: String
     var authorName: String
-    var group: String?
+    var group: String
     var membersIDs: [String]?
     
     enum CodingKeys: String, CodingKey {
@@ -32,6 +37,30 @@ struct Picker: Codable {
         case authorName = "author_name"
         case group
         case membersIDs = "members_ids"
+    }
+}
+
+struct PublicPicker: Codable {
+    var id: String?
+    var title: String
+    var description: String
+    var type: Int
+    var contents: [String]
+    var createdTime: Int?
+    var authorID: String
+    var authorName: String
+    var likedCount: Int
+    var likedIDs: [String]
+    var pickedCount: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case title, description, type, contents, id
+        case createdTime = "created_time"
+        case authorID = "author_id"
+        case authorName = "author_name"
+        case likedCount = "liked_count"
+        case likedIDs = "liked_ids"
+        case pickedCount = "picked_count"
     }
 }
 

@@ -11,7 +11,7 @@ class TitleCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    func configure(data: Picker) {
+    func configure(data: PrivatePicker) {
         titleLabel.text = data.title
         descriptionLabel.text = data.description
     }

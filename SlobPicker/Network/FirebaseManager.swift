@@ -20,14 +20,14 @@ class FirebaseManager {
     private let privatePickersRef = Firestore.firestore().collection("privatePickers")
     private let groupRef = Firestore.firestore().collection("groups")
     
-    // fetch picker info for picking
-    func fetchPrivatePickInfo(pickerID: String, completion: @escaping (Result<Picker, Error>) -> Void) {
+    // MARK: Private picker
+    func fetchPrivatePickInfo(pickerID: String, completion: @escaping (Result<PrivatePicker, Error>) -> Void) {
         privatePickersRef.document(pickerID).getDocument { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 do {
-                    if let pickInfo = try querySnapshot?.data(as: Picker.self) {
+                    if let pickInfo = try querySnapshot?.data(as: PrivatePicker.self) {
                         completion(.success(pickInfo))
                     }
                 } catch {
@@ -37,15 +37,15 @@ class FirebaseManager {
         }
     }
     
-    func fetchAllPrivatePickers(completion: @escaping (Result<[Picker], Error>) -> Void) {
-        privatePickersRef.whereField("members_ids", arrayContains: FakeUserInfo.shared.userID).getDocuments { querySnapshot, error in
+    func fetchAllPrivatePickers(completion: @escaping (Result<[PrivatePicker], Error>) -> Void) {
+        privatePickersRef.whereField("members_ids", arrayContains: FakeUserInfo.shared.userID).order(by: "created_time", descending: true).getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 do {
                     if let documents = querySnapshot?.documents {
                         let pickers = try documents.map { document in
-                            try document.data(as: Picker.self)
+                            try document.data(as: PrivatePicker.self)
                         }
                         completion(.success(pickers))
                     }
@@ -56,12 +56,12 @@ class FirebaseManager {
         }
     }
     
-    
     // publish a new picker
-    func publishPrivatePicker(pick: inout Picker, completion: @escaping (Result<String, Error>) -> Void) {
+    func publishPrivatePicker(pick: inout PrivatePicker, completion: @escaping (Result<String, Error>) -> Void) {
         let document = privatePickersRef.document()
         pick.id = document.documentID
         pick.createdTime = Date().millisecondsSince1970
+        updateGroupPickersID(groupID: pick.group, pickersID: document.documentID)
         do {
             try document.setData(from: pick)
             completion(.success("Success"))
@@ -132,6 +132,17 @@ class FirebaseManager {
         }
     }
     
+    func updateGroupPickersID(groupID: String, pickersID: String) {
+        database.collection("groups").document(groupID).updateData([
+            "pickers_ids": FieldValue.arrayUnion([pickersID])
+        ]) { error in
+            if let error = error {
+                print(error, "error of updating group pickers ID")
+            }
+        }
+    }
+    
+    // MARK: Users
     func searchUserID(userID: String, completion: @escaping (Result<User, Error>) -> Void) {
         database.collection("users").whereField("user_id", isEqualTo: userID).getDocuments { qrry, error in
             if let error = error {
@@ -208,6 +219,8 @@ class FirebaseManager {
         }
     }
     
+    
+    // MARK: Group
     func publishNewGroup(group: inout Group, completion: @escaping (Result<String, Error>) -> Void) {
         let document = groupRef.document()
         let id = document.documentID
@@ -263,6 +276,93 @@ class FirebaseManager {
                 } catch {
                     completion(.failure(error))
                 }
+            }
+        }
+    }
+    
+    // MARK: Public
+    func publishPublicPicker(pick: inout PublicPicker, completion: @escaping (Result<String, Error>) -> Void) {
+        let document = database.collection("publicPickers").document()
+        pick.id = document.documentID
+        pick.createdTime = Date().millisecondsSince1970
+        do {
+            try document.setData(from: pick)
+            completion(.success("Success"))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func fetchNewestPublicPicker(completion: @escaping (Result<[PublicPicker], Error>) -> Void) {
+        // newest picker
+        database.collection("publicPickers").order(by: "created_time", descending: true).limit(to: 10)
+            .getDocuments{ qrry, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documents = qrry?.documents {
+                do {
+                    let pickers = try documents.map {
+                        try $0.data(as: PublicPicker.self)
+                    }
+                    completion(.success(pickers))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func fetchHottestPublicPicker(completion: @escaping (Result<[PublicPicker], Error>) -> Void) {
+        let calendar = Calendar.current
+        let date = Date()
+        let today = calendar.startOfDay(for: date)
+        let mlseconds = today.millisecondsSince1970
+        database.collection("publicPickers").whereField("created_time", isGreaterThan: mlseconds).order(by: "created_time", descending: true).order(by: "picked_count", descending: true).limit(to: 10).getDocuments { qrry, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documents = qrry?.documents {
+                do {
+                    let pickers = try documents.map {
+                        try $0.data(as: PublicPicker.self)
+                    }
+                    completion(.success(pickers))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func likePicker(pickerID: String) {
+        let ref = database.collection("publicPickers").document(pickerID)
+        ref.updateData([
+            "liked_count": FieldValue.increment(Int64(1)),
+            "liked_users": FieldValue.arrayUnion([FakeUserInfo.shared.userID])
+        ])
+    }
+    
+    func updatePublicComment(comment: Comment, pickerID: String) {
+        database.collection("publicPickers").document(pickerID).collection("all_comment").document(FakeUserInfo.shared.userID).setData([
+            "comment": comment.comment,
+            "created_time": Date().millisecondsSince1970,
+            "type": comment.type,
+            "user_id": FakeUserInfo.shared.userID
+        ]) { error in
+            if let error = error {
+                print(error, "ERROR: updatePublicComment method")
+            }
+        }
+    }
+    
+    func updatePublicResult(index: Int, pickerID: String) {
+        database.collection("publicPickers").document(pickerID).collection("results").document(FakeUserInfo.shared.userID).setData([
+            "choice": index,
+            "created_time": Date().millisecondsSince1970,
+            // change to new user
+            "user_id": FakeUserInfo.shared.userID
+        ]) { error in
+            if let error = error {
+                print(error, "ERROR: updataPublicResult method")
             }
         }
     }

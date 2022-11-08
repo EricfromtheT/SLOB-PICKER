@@ -15,22 +15,13 @@ class PickViewController: UIViewController {
         }
     }
     
-    var pickerID: String? {
+    var pickerID: String?
+    var pickInfo: PrivatePicker? {
         didSet {
-            guard let pickerID = pickerID else { fatalError("pickerID was wrong") }
-            FirebaseManager.shared.fetchPrivatePickInfo(pickerID: pickerID) { [weak self] result in
-                switch result {
-                case .success(let pickInfo):
-                    self?.pickInfo = pickInfo
-                    self?.type = pickInfo.type == 0 ? .textType : .imageType
-                    self?.pickTableView.reloadData()
-                case .failure(let error):
-                    print("fetchData.failure: \(error)")
-                }
-            }
+            self.type = pickInfo?.type == 0 ? .textType : .imageType
+            self.pickerID = pickInfo?.id
         }
     }
-    private var pickInfo: Picker?
     private var type: PickerType?
     private var chosenIndex: Int?
     private var additionalComment: String?

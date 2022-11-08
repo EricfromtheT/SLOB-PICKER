@@ -8,7 +8,7 @@
 import UIKit
 
 class PickResultCell: UITableViewCell {
-    func configure(results: [VoteResult], data: Picker) {
+    func configure(results: [VoteResult], data: PrivatePicker) {
         let ordered = results.sorted { first, second in
             first.votes > second.votes
         }

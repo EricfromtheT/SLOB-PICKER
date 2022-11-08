@@ -17,7 +17,7 @@ class PickResultViewController: UIViewController {
     var pickerComments: [Comment] = []
     var voteResults: [VoteResult] = []
     var group = DispatchGroup()
-    var pickInfo: Picker? {
+    var pickInfo: PrivatePicker? {
         didSet {
             if let pickInfo = pickInfo, let pickID = pickInfo.id {
                 group.enter()
