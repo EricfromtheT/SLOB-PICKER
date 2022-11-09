@@ -17,9 +17,9 @@ enum PublicMode {
     case newest
 }
 
-enum PrivacyMode {
-    case forPublic
-    case forPrivate
+enum PrivacyMode: String {
+    case forPublic = "publicPickers"
+    case forPrivate = "privatePickers"
 }
 
 // TODO: 新增group ID 確認歸屬區

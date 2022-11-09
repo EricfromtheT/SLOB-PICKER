@@ -101,8 +101,8 @@ class FirebaseManager {
         }
     }
     
-    func fetchPickerResults(pickerID: String, completion: @escaping (Result<[PickResult], Error>) -> Void) {
-        privatePickersRef.document(pickerID).collection("results").getDocuments { querySnapshot, error in
+    func fetchResults(collection: String, pickerID: String, completion: @escaping (Result<[PickResult], Error>) -> Void) {
+        database.collection(collection).document(pickerID).collection("results").getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = querySnapshot?.documents {
@@ -118,8 +118,8 @@ class FirebaseManager {
         }
     }
     
-    func fetchPickerComments(pickerID: String, completion: @escaping (Result<[Comment], Error>) -> Void) {
-        privatePickersRef.document(pickerID).collection("all_comment").getDocuments { querySnapshot, error in
+    func fetchComments(collection: String, pickerID: String, completion: @escaping (Result<[Comment], Error>) -> Void) {
+        database.collection(collection).document(pickerID).collection("all_comment").getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = querySnapshot?.documents {
@@ -342,6 +342,14 @@ class FirebaseManager {
         ref.updateData([
             "liked_count": FieldValue.increment(Int64(1)),
             "liked_ids": FieldValue.arrayUnion([FakeUserInfo.shared.userID])
+        ])
+    }
+    
+    func dislikePicker(pickerID: String) {
+        let ref = database.collection("publicPickers").document(pickerID)
+        ref.updateData([
+            "liked_count": FieldValue.increment(Int64(-1)),
+            "liked_ids": FieldValue.arrayRemove([FakeUserInfo.shared.userID])
         ])
     }
     

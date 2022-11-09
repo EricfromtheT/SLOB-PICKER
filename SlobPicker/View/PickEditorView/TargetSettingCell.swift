@@ -9,22 +9,44 @@ import UIKit
 import DropDown
 
 class TargetSettingCell: UITableViewCell {
+    @IBOutlet weak var groupButton: UIButton!
     @IBOutlet weak var targetButton: UIButton!
-    let dropDown = DropDown()
-    var completion: ((Int) -> Void)?
+    let groupDropDown = DropDown()
+    let targetDropDown = DropDown()
+    var groupCompletion: ((Int) -> Void)?
+    var targetCompletion: ((Int) -> Void)?
     
-    func setUp(groups: [String]) {
-        targetButton.addTarget(self, action: #selector(click), for: .touchUpInside)
-        dropDown.anchorView = targetButton
-        dropDown.width = 300
-        dropDown.dataSource = groups
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            targetButton.setTitle(item, for: .normal)
-            completion?(index)
+    func setUpGroup(groups: [String]) {
+        groupButton.isHidden = true
+        groupButton.addTarget(self, action: #selector(groupClick), for: .touchUpInside)
+        groupDropDown.anchorView = groupButton
+        groupDropDown.width = 200
+        groupDropDown.bottomOffset = CGPoint(x: 0, y: 40)
+        groupDropDown.dataSource = groups
+        groupDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            groupButton.setTitle(item, for: .normal)
+            groupCompletion?(index)
         }
     }
     
-    @objc func click() {
-        dropDown.show()
+    func setUpTarget() {
+        targetButton.addTarget(self, action: #selector(targetClick), for: .touchUpInside)
+        targetDropDown.anchorView = targetButton
+        targetDropDown.width = 150
+        targetDropDown.bottomOffset = CGPoint(x: 0, y: 40)
+        targetDropDown.dataSource = ["公開", "群組"]
+        targetDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            targetButton.setTitle(item, for: .normal)
+            targetCompletion?(index)
+        }
     }
+    
+    @objc func groupClick() {
+        groupDropDown.show()
+    }
+    
+    @objc func targetClick() {
+        targetDropDown.show()
+    }
+    
 }

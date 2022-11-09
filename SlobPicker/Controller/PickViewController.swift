@@ -26,6 +26,7 @@ class PickViewController: UIViewController {
     private var chosenIndex: Int?
     private var additionalComment: String?
     var mode: PrivacyMode?
+    var publicCompletion: (() -> Void)?
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -48,6 +49,7 @@ class PickViewController: UIViewController {
                     FirebaseManager.shared.updatePrivateComment(comment: commentInfo, pickerID: pickerID)
                 }
             case .forPublic:
+                publicCompletion?()
                 FirebaseManager.shared.updatePublicResult(index: chosenIndex, pickerID: pickerID)
                 if let comment = additionalComment, !comment.isEmpty {
                     let commentInfo = Comment(userID: FakeUserInfo.shared.userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)

@@ -26,12 +26,6 @@ class PickerSelectionViewController: UIViewController {
             }
         }
     }
-    @IBOutlet weak var composeImageView: UIImageView! {
-        didSet {
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(compose))
-            composeImageView.addGestureRecognizer(gesture)
-        }
-    }
     
     var pickers: [Picker] = []
     let dropDown = DropDown()
@@ -83,7 +77,9 @@ class PickerSelectionViewController: UIViewController {
     
     func setUpNavigation() {
         navigationItem.title = "Pickers"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
+        let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
+        let compose = UIBarButtonItem(image: UIImage(named: "edit"), style: .plain, target: self, action: #selector(compose))
+        navigationItem.rightBarButtonItems = [compose, relationship]
         dropDown.anchorView = navigationItem.rightBarButtonItem
         dropDown.width = 200
         dropDown.dataSource = ["創建群組", "添加好友"]

@@ -6,32 +6,14 @@
 //
 
 import UIKit
+import MJRefresh
 
 class PublicViewController: UIViewController {
     @IBOutlet weak var hotTableView: UITableView! {
         didSet {
             hotTableView.dataSource = self
             hotTableView.delegate = self
-            group.enter()
-            FirebaseManager.shared.fetchNewestPublicPicker(completion: { result in
-                switch result {
-                case .success(let newest):
-                    self.newest = newest
-                case .failure(let error):
-                    print(error, "error of getting newest public picker")
-                }
-                self.group.leave()
-            })
-            group.enter()
-            FirebaseManager.shared.fetchHottestPublicPicker(completion: { result in
-                switch result {
-                case .success(let hottest):
-                    self.hottest = hottest
-                case .failure(let error):
-                    print(error, "error of getting hottest public picker")
-                }
-                self.group.leave()
-            })
+            fetchPublicData()
             group.notify(queue: DispatchQueue.main) {
                 self.hotTableView.reloadData()
             }
@@ -39,11 +21,46 @@ class PublicViewController: UIViewController {
     }
     
     let group = DispatchGroup()
+    let header = MJRefreshNormalHeader()
     var newest: [Picker] = []
     var hottest: [Picker] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hotTableView.mj_header = header
+        header.setRefreshingTarget(self, refreshingAction: #selector(headerRefresh))
+        navigationItem.title = "塗鴉牆"
+    }
+    
+    @objc func headerRefresh() {
+        fetchPublicData()
+        group.notify(queue: DispatchQueue.main) {
+            self.hotTableView.reloadData()
+            self.hotTableView.mj_header?.endRefreshing()
+        }
+    }
+    
+    func fetchPublicData() {
+        group.enter()
+        FirebaseManager.shared.fetchNewestPublicPicker(completion: { result in
+            switch result {
+            case .success(let newest):
+                self.newest = newest
+            case .failure(let error):
+                print(error, "error of getting newest public picker")
+            }
+            self.group.leave()
+        })
+        group.enter()
+        FirebaseManager.shared.fetchHottestPublicPicker(completion: { result in
+            switch result {
+            case .success(let hottest):
+                self.hottest = hottest
+            case .failure(let error):
+                print(error, "error of getting hottest public picker")
+            }
+            self.group.leave()
+        })
     }
 }
 

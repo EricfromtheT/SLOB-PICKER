@@ -12,7 +12,6 @@ class PickResultCell: UITableViewCell {
         let ordered = results.sorted { first, second in
             first.votes > second.votes
         }
-        print(ordered, "ordered data")
         let leftStack = UIStackView()
         let rightStack = UIStackView()
         leftStack.axis = .vertical

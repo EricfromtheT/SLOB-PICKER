@@ -17,6 +17,7 @@ class HotCell: UITableViewCell {
     }
     
     let group = DispatchGroup()
+    let semaphore = DispatchSemaphore(value: 1)
     var hottestPickers: [Picker] = [] {
         didSet {
             let users = hottestPickers.map {
@@ -39,7 +40,8 @@ class HotCell: UITableViewCell {
     var superVC: PublicViewController?
     
     func fetchUser(userID: [String]) {
-        userID.forEach {
+        let userIDs = Set(userID)
+        userIDs.forEach {
             group.enter()
             FirebaseManager.shared.searchUserID(userID: $0, completion: { result in
                 switch result {
@@ -54,6 +56,23 @@ class HotCell: UITableViewCell {
         group.notify(queue: DispatchQueue.main) {
             self.hotPickerCollectionView.reloadData()
         }
+    }
+    
+    func showPickPage(indexPath: IndexPath, cell: HotPickerCell) {
+        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        guard let pickVC = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
+                as? PickViewController else {
+            print("PickViewController rendering error")
+            return
+        }
+        let data = mode == .hottest ? hottestPickers : newestPickers
+        pickVC.publicCompletion = {
+            cell.picked()
+            cell.pickImageView.isUserInteractionEnabled = false
+        }
+        pickVC.pickInfo = data[indexPath.row]
+        pickVC.mode = .forPublic
+        superVC?.show(pickVC, sender: self)
     }
 }
 
@@ -71,7 +90,13 @@ extension HotCell: UICollectionViewDataSource {
             data = newestPickers[indexPath.row]
         }
         if let data = data, let likedIDs = data.likedIDs, let pickedIDs = data.pickedIDs {
-            cell.configure(data: data, imageURL: usersInfo[indexPath.row].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID))
+            let user = usersInfo.filter { user in
+                user.userID == data.authorID
+            }
+            cell.configure(data: data, imageURL: user[0].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID))
+        }
+        cell.clickCompletion = {
+            self.showPickPage(indexPath: indexPath, cell: cell)
         }
         return cell
     }
@@ -93,15 +118,16 @@ extension HotCell: UICollectionViewDelegateFlowLayout {
 
 extension HotCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-        guard let pickVC = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
-                as? PickViewController else {
-            print("PickViewController rendering error")
+        // show result page
+        let storyboard = UIStoryboard(name: "PickerSelection", bundle: nil)
+        guard let resultVC = storyboard.instantiateViewController(withIdentifier: "\(PickResultViewController.self)")
+                as? PickResultViewController else {
+            print("PickResultViewController rendering error")
             return
         }
         let data = mode == .hottest ? hottestPickers : newestPickers
-        pickVC.pickInfo = data[indexPath.row]
-        pickVC.mode = .forPublic
-        superVC?.show(pickVC, sender: self)
+        resultVC.mode = .forPublic
+        resultVC.pickInfo = data[indexPath.row]
+        superVC?.show(resultVC, sender: self)
     }
 }

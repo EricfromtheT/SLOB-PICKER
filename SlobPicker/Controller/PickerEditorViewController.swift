@@ -31,6 +31,7 @@ class PickerEditorViewController: UIViewController {
     private var inputDp: String?
     private var urlStrings: [String]? = []
     private var mode: PickerType = .textType
+    private var target: PrivacyMode = .forPublic
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 0)
     
@@ -84,7 +85,7 @@ class PickerEditorViewController: UIViewController {
     }
     
     func publishPicker() {
-        if let title = inputTitle, let urls = urlStrings, let strings = willBeUploadedStrings, let index = selectedGroupIndex {
+        if let title = inputTitle, let urls = urlStrings, let strings = willBeUploadedStrings {
             var contents: [String] = []
             var type = 0
             var membersID: [String] = []
@@ -96,37 +97,57 @@ class PickerEditorViewController: UIViewController {
                 type = 1
                 contents = urls
             }
-            print(groupInfos[index].groupID) // 確定有東西
-            // fetch group's member list
-            // 1
-            var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, group: groupInfos[index].groupID)
-            FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID, completion: {
-                result in
-                print("==========")
-                switch result {
-                case .success(let groupInfo):
-                    membersID = groupInfo.members
-                    privatePicker.membersIDs = membersID
-                    self.publish(picker: &privatePicker)
-                case .failure(let error):
-                    print(error, "拿單一群組資料有問題")
-                }
-            })
+            switch target {
+            case .forPrivate:
+                guard let index = selectedGroupIndex else {
+                    print("groupindex is nil")
+                    return }
+                var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, group: groupInfos[index].groupID)
+                FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID, completion: {
+                    result in
+                    print("==========")
+                    switch result {
+                    case .success(let groupInfo):
+                        membersID = groupInfo.members
+                        privatePicker.membersIDs = membersID
+                        self.publish(picker: &privatePicker)
+                    case .failure(let error):
+                        print(error, "拿單一群組資料有問題")
+                    }
+                })
+            case .forPublic:
+                var publicPicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, likedCount: 0, likedIDs: [], pickedCount: 0, pickedIDs: [])
+                self.publish(picker: &publicPicker)
+            }
             
-
         }
     }
     
     func publish(picker: inout Picker) {
-        FirebaseManager.shared.publishPrivatePicker(pick: &picker) { result in
-            switch result {
-            case .success(let success):
-                print(success)
-            case .failure(let error):
-                print(error, "ERROR")
+        switch target {
+        case .forPublic:
+            FirebaseManager.shared.publishPublicPicker(pick: &picker) { result in
+                switch result {
+                case .success(let success):
+                    print(success)
+                case .failure(let error):
+                    print(error, "error of publishing public picker")
+                }
+                DispatchQueue.main.async {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
-            DispatchQueue.main.async {
-                self.navigationController?.popToRootViewController(animated: true)
+        case .forPrivate:
+            FirebaseManager.shared.publishPrivatePicker(pick: &picker) { result in
+                switch result {
+                case .success(let success):
+                    print(success)
+                case .failure(let error):
+                    print(error, "error of publishing private picker")
+                }
+                DispatchQueue.main.async {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
         }
     }
@@ -166,9 +187,9 @@ extension PickerEditorViewController: UITableViewDataSource {
                                                                 "\(ImageOptionsCell.self)", for: indexPath) as? ImageOptionsCell else {
                     fatalError("ERROR: ImageOptionsCell broke")
                 }
-//                let names = groupInfos.map {
-//                    $0.name
-//                }
+                //                let names = groupInfos.map {
+                //                    $0.name
+                //                }
                 cell.configure(superVC: self)
                 return cell
             }
@@ -182,8 +203,18 @@ extension PickerEditorViewController: UITableViewDataSource {
             let names = groupInfos.map {
                 $0.groupName
             }
-            cell.setUp(groups: names)
-            cell.completion = { index in
+            cell.setUpGroup(groups: names)
+            cell.setUpTarget()
+            cell.targetCompletion = { index in
+                if index == 1 {
+                    cell.groupButton.isHidden = false
+                    self.target = .forPrivate
+                } else {
+                    cell.groupButton.isHidden = true
+                    self.target = .forPublic
+                }
+            }
+            cell.groupCompletion = { index in
                 self.selectedGroupIndex = index
             }
             return cell

@@ -84,14 +84,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="edit" translatesAutoresizingMaskIntoConstraints="NO" id="QNa-Y1-jNQ">
-                                <rect key="frame" x="330" y="671" width="40" height="40"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="QNa-Y1-jNQ" secondAttribute="height" multiplier="1:1" id="m0B-uB-2Id"/>
-                                    <constraint firstAttribute="width" constant="40" id="zUK-Fs-Zel"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -99,14 +91,11 @@
                             <constraint firstItem="Vyi-kg-gF7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="0YP-fF-s8J"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Vyi-kg-gF7" secondAttribute="trailing" id="MJo-cW-8zO"/>
                             <constraint firstItem="Vyi-kg-gF7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Ms4-Ky-70y"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="QNa-Y1-jNQ" secondAttribute="bottom" constant="50" id="Pqa-Ce-bSP"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="QNa-Y1-jNQ" secondAttribute="trailing" constant="20" id="SsF-CS-uaT"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Vyi-kg-gF7" secondAttribute="bottom" id="ucV-31-EQb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bzI-zd-8P5"/>
                     <connections>
-                        <outlet property="composeImageView" destination="QNa-Y1-jNQ" id="F8d-5F-Qap"/>
                         <outlet property="pickersTableView" destination="Vyi-kg-gF7" id="krd-y3-Yog"/>
                     </connections>
                 </viewController>
@@ -154,14 +143,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickCommentsCell" id="tJo-2J-FEj" customClass="PickCommentsCell" customModule="SlobPicker" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="93.666667938232422" width="390" height="43.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="93.666667938232422" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tJo-2J-FEj" id="f49-uy-alw">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="upC-Wa-HDf">
-                                                    <rect key="frame" x="20" y="11.000000000000002" width="35" height="20.666666666666671"/>
+                                                    <rect key="frame" x="20" y="11" width="35" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -204,11 +193,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lgF-L2-v7c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="807.69230769230762" y="-31.279620853080566"/>
+            <point key="canvasLocation" x="805" y="-31"/>
         </scene>
     </scenes>
     <resources>
-        <image name="edit" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -17,11 +17,12 @@ class PickResultViewController: UIViewController {
     var pickerComments: [Comment] = []
     var voteResults: [VoteResult] = []
     var group = DispatchGroup()
+    var mode: PrivacyMode = .forPrivate
     var pickInfo: Picker? {
         didSet {
             if let pickInfo = pickInfo, let pickID = pickInfo.id {
                 group.enter()
-                FirebaseManager.shared.fetchPickerResults(pickerID: pickID) { result in
+                FirebaseManager.shared.fetchResults(collection: mode.rawValue, pickerID: pickID) { result in
                     switch result {
                     case .success(let results):
                         self.pickerResults = results
@@ -32,7 +33,7 @@ class PickResultViewController: UIViewController {
                     self.group.leave()
                 }
                 group.enter()
-                FirebaseManager.shared.fetchPickerComments(pickerID: pickID) { result in
+                FirebaseManager.shared.fetchComments(collection: mode.rawValue, pickerID: pickID) { result in
                     switch result {
                     case .success(let comments):
                         self.pickerComments = comments
