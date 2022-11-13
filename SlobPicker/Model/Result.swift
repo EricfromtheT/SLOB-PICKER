@@ -9,7 +9,7 @@ import Foundation
 
 struct PickResult: Codable {
     let choice: Int
-    let createdTime: Int
+    let createdTime: Int?
     let userID: String
     enum CodingKeys: String, CodingKey {
         case choice, createdTime = "created_time", userID = "user_id"

@@ -17,37 +17,24 @@ class PickResultViewController: UIViewController {
     var pickerComments: [Comment] = []
     var voteResults: [VoteResult] = []
     var group = DispatchGroup()
-    var mode: PrivacyMode = .forPrivate
     // data should be pre supplied
+    var mode: PrivacyMode = .forPrivate
     var pickInfo: Picker? {
         didSet {
             if let pickInfo = pickInfo, let pickID = pickInfo.id {
-                group.enter()
-                FirebaseManager.shared.fetchResults(collection: mode.rawValue, pickerID: pickID) { result in
-                    switch result {
-                    case .success(let results):
-                        self.pickerResults = results
-                        self.organizeResult(data: self.pickerResults)
-                    case .failure(let error):
-                        print(error, "ERROR of getting picker results")
-                    }
-                    self.group.leave()
-                }
-                group.enter()
-                FirebaseManager.shared.fetchComments(collection: mode.rawValue, pickerID: pickID) { result in
-                    switch result {
-                    case .success(let comments):
-                        self.pickerComments = comments
-                    case .failure(let error):
-                        print(error, "ERROR of getting picker comments")
-                    }
-                    self.group.leave()
-                }
-                group.notify(queue: DispatchQueue.main) {
-                    self.resultTableView.reloadData()
-                }
+                fetchResult(pickID: pickID)
             } else {
                 print("ERROR: pickInfo or pickID is nil")
+            }
+        }
+    }
+    
+    var livePickInfo: LivePicker? {
+        didSet {
+            if let livePickInfo = livePickInfo, let pickID = livePickInfo.pickerID {
+                fetchResult(pickID: pickID)
+            } else {
+                print("ERROR: wrong with livePick pickID")
             }
         }
     }
@@ -56,17 +43,59 @@ class PickResultViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    func organizeResult(data: [PickResult]) {
-        if let pickInfo = pickInfo {
-            for index in 0..<pickInfo.contents.count {
-                let result = data.filter { datum in
-                    datum.choice == index
-                }
-                let vote = VoteResult(choice: index, votes: result.count)
-                voteResults.append(vote)
+    func fetchResult(pickID: String) {
+        group.enter()
+        FirebaseManager.shared.fetchResults(collection: mode.rawValue, pickerID: pickID) { result in
+            switch result {
+            case .success(let results):
+                self.pickerResults = results
+                self.organizeResult(data: self.pickerResults)
+            case .failure(let error):
+                print(error, "ERROR of getting picker results")
             }
-        } else {
-            print("ERROR: pickinfo is nil")
+            self.group.leave()
+        }
+        group.enter()
+        FirebaseManager.shared.fetchComments(collection: mode.rawValue, pickerID: pickID) { result in
+            switch result {
+            case .success(let comments):
+                self.pickerComments = comments
+            case .failure(let error):
+                print(error, "ERROR of getting picker comments")
+            }
+            self.group.leave()
+        }
+        group.notify(queue: DispatchQueue.main) {
+            self.resultTableView.reloadData()
+        }
+    }
+    
+    func organizeResult(data: [PickResult]) {
+        switch mode {
+        case .forLive:
+            if let pickInfo = livePickInfo {
+                for index in 0..<pickInfo.contents.count {
+                    let result = data.filter { datum in
+                        datum.choice == index
+                    }
+                    let vote = VoteResult(choice: index, votes: result.count)
+                    voteResults.append(vote)
+                }
+            } else {
+                print("ERROR: pickinfo is nil")
+            }
+        default:
+            if let pickInfo = pickInfo {
+                for index in 0..<pickInfo.contents.count {
+                    let result = data.filter { datum in
+                        datum.choice == index
+                    }
+                    let vote = VoteResult(choice: index, votes: result.count)
+                    voteResults.append(vote)
+                }
+            } else {
+                print("ERROR: pickinfo is nil")
+            }
         }
     }
 }
@@ -78,10 +107,19 @@ extension PickResultViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickResultCell.self)", for: indexPath) as? PickResultCell else {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
-            if let pickInfo = pickInfo {
-                cell.configure(results: voteResults, data: pickInfo)
-            } else {
-                print("ERROR: pickInfo is nil")
+            switch mode {
+            case .forLive:
+                if let pickInfo = livePickInfo {
+                    cell.configureLive(results: voteResults, data: pickInfo)
+                } else {
+                    print("ERROR: pickInfo is nil")
+                }
+            default:
+                if let pickInfo = pickInfo {
+                    cell.configure(results: voteResults, data: pickInfo)
+                } else {
+                    print("ERROR: pickInfo is nil")
+                }
             }
             return cell
         } else {

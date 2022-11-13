@@ -118,6 +118,8 @@ class FirebaseManager {
         }
     }
     
+    
+    
     func fetchComments(collection: String, pickerID: String, completion: @escaping (Result<[Comment], Error>) -> Void) {
         database.collection(collection).document(pickerID).collection("all_comment").getDocuments { querySnapshot, error in
             if let error = error {

@@ -41,6 +41,7 @@ struct Picker: Codable {
     var pickedCount: Int?
     var pickedIDs: [String]?
     
+    
     enum CodingKeys: String, CodingKey {
         case title, description, type, contents, id
         case createdTime = "created_time"

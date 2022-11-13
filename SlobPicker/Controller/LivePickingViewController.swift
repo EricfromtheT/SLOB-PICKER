@@ -134,7 +134,17 @@ extension LivePickingViewController: MagicTimerViewDelegate {
             // show result controller
             print("Times up")
             timer.stopCounting()
-            
+            timer.isActiveInBackground = false
+            let storyboard = UIStoryboard(name: "PickerSelection", bundle: nil)
+            guard let resultVC = storyboard.instantiateViewController(withIdentifier: "\(PickResultViewController.self)") as? PickResultViewController else {
+                fatalError("errro of instantiating pickresultViewController in live picking")
+            }
+            if let livePicker = livePicker {
+                resultVC.mode = .forLive
+                resultVC.livePickInfo = livePicker
+                resultVC.modalPresentationStyle = .fullScreen
+                present(resultVC, animated: true)
+            }
         }
     }
 }

@@ -696,6 +696,79 @@
             </objects>
             <point key="canvasLocation" x="551" y="161"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="5XT-No-K8V">
+            <objects>
+                <viewController storyboardIdentifier="PickResultViewController" id="Y76-cL-6Ls" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2rP-sF-bZ0">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LXx-pm-meZ">
+                                <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickResultCell" id="pLn-hF-VnH" customClass="PickResultCell" customModule="SlobPicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pLn-hF-VnH" id="HSS-8V-Eoq">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickCommentsCell" id="CH9-xV-6UT" customClass="PickCommentsCell" customModule="SlobPicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="93.666667938232422" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CH9-xV-6UT" id="J6i-Iz-uTY">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOL-vJ-onc">
+                                                    <rect key="frame" x="20" y="11" width="35" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="留言內容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKY-5z-WCp">
+                                                    <rect key="frame" x="75" y="11" width="70" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qOL-vJ-onc" firstAttribute="leading" secondItem="J6i-Iz-uTY" secondAttribute="leading" constant="20" symbolic="YES" id="8Y4-r6-gWQ"/>
+                                                <constraint firstItem="MKY-5z-WCp" firstAttribute="centerY" secondItem="qOL-vJ-onc" secondAttribute="centerY" id="DZ3-Mv-E1O"/>
+                                                <constraint firstAttribute="bottom" secondItem="qOL-vJ-onc" secondAttribute="bottom" constant="11.666667938232422" id="eDd-Ga-TY0"/>
+                                                <constraint firstItem="qOL-vJ-onc" firstAttribute="top" secondItem="J6i-Iz-uTY" secondAttribute="top" constant="11" id="jTT-HW-K6g"/>
+                                                <constraint firstItem="MKY-5z-WCp" firstAttribute="leading" secondItem="qOL-vJ-onc" secondAttribute="trailing" constant="20" id="sY2-YH-uhP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="commentLabel" destination="MKY-5z-WCp" id="MZg-AI-LOv"/>
+                                            <outlet property="nameLabel" destination="qOL-vJ-onc" id="qIK-PX-gqL"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Nkx-oP-hFt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Nkx-oP-hFt" firstAttribute="trailing" secondItem="LXx-pm-meZ" secondAttribute="trailing" id="1kH-9o-qSa"/>
+                            <constraint firstItem="LXx-pm-meZ" firstAttribute="top" secondItem="Nkx-oP-hFt" secondAttribute="top" id="icJ-h1-BFs"/>
+                            <constraint firstItem="Nkx-oP-hFt" firstAttribute="bottom" secondItem="LXx-pm-meZ" secondAttribute="bottom" id="pef-gg-4Lh"/>
+                            <constraint firstItem="LXx-pm-meZ" firstAttribute="leading" secondItem="Nkx-oP-hFt" secondAttribute="leading" id="sKU-FC-G5m"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="resultTableView" destination="LXx-pm-meZ" id="2Rh-zH-aal"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9fO-ks-OsP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1397" y="161"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="labelColor">
