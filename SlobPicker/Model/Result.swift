@@ -16,7 +16,7 @@ struct PickResult: Codable {
     }
 }
 
-struct VoteResult {
+struct VoteResult: Hashable {
     var choice: Int
     var votes: Int
 }

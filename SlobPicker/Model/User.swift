@@ -7,15 +7,18 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, Hashable {
     var userName: String
     var userID: String
     var profileURL: String
+    // for live picker sorting
+    var time: Int?
     
     enum CodingKeys: String, CodingKey {
         case userName = "user_name"
         case userID = "user_id"
         case profileURL = "profile_url"
+        case time
     }
 }
 

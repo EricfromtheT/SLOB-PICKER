@@ -66,7 +66,7 @@ class ChooseCell: UITableViewCell {
             button.setTitle("", for: .normal)
             button.addTarget(self, action: #selector(choose), for: .touchUpInside)
             // Constraints
-            imageView.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.7).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.3).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
             button.widthAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
             button.heightAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true

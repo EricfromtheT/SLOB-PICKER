@@ -22,29 +22,6 @@ enum PrivacyMode: String {
     case forPrivate = "privatePickers"
 }
 
-// TODO: 新增group ID 確認歸屬區
-//struct Picker: Codable {
-//    var id: String?
-//    var title: String
-//    var description: String
-//    var type: Int
-//    var contents: [String]
-//    var createdTime: Int?
-//    var authorID: String
-//    var authorName: String
-//    var group: String
-//    var membersIDs: [String]?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case title, description, type, contents, id
-//        case createdTime = "created_time"
-//        case authorID = "author_id"
-//        case authorName = "author_name"
-//        case group
-//        case membersIDs = "members_ids"
-//    }
-//}
-
 struct Picker: Codable {
     var id: String?
     var title: String
@@ -98,6 +75,28 @@ struct Comment: Codable {
             "created_time": createdTime
         ]
         return dict
+    }
+}
+
+struct LivePicker: Codable {
+    var accessCode: String
+    var authorID: String
+    var status: String
+    var pickerID: String
+    var startTime: Int
+    var contents: [String]
+    var title: String
+    var description: String
+    
+    enum CodingKeys: String, CodingKey {
+        case accessCode = "access_code"
+        case authorID = "author_id"
+        case status
+        case pickerID = "picker_id"
+        case startTime = "start_time"
+        case contents
+        case title
+        case description
     }
 }
 

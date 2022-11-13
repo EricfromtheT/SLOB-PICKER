@@ -187,9 +187,6 @@ extension PickerEditorViewController: UITableViewDataSource {
                                                                 "\(ImageOptionsCell.self)", for: indexPath) as? ImageOptionsCell else {
                     fatalError("ERROR: ImageOptionsCell broke")
                 }
-                //                let names = groupInfos.map {
-                //                    $0.name
-                //                }
                 cell.configure(superVC: self)
                 return cell
             }

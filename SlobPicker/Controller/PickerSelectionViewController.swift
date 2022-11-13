@@ -37,12 +37,6 @@ class PickerSelectionViewController: UIViewController {
         setUpNavigation()
         header.setRefreshingTarget(self, refreshingAction: #selector(self.headerRefresh))
         self.pickersTableView.mj_header = header
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let loginVC = storyboard.instantiateViewController(withIdentifier: "\(LoginViewController.self)") as! LoginViewController
-//        loginVC.superVC = self
-//        loginVC.modalPresentationStyle = .fullScreen
-//        present(loginVC, animated: true)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

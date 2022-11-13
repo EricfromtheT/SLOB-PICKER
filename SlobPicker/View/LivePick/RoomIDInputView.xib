@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RoomIDInputView" customModule="SlobPicker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="402" height="190"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="569-BJ-GXM">
+                    <rect key="frame" x="171.66666666666666" y="125" width="59" height="35"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="確認"/>
+                </button>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入房間ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="23R-gH-FcE">
+                    <rect key="frame" x="52.666666666666657" y="47" width="297" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <constraints>
+                <constraint firstItem="23R-gH-FcE" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.241294" constant="200" id="Hl0-6h-DDK"/>
+                <constraint firstItem="569-BJ-GXM" firstAttribute="top" secondItem="23R-gH-FcE" secondAttribute="bottom" constant="44" id="IGs-ni-O1Z"/>
+                <constraint firstItem="569-BJ-GXM" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Vr0-S5-sPb"/>
+                <constraint firstItem="23R-gH-FcE" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="XJ2-Jl-2Kn"/>
+                <constraint firstItem="23R-gH-FcE" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="dpz-Sz-i5Y"/>
+                <constraint firstItem="569-BJ-GXM" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="4" id="vKz-Fs-fEr"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="confirmButton" destination="569-BJ-GXM" id="BxZ-iR-BNp"/>
+                <outlet property="inputTextField" destination="23R-gH-FcE" id="ZOY-4J-vP4"/>
+            </connections>
+            <point key="canvasLocation" x="-429.23076923076923" y="-122.98578199052132"/>
+        </view>
+    </objects>
+</document>

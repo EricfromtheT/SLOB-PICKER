@@ -18,6 +18,16 @@
 		372AE2FD2912606D007D677B /* TextOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FC2912606D007D677B /* TextOptionsCell.swift */; };
 		372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FE29126088007D677B /* ImageOptionsCell.swift */; };
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
+		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
+		377852EE291D0B6100780E8D /* RoomIDInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377852ED291D0B6100780E8D /* RoomIDInputView.xib */; };
+		377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852EF291D0BEA00780E8D /* RoomIDInputView.swift */; };
+		377852F2291D380A00780E8D /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852F1291D380A00780E8D /* ContainerView.swift */; };
+		377852F4291E29CC00780E8D /* WaitingRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852F3291E29CC00780E8D /* WaitingRoomViewController.swift */; };
+		377852F6291E302600780E8D /* AttendeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852F5291E302600780E8D /* AttendeeCell.swift */; };
+		377852F8291E6A6500780E8D /* LivePick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852F7291E6A6500780E8D /* LivePick.swift */; };
+		377852FC291FCF6300780E8D /* LivePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852FB291FCF6300780E8D /* LivePickingViewController.swift */; };
+		377852FE2920921600780E8D /* LiveOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852FD2920921600780E8D /* LiveOptionsViewController.swift */; };
+		377853002920A41100780E8D /* ChoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852FF2920A41100780E8D /* ChoiceCell.swift */; };
 		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
 		37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575802913A1C600DC344D /* PickerSelection.storyboard */; };
 		37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575832913AFEA00DC344D /* PickSelectionCell.swift */; };
@@ -64,6 +74,16 @@
 		372AE2FE29126088007D677B /* ImageOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOptionsCell.swift; sourceTree = "<group>"; };
 		372AE30029127616007D677B /* TargetSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetSettingCell.swift; sourceTree = "<group>"; };
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
+		377852ED291D0B6100780E8D /* RoomIDInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomIDInputView.xib; sourceTree = "<group>"; };
+		377852EF291D0BEA00780E8D /* RoomIDInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomIDInputView.swift; sourceTree = "<group>"; };
+		377852F1291D380A00780E8D /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
+		377852F3291E29CC00780E8D /* WaitingRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewController.swift; sourceTree = "<group>"; };
+		377852F5291E302600780E8D /* AttendeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeCell.swift; sourceTree = "<group>"; };
+		377852F7291E6A6500780E8D /* LivePick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePick.swift; sourceTree = "<group>"; };
+		377852FB291FCF6300780E8D /* LivePickingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePickingViewController.swift; sourceTree = "<group>"; };
+		377852FD2920921600780E8D /* LiveOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveOptionsViewController.swift; sourceTree = "<group>"; };
+		377852FF2920A41100780E8D /* ChoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCell.swift; sourceTree = "<group>"; };
 		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
 		37D575802913A1C600DC344D /* PickerSelection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickerSelection.storyboard; sourceTree = "<group>"; };
 		37D575832913AFEA00DC344D /* PickSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSelectionCell.swift; sourceTree = "<group>"; };
@@ -120,6 +140,18 @@
 				3708B03929192C4E00397035 /* HotPickersCell.swift */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		377852EC291D0AEB00780E8D /* LivePick */ = {
+			isa = PBXGroup;
+			children = (
+				377852ED291D0B6100780E8D /* RoomIDInputView.xib */,
+				377852EF291D0BEA00780E8D /* RoomIDInputView.swift */,
+				377852F1291D380A00780E8D /* ContainerView.swift */,
+				377852F5291E302600780E8D /* AttendeeCell.swift */,
+				377852FF2920A41100780E8D /* ChoiceCell.swift */,
+			);
+			path = LivePick;
 			sourceTree = "<group>";
 		};
 		37B5D8982911FD2F00A7BC98 /* PickEditorView */ = {
@@ -190,6 +222,9 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AA7290C15C900F737A7 /* ViewController.swift */,
+				377852FB291FCF6300780E8D /* LivePickingViewController.swift */,
+				377852F3291E29CC00780E8D /* WaitingRoomViewController.swift */,
+				377852E8291CE85C00780E8D /* EntranceViewController.swift */,
 				3708B0342918FC6B00397035 /* PublicViewController.swift */,
 				37D5758B2914DFF800DC344D /* PickResultViewController.swift */,
 				3708B0302918157C00397035 /* LoginViewController.swift */,
@@ -199,6 +234,7 @@
 				37D5758F29153AAF00DC344D /* SearchIDViewController.swift */,
 				37D5759129153F0600DC344D /* FriendSelectViewController.swift */,
 				37D5759329153F3F00DC344D /* GroupCreateViewController.swift */,
+				377852FD2920921600780E8D /* LiveOptionsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -206,6 +242,7 @@
 		37DE8ADB290EA55800F737A7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				377852EC291D0AEB00780E8D /* LivePick */,
 				3708B036291901E700397035 /* Public */,
 				37D57599291656CB00DC344D /* FriendSelectView */,
 				37D575822913AFD700DC344D /* PickSelection */,
@@ -228,6 +265,7 @@
 				37D5759529154B1E00DC344D /* Result.swift */,
 				37D5759729154B3400DC344D /* User.swift */,
 				3711414F29169CFB00C567EF /* Group.swift */,
+				377852F7291E6A6500780E8D /* LivePick.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -354,6 +392,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				377852EE291D0B6100780E8D /* RoomIDInputView.xib in Resources */,
 				37DE8AE1290EBC0F00F737A7 /* Interaction.storyboard in Resources */,
 				37DE8AB0290C15CA00F737A7 /* LaunchScreen.storyboard in Resources */,
 				37D575882914B51F00DC344D /* Relationship.storyboard in Resources */,
@@ -415,14 +454,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */,
+				377852F6291E302600780E8D /* AttendeeCell.swift in Sources */,
 				371C17582916572E00B3B115 /* FriendSelectCell.swift in Sources */,
+				377852FE2920921600780E8D /* LiveOptionsViewController.swift in Sources */,
 				37D5759429153F3F00DC344D /* GroupCreateViewController.swift in Sources */,
 				37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */,
 				37DE8AF2290FCCAE00F737A7 /* AdditionCell.swift in Sources */,
 				37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */,
 				37D5759829154B3400DC344D /* User.swift in Sources */,
+				377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */,
 				372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */,
 				37D5758A2914C25300DC344D /* PickResultCell.swift in Sources */,
+				377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */,
 				3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */,
 				372AE30129127616007D677B /* TargetSettingCell.swift in Sources */,
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
@@ -432,8 +475,11 @@
 				37DE8AF6290FF02700F737A7 /* KingFisherWrapper.swift in Sources */,
 				37D5758E2914EA8200DC344D /* PickCommentsCell.swift in Sources */,
 				37D5759629154B1E00DC344D /* Result.swift in Sources */,
+				377852F2291D380A00780E8D /* ContainerView.swift in Sources */,
+				377852FC291FCF6300780E8D /* LivePickingViewController.swift in Sources */,
 				37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */,
 				3708B0352918FC6B00397035 /* PublicViewController.swift in Sources */,
+				377853002920A41100780E8D /* ChoiceCell.swift in Sources */,
 				3708B0382919021B00397035 /* HotCell.swift in Sources */,
 				3708B0312918157C00397035 /* LoginViewController.swift in Sources */,
 				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
@@ -443,7 +489,9 @@
 				3711415029169CFB00C567EF /* Group.swift in Sources */,
 				37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */,
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
+				377852F8291E6A6500780E8D /* LivePick.swift in Sources */,
 				37D5759229153F0600DC344D /* FriendSelectViewController.swift in Sources */,
+				377852F4291E29CC00780E8D /* WaitingRoomViewController.swift in Sources */,
 				37DE8AF4290FD67600F737A7 /* SPConstant.swift in Sources */,
 				37D5759029153AAF00DC344D /* SearchIDViewController.swift in Sources */,
 				372AE2FD2912606D007D677B /* TextOptionsCell.swift in Sources */,

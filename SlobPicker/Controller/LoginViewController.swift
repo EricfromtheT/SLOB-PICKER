@@ -10,7 +10,7 @@ import UIKit
 class LoginViewController: UIViewController {
     @IBOutlet weak var idField: UITextField!
     @IBOutlet weak var nameField: UITextField!
-    var superVC: PickerSelectionViewController!
+    var superVC: PublicViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()

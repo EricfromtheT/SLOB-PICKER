@@ -15,7 +15,7 @@ enum UserError: Error {
 
 class FirebaseManager {
     static let shared = FirebaseManager()
-    private let database = Firestore.firestore()
+    let database = Firestore.firestore()
     let storageRef = Storage.storage().reference().child("imagesForPickers")
     private let privatePickersRef = Firestore.firestore().collection("privatePickers")
     private let groupRef = Firestore.firestore().collection("groups")
@@ -385,5 +385,74 @@ class FirebaseManager {
                 print(error, "ERROR: updataPublicResult method")
             }
         }
+    }
+    
+    // MARK: Live Picker
+    func fetchLivePicker(roomID: String, completion: @escaping (Result<LivePicker, Error>) -> Void) {
+        database.collection("livePickers").whereField("access_code", isEqualTo: roomID).whereField("status", isEqualTo: "waiting").getDocuments { qrry, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documents = qrry?.documents {
+                do {
+                    let livePicker = try documents[0].data(as: LivePicker.self)
+                    completion(.success(livePicker))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.failure(UserError.nodata))
+            }
+        }
+    }
+    
+    func fetchAttendees(documentID: String, completion: @escaping (Result<[Attendee], Error>) -> Void) {
+        database.collection("livePickers").document(documentID).collection("attendees").getDocuments {
+            qrry, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documents = qrry?.documents {
+                do {
+                    let attendees = try documents.map {
+                        try $0.data(as: Attendee.self)
+                    }
+                    completion(.success(attendees))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func attendLivePick(livePickerID: String, completion: @escaping (Result<String, Error>) -> Void) {
+        database.collection("livePickers").document(livePickerID).collection("attendees").document(FakeUserInfo.shared.userID).setData([
+            "attend_time": Date().millisecondsSince1970,
+            "user_id": FakeUserInfo.shared.userID
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
+    func startLivePick(livePickerID: String, status: String , completion: @escaping (Result<String, Error>) -> Void) {
+        database.collection("livePickers").document(livePickerID).updateData([
+            "status": status,
+            "start_time": Date().millisecondsSince1970 + 5000
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
+    func voteForLivePicker(pickerID: String, choice: Int) {
+        database.collection("livePickers").document(pickerID).collection("results").document(FakeUserInfo.shared.userID).setData([
+            "choice": choice,
+            "user_id": FakeUserInfo.shared.userID
+        ])
     }
 }
