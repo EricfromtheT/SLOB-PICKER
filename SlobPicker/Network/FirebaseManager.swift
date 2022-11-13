@@ -388,19 +388,34 @@ class FirebaseManager {
     }
     
     // MARK: Live Picker
+    func publishLivePicker(picker: inout LivePicker, completion: (Result<String, Error>) -> Void) {
+        let document = database.collection("livePickers").document()
+        let pickerID = document.documentID
+        picker.pickerID = pickerID
+        do {
+            try document.setData(from: picker)
+            completion(.success("Success"))
+        } catch {
+            completion(.failure(error))
+        }
+        
+    }
+    
     func fetchLivePicker(roomID: String, completion: @escaping (Result<LivePicker, Error>) -> Void) {
         database.collection("livePickers").whereField("access_code", isEqualTo: roomID).whereField("status", isEqualTo: "waiting").getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {
+                if documents.isEmpty {
+                    completion(.failure(UserError.nodata))
+                    return
+                }
                 do {
                     let livePicker = try documents[0].data(as: LivePicker.self)
                     completion(.success(livePicker))
                 } catch {
                     completion(.failure(error))
                 }
-            } else {
-                completion(.failure(UserError.nodata))
             }
         }
     }
@@ -439,7 +454,7 @@ class FirebaseManager {
     func startLivePick(livePickerID: String, status: String , completion: @escaping (Result<String, Error>) -> Void) {
         database.collection("livePickers").document(livePickerID).updateData([
             "status": status,
-            "start_time": Date().millisecondsSince1970 + 5000
+            "start_time": Date().millisecondsSince1970 + 6000
         ]) { error in
             if let error = error {
                 completion(.failure(error))

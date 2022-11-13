@@ -34,7 +34,7 @@ class TargetSettingCell: UITableViewCell {
         targetDropDown.anchorView = targetButton
         targetDropDown.width = 150
         targetDropDown.bottomOffset = CGPoint(x: 0, y: 40)
-        targetDropDown.dataSource = ["公開", "群組"]
+        targetDropDown.dataSource = ["公開", "群組", "限時picker"]
         targetDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             targetButton.setTitle(item, for: .normal)
             targetCompletion?(index)

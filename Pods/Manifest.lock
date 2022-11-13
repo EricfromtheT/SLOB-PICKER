@@ -745,6 +745,7 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
+  - MagicTimer (1.0.4)
   - MJRefresh (3.7.5)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -765,6 +766,7 @@ DEPENDENCIES:
   - FirebaseStorage
   - IQKeyboardManagerSwift
   - Kingfisher
+  - MagicTimer
   - MJRefresh
   - ProgressHUD
   - SwiftLint
@@ -797,6 +799,7 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - Libuv-gRPC
+    - MagicTimer
     - MJRefresh
     - nanopb
     - ProgressHUD
@@ -830,12 +833,13 @@ SPEC CHECKSUMS:
   Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
+  MagicTimer: e39ab4d63c759eed0cee34f521002f099bdcc472
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   ProgressHUD: 4bdaa0d2ddf676b23324b199f9facffb5c3a1620
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
 
-PODFILE CHECKSUM: e2c900c63492e75ba79851d6ed21c4cc07fdf8a7
+PODFILE CHECKSUM: 4770f80f0d54fc3dbf5b3aa610ce57e82a354aa5
 
 COCOAPODS: 1.11.3

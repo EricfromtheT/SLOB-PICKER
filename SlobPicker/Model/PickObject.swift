@@ -20,6 +20,7 @@ enum PublicMode {
 enum PrivacyMode: String {
     case forPublic = "publicPickers"
     case forPrivate = "privatePickers"
+    case forLive = "livePickers"
 }
 
 struct Picker: Codable {
@@ -82,8 +83,8 @@ struct LivePicker: Codable {
     var accessCode: String
     var authorID: String
     var status: String
-    var pickerID: String
-    var startTime: Int
+    var pickerID: String?
+    var startTime: Int?
     var contents: [String]
     var title: String
     var description: String

@@ -27,11 +27,11 @@ class PublicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let loginVC = storyboard.instantiateViewController(withIdentifier: "\(LoginViewController.self)") as! LoginViewController
-//        loginVC.superVC = self
-//        loginVC.modalPresentationStyle = .fullScreen
-//        present(loginVC, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC = storyboard.instantiateViewController(withIdentifier: "\(LoginViewController.self)") as! LoginViewController
+        loginVC.superVC = self
+        loginVC.modalPresentationStyle = .fullScreen
+        present(loginVC, animated: true)
         hotTableView.mj_header = header
         header.setRefreshingTarget(self, refreshingAction: #selector(headerRefresh))
         navigationItem.title = "塗鴉牆"

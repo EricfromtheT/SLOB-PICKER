@@ -56,7 +56,7 @@ class PickViewController: UIViewController {
                     FirebaseManager.shared.updatePublicComment(comment: commentInfo, pickerID: pickerID)
                 }
                 FirebaseManager.shared.pickPicker(pickerID: pickerID)
-            case .none:
+            default:
                 print("something wrong with pick result uploading")
             }
         } else {

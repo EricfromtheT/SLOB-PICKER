@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import MagicTimer
 
 class LivePickingViewController: UIViewController {
     @IBOutlet weak var bgView: UIView!
@@ -14,6 +15,7 @@ class LivePickingViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var rankTableView: UITableView!
+    @IBOutlet weak var timer: MagicTimerView!
     
     var livePicker: LivePicker?
     var voteResults: [VoteResult] = []
@@ -26,6 +28,19 @@ class LivePickingViewController: UIViewController {
         start()
         updateUI()
         configureDataSource()
+    }
+    
+    func setUpTimer() {
+        var remainTime: Int = 0
+        if let livePicker = livePicker, let startTime = livePicker.startTime {
+            let endTime = startTime + 30000
+            remainTime = endTime - Date().millisecondsSince1970
+        }
+        timer.isActiveInBackground = true
+        timer.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        timer.mode = .countDown(fromSeconds: Double(remainTime / 1000))
+        timer.delegate = self
+        timer.startCounting()
     }
     
     func configureDataSource() {
@@ -52,8 +67,8 @@ class LivePickingViewController: UIViewController {
     }
     
     func addResultListener() {
-        if let livePicker = livePicker {
-            resultListener = FirebaseManager.shared.database.collection("livePickers").document(livePicker.pickerID).collection("results").addSnapshotListener { qrry, error in
+        if let livePicker = livePicker, let pickerID = livePicker.pickerID {
+            resultListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).collection("results").addSnapshotListener { qrry, error in
                 if let error = error {
                     print(error, "error of getting livePickers results")
                 } else {
@@ -97,6 +112,7 @@ class LivePickingViewController: UIViewController {
         } else {
             bgView.isHidden = true
             addResultListener()
+            setUpTimer()
         }
     }
     
@@ -109,5 +125,16 @@ class LivePickingViewController: UIViewController {
             optionsVC.livePicker = livePicker
         }
         present(optionsVC, animated: true)
+    }
+}
+
+extension LivePickingViewController: MagicTimerViewDelegate {
+    func timerElapsedTimeDidChange(timer: MagicTimerView, elapsedTime: TimeInterval) {
+        if elapsedTime == TimeInterval(floatLiteral: 0) {
+            // show result controller
+            print("Times up")
+            timer.stopCounting()
+            
+        }
     }
 }

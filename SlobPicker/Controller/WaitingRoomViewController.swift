@@ -110,8 +110,9 @@ class WaitingRoomViewController: UIViewController {
     
     func addWaitingListener() {
         // TODO: get document ID
-        guard let livePicker = livePicker else { fatalError("error of missing livePicker's ID") }
-        waitingListener = FirebaseManager.shared.database.collection("livePickers").document(livePicker.pickerID).collection("attendees").addSnapshotListener { qrry, error in
+        guard let livePicker = livePicker, let pickerID = livePicker.pickerID
+        else { fatalError("error of missing livePicker's ID") }
+        waitingListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).collection("attendees").addSnapshotListener { qrry, error in
             if let error = error {
                 print(error, "error of getting live picker's attendee data")
             } else if let documents = qrry?.documents {
@@ -128,8 +129,9 @@ class WaitingRoomViewController: UIViewController {
     }
     
     func addVotingListener() {
-        guard let livePicker = livePicker else { fatalError("error of missing livePicker's ID") }
-        votingListener = FirebaseManager.shared.database.collection("livePickers").document(livePicker.pickerID).addSnapshotListener {
+        guard let livePicker = livePicker, let pickerID = livePicker.pickerID
+        else { fatalError("error of missing livePicker's ID") }
+        votingListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).addSnapshotListener {
             qrry, error in
             if let error = error {
                 print(error, "error of getting live Picker's data")
@@ -156,8 +158,8 @@ class WaitingRoomViewController: UIViewController {
     }
     
     @IBAction func startGame() {
-        if let livePicker = livePicker {
-            FirebaseManager.shared.startLivePick(livePickerID: livePicker.pickerID, status: "voting") {
+        if let livePicker = livePicker, let pickerID = livePicker.pickerID {
+            FirebaseManager.shared.startLivePick(livePickerID: pickerID, status: "voting") {
                 result in
                 switch result {
                 case .success(let success):

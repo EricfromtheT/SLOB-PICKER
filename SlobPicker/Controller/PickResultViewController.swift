@@ -18,6 +18,7 @@ class PickResultViewController: UIViewController {
     var voteResults: [VoteResult] = []
     var group = DispatchGroup()
     var mode: PrivacyMode = .forPrivate
+    // data should be pre supplied
     var pickInfo: Picker? {
         didSet {
             if let pickInfo = pickInfo, let pickID = pickInfo.id {

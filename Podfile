@@ -18,5 +18,6 @@ pod 'SwiftLint'
 pod 'ProgressHUD'
 pod 'DropDown'
 pod 'MJRefresh'
+pod 'MagicTimer'
 
 end

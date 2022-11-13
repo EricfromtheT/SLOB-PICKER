@@ -49,8 +49,8 @@ class EntranceViewController: UIViewController {
                         print(error, "error of getting LivePicker")
                     }
                 }
-                if let picker = picker {
-                    FirebaseManager.shared.attendLivePick(livePickerID: picker.pickerID) {
+                if let picker = picker, let pickerID = picker.pickerID {
+                    FirebaseManager.shared.attendLivePick(livePickerID: pickerID) {
                         result in
                         switch result {
                         case .success( _):

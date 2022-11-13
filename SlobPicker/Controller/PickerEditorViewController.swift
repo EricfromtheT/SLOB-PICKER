@@ -118,8 +118,55 @@ class PickerEditorViewController: UIViewController {
             case .forPublic:
                 var publicPicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, likedCount: 0, likedIDs: [], pickedCount: 0, pickedIDs: [])
                 self.publish(picker: &publicPicker)
+            case .forLive:
+                let random = String(Int.random(in: 10000000...99999999))
+                var livePicker = LivePicker(accessCode: random, authorID: FakeUserInfo.shared.userID, status: "waiting", contents: contents, title: title, description: inputDp ?? "")
+                let passPicker = livePicker
+                FirebaseManager.shared.publishLivePicker(picker: &livePicker) { result in
+                    switch result {
+                    case .success(let success):
+                        print(success)
+                        goToLiveWaitingRoom(roomID: random)
+                    case .failure(let error):
+                        print(error, "error of publising LivePicker")
+                    }
+                }
             }
-            
+        }
+    }
+    
+    func goToLiveWaitingRoom(roomID: String) {
+        var picker: LivePicker?
+        FirebaseManager.shared.fetchLivePicker(roomID: roomID) { result in
+            print(result)
+            switch result {
+            case .success(let livePicker):
+                picker = livePicker
+            case .failure(let error):
+                if error as? UserError == .nodata {
+                    let alert = UIAlertController(title: "No this Room", message: "No room with this ID", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+                    self.present(alert, animated: true)
+                } else {
+                    print(error, "error of getting LivePicker")
+                }
+            }
+            if let picker = picker, let pickerID = picker.pickerID {
+                FirebaseManager.shared.attendLivePick(livePickerID: pickerID) {
+                    result in
+                    switch result {
+                    case .success( _):
+                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                        guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
+                            fatalError("error cannot instantiate WaitingRoomViewController")
+                        }
+                        waitingVC.livePicker = picker
+                        self.show(waitingVC, sender: self)
+                    case .failure(let error):
+                        print(error, "error of attending a live pick")
+                    }
+                }
+            }
         }
     }
     
@@ -149,6 +196,8 @@ class PickerEditorViewController: UIViewController {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             }
+        case .forLive:
+            break
         }
     }
 }
@@ -206,9 +255,12 @@ extension PickerEditorViewController: UITableViewDataSource {
                 if index == 1 {
                     cell.groupButton.isHidden = false
                     self.target = .forPrivate
-                } else {
+                } else if index == 0 {
                     cell.groupButton.isHidden = true
                     self.target = .forPublic
+                } else {
+                    // 創建並直接跳轉
+                    self.target = .forLive
                 }
             }
             cell.groupCompletion = { index in

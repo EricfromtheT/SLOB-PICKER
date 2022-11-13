@@ -72,8 +72,8 @@ class LiveOptionsViewController: UIViewController {
     }
     
     @IBAction func vote() {
-        if let livePicker = livePicker, let chosenIndex = chosenIndex {
-            FirebaseManager.shared.voteForLivePicker(pickerID: livePicker.pickerID, choice: chosenIndex)
+        if let livePicker = livePicker, let chosenIndex = chosenIndex, let pickerID = livePicker.pickerID {
+            FirebaseManager.shared.voteForLivePicker(pickerID: pickerID, choice: chosenIndex)
         }
         dismiss(animated: true)
     }
