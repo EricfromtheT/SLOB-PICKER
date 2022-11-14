@@ -13528,7 +13528,7 @@
 		0F84623328897DAF97F1EEDD9BA671CD /* FIRHeartbeatLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRHeartbeatLogger.h; path = FirebaseCore/Extension/FIRHeartbeatLogger.h; sourceTree = "<group>"; };
 		0F84F0DF9848C17BBD43B352E20FDF8A /* rbac_filter.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = rbac_filter.cc; path = src/core/ext/filters/rbac/rbac_filter.cc; sourceTree = "<group>"; };
 		0FA6899E3D84F1543DC806890798DE20 /* validate.upb.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = validate.upb.c; path = "src/core/ext/upb-generated/validate/validate.upb.c"; sourceTree = "<group>"; };
-		0FB114E27F8414106022220B5B533895 /* MagicTimer */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MagicTimer; path = MagicTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FB114E27F8414106022220B5B533895 /* MagicTimer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FBCA44351AD11DC3315191061079E08 /* listener_components.upbdefs.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = listener_components.upbdefs.c; path = "src/core/ext/upbdefs-generated/envoy/config/listener/v3/listener_components.upbdefs.c"; sourceTree = "<group>"; };
 		0FBFEF7857B5653817B394A2DBDBC189 /* protocol.upbdefs.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = protocol.upbdefs.h; path = "src/core/ext/upbdefs-generated/envoy/config/core/v3/protocol.upbdefs.h"; sourceTree = "<group>"; };
 		0FC040A78545320768456FBFF23E4D5E /* compression_internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = compression_internal.h; path = src/core/lib/compression/compression_internal.h; sourceTree = "<group>"; };
@@ -17589,7 +17589,7 @@
 		F36E3A1A4EB2C451FD8F6925F627A351 /* error_apple.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = error_apple.mm; path = Firestore/core/src/util/error_apple.mm; sourceTree = "<group>"; };
 		F372D1A439D96A370D11CBD10D654671 /* FIRAuthProtoStartMFAPhoneRequestInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRAuthProtoStartMFAPhoneRequestInfo.m; path = FirebaseAuth/Sources/Backend/RPC/Proto/Phone/FIRAuthProtoStartMFAPhoneRequestInfo.m; sourceTree = "<group>"; };
 		F37D5550DB2CED5461B7ED189A7A0011 /* FIRInstallationsBackoffController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstallationsBackoffController.h; path = FirebaseInstallations/Source/Library/InstallationsIDController/FIRInstallationsBackoffController.h; sourceTree = "<group>"; };
-		F384564874AD5A3EF24DC69CE10871A7 /* Pods-SlobPicker */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SlobPicker"; path = Pods_SlobPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F384564874AD5A3EF24DC69CE10871A7 /* Pods_SlobPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SlobPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F39439642D297BE7C077FCE05D3995E5 /* x509_cmp.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = x509_cmp.c; path = src/crypto/x509/x509_cmp.c; sourceTree = "<group>"; };
 		F39D243A68157AD7484CD5A4462D76B0 /* slice_utils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = slice_utils.h; path = src/core/lib/slice/slice_utils.h; sourceTree = "<group>"; };
 		F3A93AAE1A7B3BAE3DD1E3DECC7F383F /* FIRSignUpNewUserRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRSignUpNewUserRequest.m; path = FirebaseAuth/Sources/Backend/RPC/FIRSignUpNewUserRequest.m; sourceTree = "<group>"; };
@@ -18333,10 +18333,10 @@
 				C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher */,
 				0A9F46A999C47653013D3AD854352507 /* leveldb-library */,
 				6BC54C3D03DEBF9C3A40965E69CAE039 /* Libuv-gRPC */,
-				0FB114E27F8414106022220B5B533895 /* MagicTimer */,
+				0FB114E27F8414106022220B5B533895 /* MagicTimer.framework */,
 				E49D6D248DD1CEE584E6776B9164A1B2 /* MJRefresh */,
 				06FC5C9CF96D60C50FCD47D339C91951 /* nanopb */,
-				F384564874AD5A3EF24DC69CE10871A7 /* Pods-SlobPicker */,
+				F384564874AD5A3EF24DC69CE10871A7 /* Pods_SlobPicker.framework */,
 				0D3287058D2F13BD484A454154BEA62B /* ProgressHUD */,
 				3347A1AB6546F0A3977529B8F199DC41 /* PromisesObjC */,
 			);
@@ -28019,7 +28019,7 @@
 			);
 			name = MagicTimer;
 			productName = MagicTimer;
-			productReference = 0FB114E27F8414106022220B5B533895 /* MagicTimer */;
+			productReference = 0FB114E27F8414106022220B5B533895 /* MagicTimer.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		ADCA93948B13F4035C0A9B1BB58CDE31 /* Pods-SlobPicker */ = {
@@ -28069,7 +28069,7 @@
 			);
 			name = "Pods-SlobPicker";
 			productName = Pods_SlobPicker;
-			productReference = F384564874AD5A3EF24DC69CE10871A7 /* Pods-SlobPicker */;
+			productReference = F384564874AD5A3EF24DC69CE10871A7 /* Pods_SlobPicker.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		B490E7485944099E16C9CBD79119D1D4 /* IQKeyboardManagerSwift */ = {
