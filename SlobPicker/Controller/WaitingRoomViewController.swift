@@ -38,42 +38,16 @@ class WaitingRoomViewController: UIViewController {
     var users: [User]? = []
     var isFirstTime = true
     var livePicker: LivePicker?
-    var attendees: [Attendee]? {
-        didSet {
-            users = []
-            attendees?.sort {
-                $0.attendTime < $1.attendTime
-            }
-            attendees?.forEach {
-                group.enter()
-                FirebaseManager.shared.searchUserID(userID: $0.userID) { result in
-                    switch result {
-                    case .success(var user):
-                        // get the right attendee's ID
-                        let attendees = self.attendees?.filter {
-                            $0.userID == user.userID
-                        }
-                        // give user time property
-                        if let attendee = attendees?[0] {
-                            user.time = attendee.attendTime
-                            self.users?.append(user)
-                        }
-                    case .failure(let error):
-                        print(error, "error of getting user info")
-                    }
-                    self.group.leave()
-                }
-            }
-            group.notify(queue: DispatchQueue.main) {
-                self.configureSnap()
-            }
-        }
-    }
+    var attendees: [Attendee]?
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDataSource()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         addWaitingListener()
         addVotingListener()
     }
@@ -82,6 +56,36 @@ class WaitingRoomViewController: UIViewController {
         super.viewWillDisappear(true)
         waitingListener?.remove()
         votingListener?.remove()
+    }
+    
+    @objc func attendeeHasChanged() {
+        self.users = []
+        attendees?.sort {
+            $0.attendTime < $1.attendTime
+        }
+        attendees?.forEach {
+            group.enter()
+            FirebaseManager.shared.searchUserID(userID: $0.userID) { result in
+                switch result {
+                case .success(var user):
+                    // get the right attendee's ID
+                    let attendees = self.attendees?.filter {
+                        $0.userID == user.userID
+                    }
+                    // give user time property
+                    if let attendee = attendees?[0] {
+                        user.time = attendee.attendTime
+                        self.users?.append(user)
+                    }
+                case .failure(let error):
+                    print(error, "error of getting user info")
+                }
+                self.group.leave()
+            }
+        }
+        group.notify(queue: DispatchQueue.main) {
+            self.configureSnap()
+        }
     }
     
     func configureDataSource() {
@@ -117,10 +121,12 @@ class WaitingRoomViewController: UIViewController {
                 print(error, "error of getting live picker's attendee data")
             } else if let documents = qrry?.documents {
                 do {
-                    let attendees = try documents.map {
+                    let attendeeData = try documents.map {
                         try $0.data(as: Attendee.self)
                     }
-                    self.attendees = attendees
+                    self.attendees = attendeeData
+                    NSObject.cancelPreviousPerformRequests(withTarget: self)
+                    self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 1)
                 } catch {
                     print(error, "error of decoding LivePicker data")
                 }

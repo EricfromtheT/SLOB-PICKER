@@ -132,6 +132,7 @@ extension LivePickingViewController: MagicTimerViewDelegate {
     func timerElapsedTimeDidChange(timer: MagicTimerView, elapsedTime: TimeInterval) {
         if elapsedTime == TimeInterval(floatLiteral: 0) {
             // show result controller
+            self.presentedViewController?.dismiss(animated: true)
             print("Times up")
             timer.stopCounting()
             timer.isActiveInBackground = false

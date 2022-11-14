@@ -59,7 +59,8 @@ class ChooseCell: UITableViewCell {
             stackView.addArrangedSubview(imageView)
             self.contentView.addSubview(button)
             // Attribute
-            imageView.contentMode = .scaleAspectFit
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.loadImage(optionsURLString[unit])
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +68,7 @@ class ChooseCell: UITableViewCell {
             button.addTarget(self, action: #selector(choose), for: .touchUpInside)
             // Constraints
             imageView.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.3).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
             button.widthAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
             button.heightAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             button.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true

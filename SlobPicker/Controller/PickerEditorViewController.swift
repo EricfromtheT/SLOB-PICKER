@@ -259,7 +259,7 @@ extension PickerEditorViewController: UITableViewDataSource {
                     cell.groupButton.isHidden = true
                     self.target = .forPublic
                 } else {
-                    // 創建並直接跳轉
+                    cell.groupButton.isHidden = true
                     self.target = .forLive
                 }
             }

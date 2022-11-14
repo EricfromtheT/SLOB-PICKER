@@ -323,7 +323,7 @@ class FirebaseManager {
         let date = Date()
         let today = calendar.startOfDay(for: date)
         let mlseconds = today.millisecondsSince1970
-        database.collection("publicPickers").whereField("created_time", isGreaterThan: mlseconds).order(by: "created_time", descending: true).order(by: "picked_count", descending: true).limit(to: 10).getDocuments { qrry, error in
+        database.collection("publicPickers").whereField("created_time", isGreaterThan: mlseconds).order(by: "created_time", descending: true).limit(to: 10).order(by: "picked_count", descending: true).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {
@@ -456,7 +456,7 @@ class FirebaseManager {
     func startLivePick(livePickerID: String, status: String , completion: @escaping (Result<String, Error>) -> Void) {
         database.collection("livePickers").document(livePickerID).updateData([
             "status": status,
-            "start_time": Date().millisecondsSince1970 + 6000
+            "start_time": Date().millisecondsSince1970 + 9000
         ]) { error in
             if let error = error {
                 completion(.failure(error))

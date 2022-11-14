@@ -13,6 +13,14 @@ struct User: Codable, Hashable {
     var profileURL: String
     // for live picker sorting
     var time: Int?
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(userID)
+    }
+    
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.userID == rhs.userID
+    }
     
     enum CodingKeys: String, CodingKey {
         case userName = "user_name"
