@@ -61,7 +61,7 @@ class FirebaseManager {
         let document = privatePickersRef.document()
         pick.id = document.documentID
         pick.createdTime = Date().millisecondsSince1970
-        if let groupID = pick.group {
+        if let groupID = pick.groupID {
             updateGroupPickersID(groupID: groupID, pickersID: document.documentID)
         } else {
             completion(.success("Failed to update group picker id"))

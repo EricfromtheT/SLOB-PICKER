@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MJRefresh
+import DGElasticPullToRefresh
 
 class PublicViewController: UIViewController {
     @IBOutlet weak var hotTableView: UITableView! {
@@ -21,28 +21,48 @@ class PublicViewController: UIViewController {
     }
     
     let group = DispatchGroup()
-    let header = MJRefreshNormalHeader()
+    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     var newest: [Picker] = []
     var hottest: [Picker] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(withIdentifier: "\(LoginViewController.self)") as! LoginViewController
-        loginVC.superVC = self
-        loginVC.modalPresentationStyle = .fullScreen
-        present(loginVC, animated: true)
-        hotTableView.mj_header = header
-        header.setRefreshingTarget(self, refreshingAction: #selector(headerRefresh))
-        navigationItem.title = "塗鴉牆"
+        setUpDGE()
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let loginVC = storyboard.instantiateViewController(withIdentifier: "\(LoginViewController.self)") as! LoginViewController
+//        loginVC.superVC = self
+//        loginVC.modalPresentationStyle = .fullScreen
+//        present(loginVC, animated: true)
+        navigationItem.title = "公開Pick"
     }
     
-    @objc func headerRefresh() {
-        fetchPublicData()
-        group.notify(queue: DispatchQueue.main) {
-            self.hotTableView.reloadData()
-            self.hotTableView.mj_header?.endRefreshing()
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.asset(.navigationbar)
+        // cancel navigationbar seperator
+        appearance.shadowColor = nil
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationItem.titleView?.tintColor = .white
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    deinit {
+        hotTableView.dg_removePullToRefresh()
+    }
+    
+    func setUpDGE() {
+        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        hotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            self?.fetchPublicData()
+            self?.group.notify(queue: .main) {
+                self?.hotTableView.reloadData()
+                self?.hotTableView.dg_stopLoading()
+            }
+        }, loadingView: loadingView)
+        hotTableView.dg_setPullToRefreshFillColor(UIColor(red: 152/255.0, green: 111/255.0, blue: 229/255.0, alpha: 1.0))
+        hotTableView.dg_setPullToRefreshBackgroundColor(hotTableView.backgroundColor!)
     }
     
     func fetchPublicData() {

@@ -7,70 +7,103 @@
 
 import UIKit
 import DropDown
-import MJRefresh
+import DGElasticPullToRefresh
+import ViewAnimator
 
 class PickerSelectionViewController: UIViewController {
     @IBOutlet weak var pickersTableView: UITableView! {
         didSet {
             pickersTableView.dataSource = self
-            FirebaseManager.shared.fetchAllPrivatePickers { result in
-                switch result {
-                case .success(let pickers):
-                    self.pickers = pickers
-                    DispatchQueue.main.async {
-                        self.pickersTableView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                }
+            DispatchQueue.global().async {
+                self.loadData()
             }
         }
     }
     
     var pickers: [Picker] = []
+    var users: [User] = []
     let dropDown = DropDown()
-    let header = MJRefreshNormalHeader()
+    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+    let group = DispatchGroup()
+    let semaphore = DispatchSemaphore(value: 0)
+    
+    private let animations = [AnimationType.from(direction: .top, offset: 40)]
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigation()
-        header.setRefreshingTarget(self, refreshingAction: #selector(self.headerRefresh))
-        self.pickersTableView.mj_header = header
+        setUpDGE()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.asset(.navigationbar)
+        // cancel navigationbar seperator
+        appearance.shadowColor = nil
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationItem.titleView?.tintColor = .white
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    deinit {
+        pickersTableView.dg_removePullToRefresh()
+    }
+    
+    
+    // MARK: SetUp
+    func loadData() {
         FirebaseManager.shared.fetchAllPrivatePickers { result in
             switch result {
             case .success(let pickers):
                 self.pickers = pickers
-                DispatchQueue.main.async {
-                    self.pickersTableView.reloadData()
-                }
             case .failure(let error):
                 print(error)
             }
+            self.semaphore.signal()
+        }
+        semaphore.wait()
+        //
+        let authors = Set(pickers.map { $0.authorID })
+        authors.forEach {
+            group.enter()
+            FirebaseManager.shared.searchUserID(userID: $0) { result in
+                switch result {
+                case .success(let user):
+                    self.users.append(user)
+                case .failure(let error):
+                    print(error, "error of getting user's info")
+                }
+                self.group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            self.pickersTableView.reloadData()
+            self.pickersTableView.dg_stopLoading()
+            UIView.animate(views: self.pickersTableView.visibleCells, animations: self.animations, duration: 0.6)
         }
     }
     
-    @objc func headerRefresh() {
-        FirebaseManager.shared.fetchAllPrivatePickers { result in
-            switch result {
-            case .success(let pickers):
-                self.pickers = pickers
-                DispatchQueue.main.async {
-                    self.pickersTableView.reloadData()
-                    self.pickersTableView.mj_header?.endRefreshing()
-                }
-            case .failure(let error):
-                print(error)
+    func setUpDGE() {
+        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        pickersTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            guard let self = self else {
+                fatalError("no pickerselectionViewController")
             }
-        }
+            self.users = []
+            DispatchQueue.global().async {
+                self.loadData()
+            }
+        }, loadingView: loadingView)
+        pickersTableView.dg_setPullToRefreshFillColor(UIColor(red: 152/255.0, green: 111/255.0, blue: 229/255.0, alpha: 1.0))
+        pickersTableView.dg_setPullToRefreshBackgroundColor(pickersTableView.backgroundColor!)
     }
     
     func setUpNavigation() {
-        navigationItem.title = "Pickers"
+        navigationItem.title = "群組Pick"
+        // set up bar button
         let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
         let compose = UIBarButtonItem(image: UIImage(named: "edit"), style: .plain, target: self, action: #selector(compose))
         navigationItem.rightBarButtonItems = [compose, relationship]
@@ -98,6 +131,7 @@ class PickerSelectionViewController: UIViewController {
         }
     }
     
+    // MARK: Action
     @objc func createNewGroup() {
         dropDown.show()
     }
@@ -145,11 +179,12 @@ extension PickerSelectionViewController: UITableViewDataSource {
                 as? PickSelectionCell else {
             fatalError("ERROR: pickSelectionCell broke")
         }
-        cell.configure(data: pickers[indexPath.row], index: indexPath.row)
+        let user = users.filter { $0.userID == pickers[indexPath.row].authorID }[0]
+        cell.configure(data: pickers[indexPath.row], index: indexPath.row, url: user.profileURL)
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        pickers.count
+        users.isEmpty ? 0 : pickers.count
     }
 }

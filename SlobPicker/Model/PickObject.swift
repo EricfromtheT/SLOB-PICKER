@@ -33,7 +33,8 @@ struct Picker: Codable {
     var authorID: String
     var authorName: String
     // for private
-    var group: String?
+    var groupID: String?
+    var groupName: String?
     var membersIDs: [String]?
     // for public
     var likedCount: Int?
@@ -50,7 +51,8 @@ struct Picker: Codable {
         case likedCount = "liked_count"
         case likedIDs = "liked_ids"
         case pickedCount = "picked_count"
-        case group
+        case groupID = "group_id"
+        case groupName = "group_name"
         case membersIDs = "members_ids"
         case pickedIDs = "picked_ids"
     }

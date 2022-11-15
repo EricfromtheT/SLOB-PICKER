@@ -48,6 +48,8 @@ class HotPickerCell: UICollectionViewCell {
         let pickGesture = UITapGestureRecognizer(target: self, action: #selector(goPick))
         pickImageView.addGestureRecognizer(pickGesture)
         pickImageView.isUserInteractionEnabled = !hasPicked
+        // appearance
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
     }
     
     func picked() {

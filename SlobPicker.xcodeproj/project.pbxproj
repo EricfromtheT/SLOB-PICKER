@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370050CE29227F6400E1EA35 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370050CD29227F6400E1EA35 /* UIColor+Extension.swift */; };
 		3708B0312918157C00397035 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B0302918157C00397035 /* LoginViewController.swift */; };
 		3708B0332918FC5700397035 /* Public.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3708B0322918FC5700397035 /* Public.storyboard */; };
 		3708B0352918FC6B00397035 /* PublicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B0342918FC6B00397035 /* PublicViewController.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		370050CD29227F6400E1EA35 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		3708B0302918157C00397035 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3708B0322918FC5700397035 /* Public.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Public.storyboard; sourceTree = "<group>"; };
 		3708B0342918FC6B00397035 /* PublicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicViewController.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AFF2910C70E00F737A7 /* DateHelper.swift */,
+				370050CD29227F6400E1EA35 /* UIColor+Extension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */,
 				372AE30129127616007D677B /* TargetSettingCell.swift in Sources */,
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
+				370050CE29227F6400E1EA35 /* UIColor+Extension.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
 				37DE8AEC290FCC5000F737A7 /* TitleCell.swift in Sources */,
 				37DE8AEE290FCC7200F737A7 /* ChooseCell.swift in Sources */,

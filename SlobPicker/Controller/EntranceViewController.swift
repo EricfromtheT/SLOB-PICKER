@@ -6,14 +6,28 @@
 //
 
 import UIKit
+import DGElasticPullToRefresh
 
 class EntranceViewController: UIViewController {
     var roomID: String?
+    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "即時pick"
         showRoomIDInputView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.asset(.navigationbar)
+        // cancel navigationbar seperator
+        appearance.shadowColor = nil
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationItem.titleView?.tintColor = .white
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     func showRoomIDInputView() {

@@ -15,9 +15,9 @@ pod 'Kingfisher'
 pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
 pod 'SwiftLint'
-pod 'ProgressHUD'
 pod 'DropDown'
-pod 'MJRefresh'
 pod 'MagicTimer'
+pod 'DGElasticPullToRefresh'
+pod 'ViewAnimator'
 
 end

@@ -102,7 +102,7 @@ class PickerEditorViewController: UIViewController {
                 guard let index = selectedGroupIndex else {
                     print("groupindex is nil")
                     return }
-                var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, group: groupInfos[index].groupID)
+                var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, groupID: groupInfos[index].groupID, groupName: groupInfos[index].groupName)
                 FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID, completion: {
                     result in
                     print("==========")
