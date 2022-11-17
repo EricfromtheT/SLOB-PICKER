@@ -26,7 +26,6 @@ class PickerSelectionViewController: UIViewController {
     let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 0)
-    
     private let animations = [AnimationType.from(direction: .top, offset: 40)]
     
     // MARK: Life Cycle
@@ -39,7 +38,7 @@ class PickerSelectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.navigationbar)
+        appearance.backgroundColor = UIColor.asset(.navigationbar2)
         // cancel navigationbar seperator
         appearance.shadowColor = nil
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -87,7 +86,7 @@ class PickerSelectionViewController: UIViewController {
     }
     
     func setUpDGE() {
-        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        loadingView.tintColor = UIColor.white
         pickersTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             guard let self = self else {
                 fatalError("no pickerselectionViewController")
@@ -97,7 +96,7 @@ class PickerSelectionViewController: UIViewController {
                 self.loadData()
             }
         }, loadingView: loadingView)
-        pickersTableView.dg_setPullToRefreshFillColor(UIColor(red: 152/255.0, green: 111/255.0, blue: 229/255.0, alpha: 1.0))
+        pickersTableView.dg_setPullToRefreshFillColor(UIColor.asset(.navigationbar2) ?? .clear)
         pickersTableView.dg_setPullToRefreshBackgroundColor(pickersTableView.backgroundColor!)
     }
     

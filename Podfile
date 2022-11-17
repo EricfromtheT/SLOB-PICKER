@@ -19,5 +19,6 @@ pod 'DropDown'
 pod 'MagicTimer'
 pod 'DGElasticPullToRefresh'
 pod 'ViewAnimator'
+pod 'lottie-ios'
 
 end

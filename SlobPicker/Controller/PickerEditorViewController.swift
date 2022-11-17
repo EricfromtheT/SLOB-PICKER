@@ -119,7 +119,7 @@ class PickerEditorViewController: UIViewController {
                 var publicPicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, likedCount: 0, likedIDs: [], pickedCount: 0, pickedIDs: [])
                 self.publish(picker: &publicPicker)
             case .forLive:
-                let random = String(Int.random(in: 10000000...99999999))
+                let random = String(Int.random(in: 100000...999999))
                 var livePicker = LivePicker(accessCode: random, authorID: FakeUserInfo.shared.userID, status: "waiting", contents: contents, title: title, description: inputDp ?? "")
                 let passPicker = livePicker
                 FirebaseManager.shared.publishLivePicker(picker: &livePicker) { result in
@@ -161,7 +161,9 @@ class PickerEditorViewController: UIViewController {
                             fatalError("error cannot instantiate WaitingRoomViewController")
                         }
                         waitingVC.livePicker = picker
-                        self.show(waitingVC, sender: self)
+                        waitingVC.modalTransitionStyle = .crossDissolve
+                        waitingVC.modalPresentationStyle = .fullScreen
+                        self.present(waitingVC, animated: true)
                     case .failure(let error):
                         print(error, "error of attending a live pick")
                     }

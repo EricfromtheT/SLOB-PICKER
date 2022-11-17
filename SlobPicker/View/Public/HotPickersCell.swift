@@ -15,14 +15,18 @@ class HotPickerCell: UICollectionViewCell {
     @IBOutlet weak var heartCountLabel: UILabel!
     @IBOutlet weak var pickCountLabel: UILabel!
     @IBOutlet weak var pickImageView: UIImageView!
+    @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var bgView2: UIView!
     
     var pickerID: String = ""
     var hasLikedC: Bool = false
     var hasPickedC: Bool = false
     var clickCompletion: (() -> ())?
+    var leftColor: [UIColor?] = [UIColor.asset(.card1left), UIColor.asset(.card2left), UIColor.asset(.card3left), UIColor.asset(.card4left)]
+    var rightColor: [UIColor?] = [UIColor.asset(.card1right), UIColor.asset(.card2right), UIColor.asset(.card3right), UIColor.asset(.card4right)]
+    let gradientLayer = CAGradientLayer()
     
-    func configure(data: Picker, imageURL: String, hasLiked: Bool, hasPicked: Bool) {
-        print(imageURL, "URL is here")
+    func configure(data: Picker, imageURL: String, hasLiked: Bool, hasPicked: Bool, index: Int) {
         // assign
         if let id = data.id {
             pickerID = id
@@ -50,6 +54,14 @@ class HotPickerCell: UICollectionViewCell {
         pickImageView.isUserInteractionEnabled = !hasPicked
         // appearance
         profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
+        bgView.layer.cornerRadius = 25
+        bgView2.layer.cornerRadius = 22
+        gradientLayer.cornerRadius = 25
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: SPConstant.screenWidth*0.55, height: SPConstant.screenHeight*0.2)
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.colors = [leftColor[index % 4]?.cgColor , rightColor[index % 4]?.cgColor]
+        bgView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func picked() {

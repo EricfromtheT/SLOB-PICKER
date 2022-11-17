@@ -7,6 +7,7 @@
 
 import UIKit
 import DGElasticPullToRefresh
+import ViewAnimator
 
 class PublicViewController: UIViewController {
     @IBOutlet weak var hotTableView: UITableView! {
@@ -14,9 +15,6 @@ class PublicViewController: UIViewController {
             hotTableView.dataSource = self
             hotTableView.delegate = self
             fetchPublicData()
-            group.notify(queue: DispatchQueue.main) {
-                self.hotTableView.reloadData()
-            }
         }
     }
     
@@ -24,6 +22,7 @@ class PublicViewController: UIViewController {
     let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     var newest: [Picker] = []
     var hottest: [Picker] = []
+    private let animations = [AnimationType.from(direction: .top, offset: 40)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +38,7 @@ class PublicViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.navigationbar)
+        appearance.backgroundColor = UIColor.asset(.navigationbar2)
         // cancel navigationbar seperator
         appearance.shadowColor = nil
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -53,15 +52,12 @@ class PublicViewController: UIViewController {
     }
     
     func setUpDGE() {
-        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        loadingView.tintColor = UIColor.white
         hotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            self?.fetchPublicData()
-            self?.group.notify(queue: .main) {
-                self?.hotTableView.reloadData()
-                self?.hotTableView.dg_stopLoading()
-            }
+            guard let self = self else { return }
+            self.fetchPublicData()
         }, loadingView: loadingView)
-        hotTableView.dg_setPullToRefreshFillColor(UIColor(red: 152/255.0, green: 111/255.0, blue: 229/255.0, alpha: 1.0))
+        hotTableView.dg_setPullToRefreshFillColor(UIColor.asset(.navigationbar2) ?? .clear)
         hotTableView.dg_setPullToRefreshBackgroundColor(hotTableView.backgroundColor!)
     }
     
@@ -86,6 +82,11 @@ class PublicViewController: UIViewController {
             }
             self.group.leave()
         })
+        group.notify(queue: DispatchQueue.main) {
+            self.hotTableView.reloadData()
+            self.hotTableView.dg_stopLoading()
+            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.6)
+        }
     }
 }
 

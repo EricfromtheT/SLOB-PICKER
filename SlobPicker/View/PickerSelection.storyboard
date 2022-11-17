@@ -42,6 +42,13 @@
                                                                 <action selector="goToResult:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Fky-TT-ElW"/>
                                                             </connections>
                                                         </button>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picking" translatesAutoresizingMaskIntoConstraints="NO" id="yeY-ZN-oQE">
+                                                            <rect key="frame" x="60" y="101" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="nSY-Lp-hR7"/>
+                                                                <constraint firstAttribute="width" secondItem="yeY-ZN-oQE" secondAttribute="height" multiplier="1:1" id="yKl-gn-Iyt"/>
+                                                            </constraints>
+                                                        </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U41-sy-p3d">
                                                             <rect key="frame" x="60" y="101" width="40" height="40"/>
                                                             <constraints>
@@ -50,7 +57,7 @@
                                                             </constraints>
                                                             <color key="tintColor" systemColor="systemBackgroundColor"/>
                                                             <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="picking_48px" title=""/>
+                                                            <buttonConfiguration key="configuration" style="plain" title=""/>
                                                             <connections>
                                                                 <action selector="goToPick:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="GxP-L3-94c"/>
                                                             </connections>
@@ -107,9 +114,11 @@
                                                         <constraint firstItem="e6T-QJ-Pgh" firstAttribute="centerY" secondItem="U41-sy-p3d" secondAttribute="centerY" id="UHC-nP-K2a"/>
                                                         <constraint firstItem="0ng-DU-nbd" firstAttribute="leading" secondItem="ShM-eH-no5" secondAttribute="trailing" constant="8" symbolic="YES" id="a18-NY-901"/>
                                                         <constraint firstItem="vc5-eA-b1d" firstAttribute="top" secondItem="HyC-W1-el1" secondAttribute="top" constant="15" id="cZX-Jz-Q3M"/>
+                                                        <constraint firstItem="yeY-ZN-oQE" firstAttribute="leading" secondItem="HyC-W1-el1" secondAttribute="leading" constant="60" id="cvy-c1-obH"/>
                                                         <constraint firstAttribute="trailing" secondItem="vc5-eA-b1d" secondAttribute="trailing" constant="20" id="e7j-nT-AAk"/>
                                                         <constraint firstItem="qYG-C2-Dui" firstAttribute="leading" secondItem="ShM-eH-no5" secondAttribute="leading" id="hgN-L0-Cgk"/>
                                                         <constraint firstItem="b46-nA-Te7" firstAttribute="centerY" secondItem="qYG-C2-Dui" secondAttribute="centerY" id="j9E-QH-HqS"/>
+                                                        <constraint firstItem="yeY-ZN-oQE" firstAttribute="centerY" secondItem="U41-sy-p3d" secondAttribute="centerY" id="lNx-y8-JtK"/>
                                                         <constraint firstItem="b46-nA-Te7" firstAttribute="leading" secondItem="qYG-C2-Dui" secondAttribute="trailing" constant="8" symbolic="YES" id="nty-1U-hlo"/>
                                                         <constraint firstItem="0dc-V9-P28" firstAttribute="leading" secondItem="HyC-W1-el1" secondAttribute="leading" constant="20" id="tx9-jp-k62"/>
                                                         <constraint firstAttribute="trailing" secondItem="e6T-QJ-Pgh" secondAttribute="trailing" constant="35" id="yi1-be-qYm"/>
@@ -185,20 +194,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7WZ-aR-rOs">
-                                <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7WZ-aR-rOs">
+                                <rect key="frame" x="0.0" y="97" width="390" height="713"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickResultCell" id="ni9-94-3CM" customClass="PickResultCell" customModule="SlobPicker" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="390" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ni9-94-3CM" id="goz-xy-qKI">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickCommentsCell" id="tJo-2J-FEj" customClass="PickCommentsCell" customModule="SlobPicker" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="93.666667938232422" width="390" height="44"/>
+                                        <rect key="frame" x="0.0" y="94" width="390" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tJo-2J-FEj" id="f49-uy-alw">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
@@ -232,17 +241,32 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u0Z-2V-eP9">
+                                <rect key="frame" x="0.0" y="47" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="FyE-7O-rzB"/>
+                                    <constraint firstAttribute="width" secondItem="u0Z-2V-eP9" secondAttribute="height" multiplier="1:1" id="dWx-Ij-GKL"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="Icons_24px_CleanAll" title=""/>
+                                <connections>
+                                    <action selector="goToRootView" destination="gct-z6-JwY" eventType="touchUpInside" id="aWf-YC-OT7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="O1Y-Zf-Mrj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="7WZ-aR-rOs" firstAttribute="top" secondItem="O1Y-Zf-Mrj" secondAttribute="top" id="2Jx-WM-biM"/>
+                            <constraint firstItem="7WZ-aR-rOs" firstAttribute="top" secondItem="O1Y-Zf-Mrj" secondAttribute="top" constant="50" id="2Jx-WM-biM"/>
                             <constraint firstItem="O1Y-Zf-Mrj" firstAttribute="trailing" secondItem="7WZ-aR-rOs" secondAttribute="trailing" id="MKp-ng-zZ1"/>
+                            <constraint firstItem="u0Z-2V-eP9" firstAttribute="leading" secondItem="O1Y-Zf-Mrj" secondAttribute="leading" id="gae-PD-pfL"/>
+                            <constraint firstItem="u0Z-2V-eP9" firstAttribute="top" secondItem="O1Y-Zf-Mrj" secondAttribute="top" id="kFg-qi-b1M"/>
                             <constraint firstItem="7WZ-aR-rOs" firstAttribute="leading" secondItem="O1Y-Zf-Mrj" secondAttribute="leading" id="oYZ-5E-mGo"/>
                             <constraint firstItem="O1Y-Zf-Mrj" firstAttribute="bottom" secondItem="7WZ-aR-rOs" secondAttribute="bottom" id="qWD-cb-eCB"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="leaveButton" destination="u0Z-2V-eP9" id="jye-ac-kXP"/>
                         <outlet property="resultTableView" destination="7WZ-aR-rOs" id="AGd-UP-U8q"/>
                     </connections>
                 </viewController>
@@ -252,7 +276,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="picking_48px" width="48" height="48"/>
+        <image name="Icons_24px_CleanAll" width="24" height="24"/>
+        <image name="picking" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

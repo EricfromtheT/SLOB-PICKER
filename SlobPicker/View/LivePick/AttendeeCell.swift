@@ -14,5 +14,6 @@ class AttendeeCell: UICollectionViewCell {
     func configure(data: User) {
         profileImageView.loadImage(data.profileURL)
         NameLabel.text = data.userID
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
     }
 }

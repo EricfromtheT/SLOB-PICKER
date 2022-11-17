@@ -13,6 +13,13 @@ class PickResultViewController: UIViewController {
             resultTableView.dataSource = self
         }
     }
+    @IBOutlet weak var leaveButton: UIButton! {
+        didSet {
+            if mode != .forLive {
+                leaveButton.isHidden = true
+            }
+        }
+    }
     var pickerResults: [PickResult] = []
     var pickerComments: [Comment] = []
     var voteResults: [VoteResult] = []
@@ -97,6 +104,11 @@ class PickResultViewController: UIViewController {
                 print("ERROR: pickinfo is nil")
             }
         }
+    }
+    
+    @IBAction func goToRootView() {
+        let rootVC = UIApplication.shared.windows.first!.rootViewController
+        rootVC?.dismiss(animated: true)
     }
 }
 

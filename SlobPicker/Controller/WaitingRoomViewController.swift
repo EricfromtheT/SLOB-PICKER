@@ -46,8 +46,8 @@ class WaitingRoomViewController: UIViewController {
         configureDataSource()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         addWaitingListener()
         addVotingListener()
     }
@@ -56,6 +56,7 @@ class WaitingRoomViewController: UIViewController {
         super.viewWillDisappear(true)
         waitingListener?.remove()
         votingListener?.remove()
+        
     }
     
     @objc func attendeeHasChanged() {
@@ -126,7 +127,7 @@ class WaitingRoomViewController: UIViewController {
                     }
                     self.attendees = attendeeData
                     NSObject.cancelPreviousPerformRequests(withTarget: self)
-                    self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 1)
+                    self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 0.3)
                 } catch {
                     print(error, "error of decoding LivePicker data")
                 }
@@ -176,12 +177,35 @@ class WaitingRoomViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func leave() {
+        let alert = UIAlertController(title: "是否確定離開?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        alert.addAction(UIAlertAction(title: "確認", style: .default) { alert in
+            self.confirmToleave()
+        })
+        present(alert, animated: true)
+    }
+    
+    func confirmToleave() {
+        if let livePicker = livePicker, let pickerID = livePicker.pickerID {
+            FirebaseManager.shared.leaveLiveRoom(pickerID: pickerID) { result in
+                switch result {
+                case .success(let success):
+                    print(success)
+                case .failure(let error):
+                    print(error, "error of deleting attendee")
+                }
+                self.dismiss(animated: true)
+            }
+        }
+    }
 }
 
 // MARK: CollectionView Delegate FlowLayout
 extension WaitingRoomViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: SPConstant.screenWidth * 0.25, height: SPConstant.screenHeight * 0.15)
+        CGSize(width: SPConstant.screenWidth * 0.25, height: SPConstant.screenHeight * 0.2)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

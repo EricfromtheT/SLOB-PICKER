@@ -7,22 +7,43 @@
 
 import UIKit
 import DGElasticPullToRefresh
+import Lottie
 
 class EntranceViewController: UIViewController {
+    @IBOutlet weak var roomIDTextField: UITextField! {
+        didSet {
+            roomIDTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var entryButton: UIButton!
     var roomID: String?
     let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+    var animationView: LottieAnimationView?
+    let textFieldWidth = 300
+    let entryButtonWidth = 150
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "即時pick"
-        showRoomIDInputView()
+        setUpTextField()
+        addBGAnimation()
+        setUpEntryButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        customNav()
+        animationView?.play()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animateElement()
+    }
+    
+    func customNav() {
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.navigationbar)
-        // cancel navigationbar seperator
+        //cancel navigationbar seperator
         appearance.shadowColor = nil
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.titleView?.tintColor = .white
@@ -30,27 +51,38 @@ class EntranceViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    func showRoomIDInputView() {
-        if let roomView = Bundle.main.loadNibNamed("RoomIDInputView", owner: nil)?.first as? RoomIDInputView {
-            view.addSubview(roomView)
-            roomView.completion = { content in
-                self.roomID = content
-            }
-            roomView.confirmButton.addTarget(self, action: #selector(confirm), for: .touchUpInside)
-            roomView.translatesAutoresizingMaskIntoConstraints = false
-            roomView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            roomView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            roomView.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth).isActive = true
-            roomView.heightAnchor.constraint(equalToConstant: SPConstant.screenHeight * 0.15).isActive = true
+    func setUpTextField() {
+        roomIDTextField.attributedPlaceholder = NSAttributedString(string: "請輸入房號", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        roomIDTextField.frame = CGRect(x: (Int(SPConstant.screenWidth) - textFieldWidth) / 2, y: Int(SPConstant.screenHeight), width: 0, height: 40)
+    }
+    
+    func setUpEntryButton() {
+        entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - entryButtonWidth) / 2, y: Int(SPConstant.screenHeight), width: entryButtonWidth, height: 30)
+    }
+    
+    func animateElement() {
+        UIView.animate(withDuration: 0.4) {
+            self.roomIDTextField.frame = CGRect(x: (Int(SPConstant.screenWidth) - self.textFieldWidth) / 2, y: Int(SPConstant.screenHeight) / 2 - 100, width: self.textFieldWidth, height: 40)
+            self.entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - self.entryButtonWidth) / 2, y: Int(SPConstant.screenHeight) / 2 + 100, width: self.entryButtonWidth, height: 30)
+            self.view.layoutIfNeeded()
         }
     }
     
-    @objc func confirm() {
-        // 取得該房號所屬的picker資料，提取出pickerID後索取此議題目前的參加者，進行Waiting room第一次的畫面渲染
+    func addBGAnimation() {
+        animationView = .init(name: "gameRoom")
+        animationView?.loopMode = .loop
+        animationView?.frame = CGRect(x: 0, y: -100, width: SPConstant.screenWidth, height: SPConstant.screenHeight + 100)
+        animationView?.contentMode = .scaleAspectFill
+        animationView?.animationSpeed = 1
+        view.addSubview(animationView!)
+        view.sendSubviewToBack(animationView!)
+    }
+    
+    @IBAction func confirm() {
+        //取得該房號所屬的picker資料，提取出pickerID後索取此議題目前的參加者，進行Waiting room第一次的畫面渲染
         var picker: LivePicker?
         if let roomID = roomID {
             FirebaseManager.shared.fetchLivePicker(roomID: roomID) { result in
-                print(result)
                 switch result {
                 case .success(let livePicker):
                     picker = livePicker
@@ -73,13 +105,24 @@ class EntranceViewController: UIViewController {
                                 fatalError("error cannot instantiate WaitingRoomViewController")
                             }
                             waitingVC.livePicker = picker
-                            self.show(waitingVC, sender: self)
+                            waitingVC.modalPresentationStyle = .fullScreen
+                            waitingVC.modalTransitionStyle = .crossDissolve
+                            self.present(waitingVC, animated: true)
+                            
                         case .failure(let error):
                             print(error, "error of attending a live pick")
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+extension EntranceViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let content = textField.text {
+            self.roomID = content
         }
     }
 }

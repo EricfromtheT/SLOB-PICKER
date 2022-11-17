@@ -17,6 +17,9 @@ enum assetColor: String {
     case card4left
     case card4right
     case navigationbar
+    case navigationbar2
+    case livePick
+    case livePickBG
 }
 
 extension UIColor {

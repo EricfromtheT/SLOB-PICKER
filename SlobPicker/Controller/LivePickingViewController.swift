@@ -33,7 +33,7 @@ class LivePickingViewController: UIViewController {
     func setUpTimer() {
         var remainTime: Int = 0
         if let livePicker = livePicker, let startTime = livePicker.startTime {
-            let endTime = startTime + 30000
+            let endTime = startTime + 1000
             remainTime = endTime - Date().millisecondsSince1970
         }
         timer.isActiveInBackground = true

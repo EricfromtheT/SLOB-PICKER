@@ -93,7 +93,7 @@ extension HotCell: UICollectionViewDataSource {
             let user = usersInfo.filter { user in
                 user.userID == data.authorID
             }
-            cell.configure(data: data, imageURL: user[0].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID))
+            cell.configure(data: data, imageURL: user[0].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID), index: indexPath.row)
         }
         cell.clickCompletion = {
             self.showPickPage(indexPath: indexPath, cell: cell)
@@ -108,7 +108,7 @@ extension HotCell: UICollectionViewDataSource {
 
 extension HotCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: SPConstant.screenWidth * 0.5, height: SPConstant.screenHeight * 0.2)
+        CGSize(width: SPConstant.screenWidth * 0.55, height: SPConstant.screenHeight * 0.2)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -130,4 +130,5 @@ extension HotCell: UICollectionViewDelegate {
         resultVC.pickInfo = data[indexPath.row]
         superVC?.show(resultVC, sender: self)
     }
+
 }

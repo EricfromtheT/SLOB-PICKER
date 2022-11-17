@@ -472,4 +472,14 @@ class FirebaseManager {
             "user_id": FakeUserInfo.shared.userID
         ])
     }
+    
+    func leaveLiveRoom(pickerID: String, completion: @escaping (Result<String, Error>) -> Void)  {
+        database.collection("livePickers").document(pickerID).collection("attendees").document(FakeUserInfo.shared.userID).delete() { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
 }
