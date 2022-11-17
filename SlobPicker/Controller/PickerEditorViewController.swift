@@ -50,10 +50,10 @@ class PickerEditorViewController: UIViewController {
     }
     
     func setUpNavigation() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .done, target: self, action: #selector(uploadImages))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .done, target: self, action: #selector(uploadContent))
     }
     
-    @objc func uploadImages() {
+    @objc func uploadContent() {
         guard let data = willBeUploadedImages else { fatalError("UIImages have not been found") }
         for image in data {
             // transform image file type
@@ -228,8 +228,11 @@ extension PickerEditorViewController: UITableViewDataSource {
                 cell.completion = { content, index in
                     if self.willBeUploadedStrings?.count ?? 0 >= index + 1 {
                         self.willBeUploadedStrings?.remove(at: index)
+                        self.willBeUploadedStrings?.insert(content, at: index)
+                    } else {
+                        self.willBeUploadedStrings?.append(content)
                     }
-                    self.willBeUploadedStrings?.insert(content, at: index)
+                    
                 }
                 return cell
             case .imageType:
@@ -311,8 +314,10 @@ extension PickerEditorViewController: PHPickerViewControllerDelegate {
                     if let filename = itemProvider.suggestedName, let index = self.clickIndex {
                         if self.willBeUploadedImages?.count ?? 0 >= index + 1 {
                             self.willBeUploadedImages?.remove(at: index)
+                            self.willBeUploadedImages?.insert(image, at: index)
+                        } else {
+                            self.willBeUploadedImages?.append(image)
                         }
-                        self.willBeUploadedImages?.insert(image, at: index)
                         self.imageUploadCompletely?(filename, index)
                     }
                 }

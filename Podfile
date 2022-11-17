@@ -20,5 +20,6 @@ pod 'MagicTimer'
 pod 'DGElasticPullToRefresh'
 pod 'ViewAnimator'
 pod 'lottie-ios'
+pod 'ProgressHUD'
 
 end

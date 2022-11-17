@@ -15,13 +15,14 @@ class LivePickingViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var rankTableView: UITableView!
-    @IBOutlet weak var timer: MagicTimerView!
+    @IBOutlet weak var magicTimer: MagicTimerView!
     
     var livePicker: LivePicker?
     var voteResults: [VoteResult] = []
     var counter = 5
     var dataSource: UITableViewDiffableDataSource<Int, VoteResult>!
     var resultListener: ListenerRegistration?
+    var myTimer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +37,19 @@ class LivePickingViewController: UIViewController {
             let endTime = startTime + 1000
             remainTime = endTime - Date().millisecondsSince1970
         }
-        timer.isActiveInBackground = true
-        timer.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        timer.mode = .countDown(fromSeconds: Double(remainTime / 1000))
-        timer.delegate = self
-        timer.startCounting()
+        magicTimer.isActiveInBackground = true
+        magicTimer.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        magicTimer.mode = .countDown(fromSeconds: Double(remainTime / 1000))
+        magicTimer.delegate = self
+        magicTimer.startCounting()
     }
     
     func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<Int, VoteResult>(tableView: rankTableView) {
+        dataSource = UITableViewDiffableDataSource<Int, VoteResult>(tableView: rankTableView) { [weak self]
             (tableView, indexPath, result) -> UITableViewCell? in
+            guard let `self` = self else {
+                fatalError()
+            }
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(ChoiceCell.self)", for: indexPath)
                     as? ChoiceCell else {
                 fatalError("error of ChoiceCell cannot be instatiated")
@@ -68,7 +72,10 @@ class LivePickingViewController: UIViewController {
     
     func addResultListener() {
         if let livePicker = livePicker, let pickerID = livePicker.pickerID {
-            resultListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).collection("results").addSnapshotListener { qrry, error in
+            resultListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).collection("results").addSnapshotListener { [weak self] (qrry, error) in
+                guard let `self` = self else {
+                    fatalError()
+                }
                 if let error = error {
                     print(error, "error of getting livePickers results")
                 } else {
@@ -95,7 +102,7 @@ class LivePickingViewController: UIViewController {
     }
     
     func start() {
-        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+        myTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
     }
     
     func updateUI() {
@@ -113,6 +120,7 @@ class LivePickingViewController: UIViewController {
             bgView.isHidden = true
             addResultListener()
             setUpTimer()
+            myTimer?.invalidate()
         }
     }
     

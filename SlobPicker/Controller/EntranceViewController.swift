@@ -34,6 +34,7 @@ class EntranceViewController: UIViewController {
         super.viewWillAppear(animated)
         customNav()
         animationView?.play()
+        entryButton.isEnabled = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -86,6 +87,7 @@ class EntranceViewController: UIViewController {
                 switch result {
                 case .success(let livePicker):
                     picker = livePicker
+                    self.entryButton.isEnabled = false
                 case .failure(let error):
                     if error as? UserError == .nodata {
                         let alert = UIAlertController(title: "No this Room", message: "No room with this ID", preferredStyle: .alert)

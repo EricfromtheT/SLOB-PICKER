@@ -274,10 +274,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gve-Du-R1o">
-                                                    <rect key="frame" x="329" y="15" width="34" height="34"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="qjf-4c-2rK" firstAttribute="centerX" secondItem="krA-es-GlQ" secondAttribute="centerX" id="MIp-N9-Inr"/>
@@ -684,8 +680,8 @@
                         <outlet property="bgView" destination="iG1-QD-W4W" id="Kf3-eW-RUR"/>
                         <outlet property="countdownLabel" destination="GXb-oL-VaW" id="126-Ve-Dp1"/>
                         <outlet property="descriptionLabel" destination="cVk-G0-BeO" id="oYz-IE-A2S"/>
+                        <outlet property="magicTimer" destination="20V-QT-rmp" id="emi-9s-cxL"/>
                         <outlet property="rankTableView" destination="bFO-3x-5G1" id="K1n-uh-xIw"/>
-                        <outlet property="timer" destination="20V-QT-rmp" id="emi-9s-cxL"/>
                         <outlet property="titleLabel" destination="ZAp-6v-qeU" id="Z8c-8A-djn"/>
                     </connections>
                 </viewController>
