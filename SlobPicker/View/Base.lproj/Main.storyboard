@@ -66,11 +66,21 @@
                                     <action selector="done" destination="Yuo-5I-LsW" eventType="touchUpInside" id="d9y-B6-yYe"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcx-nh-4DO">
+                                <rect key="frame" x="10" y="560" width="370" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Xvv-Xc-ioz"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="b1e-Ei-UxQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2Ya-ZV-tl6" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="1Zu-nU-1Kk"/>
+                            <constraint firstItem="b1e-Ei-UxQ" firstAttribute="bottom" secondItem="xcx-nh-4DO" secondAttribute="bottom" constant="200" id="FlY-HN-Gj3"/>
+                            <constraint firstItem="b1e-Ei-UxQ" firstAttribute="trailing" secondItem="xcx-nh-4DO" secondAttribute="trailing" constant="10" id="RSj-Uc-pBp"/>
+                            <constraint firstItem="xcx-nh-4DO" firstAttribute="leading" secondItem="b1e-Ei-UxQ" secondAttribute="leading" constant="10" id="TbH-bo-Fea"/>
                             <constraint firstItem="Dye-xI-sih" firstAttribute="centerY" secondItem="b1e-Ei-UxQ" secondAttribute="centerY" id="cFb-Pm-NEA"/>
                             <constraint firstItem="Dye-xI-sih" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="h4l-WG-0AU"/>
                             <constraint firstItem="2Ya-ZV-tl6" firstAttribute="top" secondItem="b1e-Ei-UxQ" secondAttribute="top" constant="120" id="iya-um-tJw"/>
@@ -79,6 +89,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="appleLogInView" destination="xcx-nh-4DO" id="lox-o2-oxX"/>
                         <outlet property="idField" destination="2Ya-ZV-tl6" id="bLu-bE-Un4"/>
                         <outlet property="nameField" destination="f9c-e4-t1d" id="8Ku-T4-7qp"/>
                     </connections>

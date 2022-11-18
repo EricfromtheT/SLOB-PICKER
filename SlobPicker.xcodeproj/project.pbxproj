@@ -32,6 +32,7 @@
 		377853002920A41100780E8D /* ChoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852FF2920A41100780E8D /* ChoiceCell.swift */; };
 		37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C9582925183700604A4A /* UIImage+Extension.swift */; };
 		37A7C95D292613C400604A4A /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 37A7C95C292613C400604A4A /* gameRoom.json */; };
+		37A7C96329267AC600604A4A /* ProgressHUDHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C96229267AC600604A4A /* ProgressHUDHelper.swift */; };
 		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
 		37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575802913A1C600DC344D /* PickerSelection.storyboard */; };
 		37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575832913AFEA00DC344D /* PickSelectionCell.swift */; };
@@ -92,6 +93,8 @@
 		377852FF2920A41100780E8D /* ChoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCell.swift; sourceTree = "<group>"; };
 		37A7C9582925183700604A4A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		37A7C95C292613C400604A4A /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
+		37A7C96229267AC600604A4A /* ProgressHUDHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUDHelper.swift; sourceTree = "<group>"; };
+		37A7C9642927350100604A4A /* SlobPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SlobPicker.entitlements; sourceTree = "<group>"; };
 		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
 		37D575802913A1C600DC344D /* PickerSelection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickerSelection.storyboard; sourceTree = "<group>"; };
 		37D575832913AFEA00DC344D /* PickSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSelectionCell.swift; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 		37DE8AA2290C15C900F737A7 /* SlobPicker */ = {
 			isa = PBXGroup;
 			children = (
+				37A7C9642927350100604A4A /* SlobPicker.entitlements */,
 				37DE8AFE2910C6FE00F737A7 /* Helper */,
 				37DE8ADD290EA5C900F737A7 /* Third Party Wrapper */,
 				37DE8AF929100D5B00F737A7 /* Network */,
@@ -322,6 +326,7 @@
 				37DE8AFF2910C70E00F737A7 /* DateHelper.swift */,
 				370050CD29227F6400E1EA35 /* UIColor+Extension.swift */,
 				37A7C9582925183700604A4A /* UIImage+Extension.swift */,
+				37A7C96229267AC600604A4A /* ProgressHUDHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -486,6 +491,7 @@
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
 				370050CE29227F6400E1EA35 /* UIColor+Extension.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
+				37A7C96329267AC600604A4A /* ProgressHUDHelper.swift in Sources */,
 				37DE8AEC290FCC5000F737A7 /* TitleCell.swift in Sources */,
 				37DE8AEE290FCC7200F737A7 /* ChooseCell.swift in Sources */,
 				37DE8AF6290FF02700F737A7 /* KingFisherWrapper.swift in Sources */,
@@ -656,6 +662,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = FV92TC3KA2;
@@ -691,6 +698,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = FV92TC3KA2;

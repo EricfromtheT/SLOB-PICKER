@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class PickResultViewController: UIViewController {
     @IBOutlet weak var resultTableView: UITableView! {
@@ -50,6 +51,12 @@ class PickResultViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        ProgressHUD.animationType = .lineScaling
+        ProgressHUD.show()
+    }
+    
     func fetchResult(pickID: String) {
         group.enter()
         FirebaseManager.shared.fetchResults(collection: mode.rawValue, pickerID: pickID) { result in
@@ -74,6 +81,7 @@ class PickResultViewController: UIViewController {
         }
         group.notify(queue: DispatchQueue.main) {
             self.resultTableView.reloadData()
+            ProgressHUD.dismiss()
         }
     }
     
@@ -107,7 +115,7 @@ class PickResultViewController: UIViewController {
     }
     
     @IBAction func goToRootView() {
-        let rootVC = UIApplication.shared.windows.first!.rootViewController
+        let rootVC = UIApplication.shared.windows.first?.rootViewController
         rootVC?.dismiss(animated: true)
     }
 }

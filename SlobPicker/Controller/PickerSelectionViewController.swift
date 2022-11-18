@@ -104,7 +104,7 @@ class PickerSelectionViewController: UIViewController {
         navigationItem.title = "群組Pick"
         // set up bar button
         let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
-        let compose = UIBarButtonItem(image: UIImage(named: "edit"), style: .plain, target: self, action: #selector(compose))
+        let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
         navigationItem.rightBarButtonItems = [compose, relationship]
         dropDown.anchorView = navigationItem.rightBarButtonItem
         dropDown.width = 200

@@ -8,6 +8,7 @@
 import UIKit
 import DGElasticPullToRefresh
 import ViewAnimator
+import FirebaseAuth
 
 class PublicViewController: UIViewController {
     @IBOutlet weak var hotTableView: UITableView! {
@@ -22,16 +23,24 @@ class PublicViewController: UIViewController {
     let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     var newest: [Picker] = []
     var hottest: [Picker] = []
-    private let animations = [AnimationType.from(direction: .top, offset: 40)]
+    private let animations = [AnimationType.from(direction: .top, offset: 30)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDGE()
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let loginVC = storyboard.instantiateViewController(withIdentifier: "\(LoginViewController.self)") as! LoginViewController
-//        loginVC.superVC = self
-//        loginVC.modalPresentationStyle = .fullScreen
-//        present(loginVC, animated: true)
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if user != nil {
+                print("user has logged in")
+            } else {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginVC = storyboard
+                    .instantiateViewController(withIdentifier: "\(LoginViewController.self)")
+                as! LoginViewController
+                loginVC.superVC = self
+                loginVC.modalPresentationStyle = .fullScreen
+                self.present(loginVC, animated: false)
+            }
+        }
         navigationItem.title = "公開Pick"
     }
     
@@ -85,11 +94,12 @@ class PublicViewController: UIViewController {
         group.notify(queue: DispatchQueue.main) {
             self.hotTableView.reloadData()
             self.hotTableView.dg_stopLoading()
-            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.6)
+            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.2, duration: 0.6)
         }
     }
 }
 
+// MARK: TableView DataSource
 extension PublicViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(HotCell.self)", for: indexPath)
@@ -116,6 +126,7 @@ extension PublicViewController: UITableViewDataSource {
     }
 }
 
+// MARK: TableView Delegate
 extension PublicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         section == 0 ? "熱門Pickers" : "最新Pickers"
