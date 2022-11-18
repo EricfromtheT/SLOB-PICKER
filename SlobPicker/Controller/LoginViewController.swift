@@ -108,7 +108,6 @@ class LoginViewController: UIViewController {
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            print(appleIDCredential.fullName)
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
             }

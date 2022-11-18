@@ -94,7 +94,7 @@ class PublicViewController: UIViewController {
         group.notify(queue: DispatchQueue.main) {
             self.hotTableView.reloadData()
             self.hotTableView.dg_stopLoading()
-            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.2, duration: 0.6)
+            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.6)
         }
     }
 }
