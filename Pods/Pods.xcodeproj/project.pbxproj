@@ -13600,7 +13600,7 @@
 		0CE58D949303F699BDE64E32BB9CAA30 /* onepass.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = onepass.cc; path = third_party/re2/re2/onepass.cc; sourceTree = "<group>"; };
 		0CEBDA257A85E17BFE9D60B0801C8E45 /* GoogleUtilities.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleUtilities.release.xcconfig; sourceTree = "<group>"; };
 		0D2C7705E425E546B29166687BC2BC2F /* x_req.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = x_req.c; path = src/crypto/x509/x_req.c; sourceTree = "<group>"; };
-		0D3287058D2F13BD484A454154BEA62B /* ProgressHUD */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ProgressHUD; path = ProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D3287058D2F13BD484A454154BEA62B /* ProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D3D63E9479327BB973D4BBB2DCA5A6E /* FIRInstallationsStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRInstallationsStore.m; path = FirebaseInstallations/Source/Library/InstallationsStore/FIRInstallationsStore.m; sourceTree = "<group>"; };
 		0D5B07E0A14DE2E42305046126A39C3A /* pollset_custom.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pollset_custom.h; path = src/core/lib/iomgr/pollset_custom.h; sourceTree = "<group>"; };
 		0D671767BF049B5ED29901A947EC2FE2 /* Trim.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Trim.swift; path = Sources/Private/Model/ShapeItems/Trim.swift; sourceTree = "<group>"; };
@@ -22260,7 +22260,7 @@
 				0FB114E27F8414106022220B5B533895 /* MagicTimer */,
 				06FC5C9CF96D60C50FCD47D339C91951 /* nanopb */,
 				F384564874AD5A3EF24DC69CE10871A7 /* Pods-SlobPicker */,
-				0D3287058D2F13BD484A454154BEA62B /* ProgressHUD */,
+				0D3287058D2F13BD484A454154BEA62B /* ProgressHUD.framework */,
 				3347A1AB6546F0A3977529B8F199DC41 /* PromisesObjC */,
 				A76921F7329D552AD6FA723972B6337A /* ViewAnimator */,
 			);
@@ -27677,7 +27677,7 @@
 			);
 			name = ProgressHUD;
 			productName = ProgressHUD;
-			productReference = 0D3287058D2F13BD484A454154BEA62B /* ProgressHUD */;
+			productReference = 0D3287058D2F13BD484A454154BEA62B /* ProgressHUD.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		0B967D7F8561D42493EE289EC8D450D1 /* lottie-ios */ = {
