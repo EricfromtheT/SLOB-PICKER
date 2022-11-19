@@ -55,7 +55,7 @@ class HotCell: UITableViewCell {
         }
         group.notify(queue: DispatchQueue.main) {
             self.hotPickerCollectionView.reloadData()
-            self.hotPickerCollectionView.setContentOffset(.zero, animated: true)
+            self.hotPickerCollectionView.setContentOffset(.zero, animated: false)
         }
     }
     

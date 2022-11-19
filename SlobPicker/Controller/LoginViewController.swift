@@ -20,7 +20,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpAppleButton()
-        
     }
     
     func setUpAppleButton() {
@@ -37,7 +36,7 @@ class LoginViewController: UIViewController {
     @objc func pressSignInWithAppleButton() {
         let nonce = randomNonceString()
         currentNonce = nonce
-        // generate request by crpto string
+        // generate request by crypto string
         let authorizationAppleIDRequest: ASAuthorizationAppleIDRequest
         = ASAuthorizationAppleIDProvider().createRequest()
         authorizationAppleIDRequest.requestedScopes = [.fullName, .email]
@@ -48,7 +47,6 @@ class LoginViewController: UIViewController {
         
         controller.delegate = self
         controller.presentationContextProvider = self
-        
         controller.performRequests()
     }
     
@@ -107,7 +105,8 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+        if let appleIDCredential = authorization.credential
+            as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
             }

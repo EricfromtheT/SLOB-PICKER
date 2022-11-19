@@ -28,7 +28,9 @@ class PublicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDGE()
+        // check whether user has logged in
         Auth.auth().addStateDidChangeListener { auth, user in
+            
             if user != nil {
                 print("user has logged in")
             } else {
