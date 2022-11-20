@@ -11,7 +11,11 @@ class LiveOptionsViewController: UIViewController {
     @IBOutlet weak var optionsView: UIView! {
         didSet {
             if let livePicker = livePicker {
-                layoutWithTextType(optionsString: livePicker.contents)
+                if livePicker.type == 0 {
+                    layoutWithTextType(optionsString: livePicker.contents)
+                } else {
+                    layoutWithImageType(optionsURL: livePicker.contents)
+                }
             }
         }
     }
@@ -55,6 +59,43 @@ class LiveOptionsViewController: UIViewController {
         stackView.centerXAnchor.constraint(equalTo: optionsView.centerXAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: optionsView.topAnchor, constant: 10).isActive = true
         stackView.bottomAnchor.constraint(equalTo: optionsView.bottomAnchor, constant: 10).isActive = true
+    }
+    
+    func layoutWithImageType(optionsURL: [String]) {
+        let stackView = UIStackView()
+        self.optionsView.addSubview(stackView)
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        for unit in 0..<optionsURL.count {
+            let imageView = UIImageView()
+            let button = UIButton()
+            imageView.isUserInteractionEnabled = true
+            stackView.addArrangedSubview(imageView)
+            self.optionsView.addSubview(button)
+            // Attribute
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.loadImage(optionsURL[unit])
+            button.tag = unit
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("", for: .normal)
+            button.addTarget(self, action: #selector(choose), for: .touchUpInside)
+            // Constraints
+            imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
+            button.widthAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
+            button.heightAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
+            button.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+            button.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
+        }
+        let spacer = UIView()
+        spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
+        stackView.addArrangedSubview(spacer)
+        stackView.spacing = 30
+        stackView.centerXAnchor.constraint(equalTo: self.optionsView.centerXAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: self.optionsView.topAnchor, constant: 10).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: self.optionsView.bottomAnchor, constant: 10).isActive = true
     }
     
     @objc func choose(_ sender: UIButton) {

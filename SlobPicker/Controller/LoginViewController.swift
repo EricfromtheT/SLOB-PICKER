@@ -131,8 +131,26 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     print(error.localizedDescription)
                     return
                 } else {
-                    // User is signed in to Firebase with Apple
-                    // Move to basic setting
+                    // User has signed in to Firebase with Apple
+                    // See if this user is the new client
+                    guard let auth = authResult else { fatalError("user is missed") }
+                    FirebaseManager.shared.searchUserID(userID: auth.user.uid) {
+                        result in
+                        switch result {
+                        case .success( _):
+                            // old user login in
+                            KeychainService.keychainManager.saveUserUID(uid: auth.user.uid)
+                            
+                        case .failure(let error):
+                            if error as? UserError == .nodata {
+                                // new user register and log in
+                                KeychainService.keychainManager.saveUserUID(uid: auth.user.uid)
+                            } else {
+                                print(error, "error of getting user info")
+                            }
+                            
+                        }
+                    }
                 }
             }
         }

@@ -46,6 +46,9 @@
 		37D5759429153F3F00DC344D /* GroupCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759329153F3F00DC344D /* GroupCreateViewController.swift */; };
 		37D5759629154B1E00DC344D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759529154B1E00DC344D /* Result.swift */; };
 		37D5759829154B3400DC344D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759729154B3400DC344D /* User.swift */; };
+		37DD01862929B3200078352F /* countDown.json in Resources */ = {isa = PBXBuildFile; fileRef = 37DD01852929B3200078352F /* countDown.json */; };
+		37DD018A2929C9840078352F /* ChoiceImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD01892929C9840078352F /* ChoiceImageCell.swift */; };
+		37DD018C292A02EC0078352F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD018B292A02EC0078352F /* KeychainService.swift */; };
 		37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA3290C15C900F737A7 /* AppDelegate.swift */; };
 		37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */; };
 		37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA7290C15C900F737A7 /* ViewController.swift */; };
@@ -108,6 +111,9 @@
 		37D5759329153F3F00DC344D /* GroupCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCreateViewController.swift; sourceTree = "<group>"; };
 		37D5759529154B1E00DC344D /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		37D5759729154B3400DC344D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		37DD01852929B3200078352F /* countDown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countDown.json; sourceTree = "<group>"; };
+		37DD01892929C9840078352F /* ChoiceImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceImageCell.swift; sourceTree = "<group>"; };
+		37DD018B292A02EC0078352F /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		37DE8AA0290C15C900F737A7 /* SlobPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlobPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37DE8AA3290C15C900F737A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +167,7 @@
 				377852F1291D380A00780E8D /* ContainerView.swift */,
 				377852F5291E302600780E8D /* AttendeeCell.swift */,
 				377852FF2920A41100780E8D /* ChoiceCell.swift */,
+				37DD01892929C9840078352F /* ChoiceImageCell.swift */,
 			);
 			path = LivePick;
 			sourceTree = "<group>";
@@ -296,7 +303,9 @@
 			children = (
 				37DE8AAC290C15CA00F737A7 /* Assets.xcassets */,
 				37A7C95C292613C400604A4A /* gameRoom.json */,
+				37DD01852929B3200078352F /* countDown.json */,
 				37DE8AF3290FD67600F737A7 /* SPConstant.swift */,
+				37DD018B292A02EC0078352F /* KeychainService.swift */,
 				37DE8AF72910047100F737A7 /* GoogleService-Info.plist */,
 			);
 			path = Resources;
@@ -410,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				377852EE291D0B6100780E8D /* RoomIDInputView.xib in Resources */,
+				37DD01862929B3200078352F /* countDown.json in Resources */,
 				37A7C95D292613C400604A4A /* gameRoom.json in Resources */,
 				37DE8AE1290EBC0F00F737A7 /* Interaction.storyboard in Resources */,
 				37DE8AB0290C15CA00F737A7 /* LaunchScreen.storyboard in Resources */,
@@ -484,6 +494,7 @@
 				377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */,
 				372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */,
 				37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */,
+				37DD018A2929C9840078352F /* ChoiceImageCell.swift in Sources */,
 				37D5758A2914C25300DC344D /* PickResultCell.swift in Sources */,
 				377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */,
 				3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */,
@@ -499,6 +510,7 @@
 				37D5759629154B1E00DC344D /* Result.swift in Sources */,
 				377852F2291D380A00780E8D /* ContainerView.swift in Sources */,
 				377852FC291FCF6300780E8D /* LivePickingViewController.swift in Sources */,
+				37DD018C292A02EC0078352F /* KeychainService.swift in Sources */,
 				37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */,
 				3708B0352918FC6B00397035 /* PublicViewController.swift in Sources */,
 				377853002920A41100780E8D /* ChoiceCell.swift in Sources */,

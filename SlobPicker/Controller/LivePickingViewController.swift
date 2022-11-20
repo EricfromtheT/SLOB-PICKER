@@ -8,10 +8,10 @@
 import UIKit
 import FirebaseFirestore
 import MagicTimer
+import Lottie
 
 class LivePickingViewController: UIViewController {
     @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var rankTableView: UITableView!
@@ -19,14 +19,18 @@ class LivePickingViewController: UIViewController {
     
     var livePicker: LivePicker?
     var voteResults: [VoteResult] = []
-    var counter = 5
+    var counter = 2.5
     var dataSource: UITableViewDiffableDataSource<Int, VoteResult>!
     var resultListener: ListenerRegistration?
     var myTimer: Timer?
+    var animationView: LottieAnimationView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         start()
+        setUpTimer()
+        addCountDownAnimation()
+        animationView?.play()
         updateUI()
         configureDataSource()
     }
@@ -41,7 +45,6 @@ class LivePickingViewController: UIViewController {
         magicTimer.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         magicTimer.mode = .countDown(fromSeconds: Double(remainTime / 1000))
         magicTimer.delegate = self
-        magicTimer.startCounting()
     }
     
     func configureDataSource() {
@@ -50,16 +53,29 @@ class LivePickingViewController: UIViewController {
             guard let `self` = self else {
                 fatalError()
             }
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(ChoiceCell.self)", for: indexPath)
-                    as? ChoiceCell else {
-                fatalError("error of ChoiceCell cannot be instatiated")
-            }
-            if let livePicker = self.livePicker {
-                cell.configure(title: livePicker.contents[result.choice], result: result)
+            if self.livePicker?.type == 0 {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(ChoiceCell.self)", for: indexPath)
+                        as? ChoiceCell else {
+                    fatalError("error of ChoiceCell cannot be instatiated")
+                }
+                if let livePicker = self.livePicker {
+                    cell.configure(title: livePicker.contents[result.choice], result: result)
+                } else {
+                    fatalError("livePicker no data")
+                }
+                return cell
             } else {
-                fatalError("livePicker no data")
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(ChoiceImageCell.self)", for: indexPath)
+                        as? ChoiceImageCell else {
+                    fatalError("error of ChoiceImageCell cannot be instatiated")
+                }
+                if let livePicker = self.livePicker {
+                    cell.configure(url: livePicker.contents[result.choice], result: result)
+                } else {
+                    fatalError("livePicker no data")
+                }
+                return cell
             }
-            return cell
         }
     }
     
@@ -105,6 +121,16 @@ class LivePickingViewController: UIViewController {
         myTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
     }
     
+    func addCountDownAnimation() {
+        animationView = .init(name: "countDown")
+        animationView?.loopMode = .playOnce
+        animationView?.frame = CGRect(x: 0, y: SPConstant.screenHeight / 4, width: SPConstant.screenWidth, height: SPConstant.screenHeight / 2)
+        animationView?.contentMode = .scaleAspectFill
+        animationView?.animationSpeed = 1
+        view.addSubview(animationView!)
+//        view.sendSubviewToBack(animationView!)
+    }
+    
     func updateUI() {
         if let livePicker = livePicker {
             titleLabel.text = livePicker.title
@@ -115,12 +141,12 @@ class LivePickingViewController: UIViewController {
     @objc func updateCounter() {
         if counter > 0 {
             counter -= 1
-            countdownLabel.text = counter == 0 ? "開始" : "\(counter)"
         } else {
             bgView.isHidden = true
-            addResultListener()
             setUpTimer()
+            addResultListener()
             myTimer?.invalidate()
+            magicTimer.startCounting()
         }
     }
     
@@ -150,6 +176,7 @@ extension LivePickingViewController: MagicTimerViewDelegate {
             }
             if let livePicker = livePicker {
                 resultVC.mode = .forLive
+                print(livePicker, "data is here")
                 resultVC.livePickInfo = livePicker
                 resultVC.modalPresentationStyle = .fullScreen
                 present(resultVC, animated: true)

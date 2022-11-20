@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "public picker.png",
+      "filename" : "opinions (1).png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "opinions (2).png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "opinions (3).png",
       "idiom" : "universal",
       "scale" : "3x"
     }

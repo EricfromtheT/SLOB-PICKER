@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class PickViewController: UIViewController {
     @IBOutlet weak var pickTableView: UITableView! {
@@ -32,6 +33,7 @@ class PickViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
+        ProgressHUD.animationType = .lineScaling
     }
     
     func configureNavigation() {
@@ -40,6 +42,7 @@ class PickViewController: UIViewController {
     
     // confirm your selecting result
     @objc func donePick() {
+        ProgressHUD.show()
         if let chosenIndex = chosenIndex, let pickerID = pickerID {
             switch mode {
             case .forPrivate:
@@ -65,6 +68,7 @@ class PickViewController: UIViewController {
             present(alert, animated: true)
         }
         navigationController?.popToRootViewController(animated: true)
+        ProgressHUD.dismiss()
     }
 }
 

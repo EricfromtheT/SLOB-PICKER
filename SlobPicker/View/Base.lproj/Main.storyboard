@@ -59,9 +59,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dye-xI-sih">
-                                <rect key="frame" x="157.66666666666666" y="411" width="75" height="35"/>
+                                <rect key="frame" x="165.66666666666666" y="411" width="59" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="登入"/>
                                 <connections>
                                     <action selector="done" destination="Yuo-5I-LsW" eventType="touchUpInside" id="d9y-B6-yYe"/>
                                 </connections>
@@ -70,6 +70,7 @@
                                 <rect key="frame" x="10" y="560" width="370" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="370" id="U0W-mL-WO0"/>
                                     <constraint firstAttribute="height" constant="50" id="Xvv-Xc-ioz"/>
                                 </constraints>
                             </view>
@@ -78,9 +79,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2Ya-ZV-tl6" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="1Zu-nU-1Kk"/>
+                            <constraint firstItem="xcx-nh-4DO" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="Aqg-eK-4Tf"/>
                             <constraint firstItem="b1e-Ei-UxQ" firstAttribute="bottom" secondItem="xcx-nh-4DO" secondAttribute="bottom" constant="200" id="FlY-HN-Gj3"/>
-                            <constraint firstItem="b1e-Ei-UxQ" firstAttribute="trailing" secondItem="xcx-nh-4DO" secondAttribute="trailing" constant="10" id="RSj-Uc-pBp"/>
-                            <constraint firstItem="xcx-nh-4DO" firstAttribute="leading" secondItem="b1e-Ei-UxQ" secondAttribute="leading" constant="10" id="TbH-bo-Fea"/>
                             <constraint firstItem="Dye-xI-sih" firstAttribute="centerY" secondItem="b1e-Ei-UxQ" secondAttribute="centerY" id="cFb-Pm-NEA"/>
                             <constraint firstItem="Dye-xI-sih" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="h4l-WG-0AU"/>
                             <constraint firstItem="2Ya-ZV-tl6" firstAttribute="top" secondItem="b1e-Ei-UxQ" secondAttribute="top" constant="120" id="iya-um-tJw"/>
@@ -97,6 +97,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2p-hL-peb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1543" y="28"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Zx9-Ua-fI3">
+            <objects>
+                <viewController id="aQY-BW-s41" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="olr-5x-cqS">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="W49-5H-EKX"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XPX-xS-IHQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2412" y="28"/>
         </scene>
         <!--PickerSelection-->
         <scene sceneID="2n3-QN-fRg">

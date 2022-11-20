@@ -9,7 +9,12 @@ import UIKit
 
 class SearchIDViewController: UIViewController {
     @IBOutlet weak var idTextField: UITextField!
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView! {
+        didSet {
+            profileImageView.layer.cornerRadius
+            = profileImageView.bounds.width / 2
+        }
+    }
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sendInvitationButton: UIButton! {
         didSet {
@@ -35,7 +40,7 @@ class SearchIDViewController: UIViewController {
                     self.userInfo = userInfo
                     self.isRealUser = true
                 case .failure(let error):
-                    if error as? UserError == UserError.nodata {
+                    if error as? UserError == .nodata {
                         self.showNoUserPrompt()
                     } else {
                         print(error, "ERROR of fetching single user info")

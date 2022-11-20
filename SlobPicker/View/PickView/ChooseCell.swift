@@ -59,10 +59,12 @@ class ChooseCell: UITableViewCell {
             stackView.addArrangedSubview(imageView)
             self.contentView.addSubview(button)
             // Attribute
+            imageView.layer.cornerRadius = 20
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.loadImage(optionsURLString[unit])
+            button.tag = unit
             button.translatesAutoresizingMaskIntoConstraints = false
             button.setTitle("", for: .normal)
             button.addTarget(self, action: #selector(choose), for: .touchUpInside)

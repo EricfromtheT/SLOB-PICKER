@@ -106,6 +106,13 @@ class PickerSelectionViewController: UIViewController {
         let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
         navigationItem.rightBarButtonItems = [compose, relationship]
+        let menu = UIMenu(children: [
+            UIAction(title: "登出") { action in
+                FirebaseManager.shared.logOut()
+            }
+        ])
+        let profile = UIBarButtonItem(image: UIImage(systemName: "person"), menu: menu)
+        navigationItem.leftBarButtonItem = profile
         dropDown.anchorView = navigationItem.rightBarButtonItem
         dropDown.width = 200
         dropDown.dataSource = ["創建群組", "添加好友"]

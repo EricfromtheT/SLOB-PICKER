@@ -10,6 +10,8 @@ import UIKit
 
 enum assetImage: String {
     case Icons_24px_CleanAll
+    case image
+    case deleteButton
 }
 
 extension UIImage {

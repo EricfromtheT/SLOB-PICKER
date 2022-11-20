@@ -9,9 +9,7 @@ import UIKit
 
 protocol TitleInputDelegate: AnyObject{
     func segmentModeHasChanged(mode: PickerType)
-    
     func titleHasChanged(title: String)
-    
     func dpHasChanged(description: String)
 }
 
@@ -25,6 +23,9 @@ class TitleInputCell: UITableViewCell {
     func configure() {
         titleTextField.delegate = self
         dpTextView.delegate = self
+        dpTextView.layer.cornerRadius = 10
+        dpTextView.layer.borderWidth = 1.5
+        dpTextView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     @IBAction func changeMode(_ sender: UISegmentedControl) {
@@ -38,16 +39,22 @@ class TitleInputCell: UITableViewCell {
 }
 
 extension TitleInputCell: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if let content = textField.text {
+//            delegate?.titleHasChanged(title: content)
+//        }
+//
+//    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
         if let content = textField.text {
             delegate?.titleHasChanged(title: content)
         }
-        
     }
 }
 
 extension TitleInputCell: UITextViewDelegate {
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidChangeSelection(_ textView: UITextView) {
         if let content = textView.text {
             delegate?.dpHasChanged(description: content)
         }

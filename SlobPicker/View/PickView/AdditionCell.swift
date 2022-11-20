@@ -16,7 +16,13 @@ class AdditionCell: UITableViewCell {
 }
 
 extension AdditionCell: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if let text = textField.text {
+//            completion?(text)
+//        }
+//    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
         if let text = textField.text {
             completion?(text)
         }

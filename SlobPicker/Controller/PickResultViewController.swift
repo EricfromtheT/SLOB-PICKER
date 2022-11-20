@@ -49,12 +49,12 @@ class PickResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ProgressHUD.animationType = .lineScaling
+        ProgressHUD.show()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        ProgressHUD.animationType = .lineScaling
-        ProgressHUD.show()
     }
     
     func fetchResult(pickID: String) {
@@ -80,8 +80,10 @@ class PickResultViewController: UIViewController {
             self.group.leave()
         }
         group.notify(queue: DispatchQueue.main) {
-            self.resultTableView.reloadData()
-            ProgressHUD.dismiss()
+            if let tableView = self.resultTableView {
+                tableView.reloadData()
+                ProgressHUD.dismiss()
+            }
         }
     }
     
@@ -130,13 +132,21 @@ extension PickResultViewController: UITableViewDataSource {
             switch mode {
             case .forLive:
                 if let pickInfo = livePickInfo {
-                    cell.configureLive(results: voteResults, data: pickInfo)
+                    if pickInfo.type == 0 {
+                        cell.configureLive(results: voteResults, data: pickInfo)
+                    } else {
+                        cell.configureLiveImage(results: voteResults, data: pickInfo)
+                    }
                 } else {
                     print("ERROR: pickInfo is nil")
                 }
             default:
                 if let pickInfo = pickInfo {
-                    cell.configure(results: voteResults, data: pickInfo)
+                    if pickInfo.type == 0 {
+                        cell.configure(results: voteResults, data: pickInfo)
+                    } else {
+                        cell.configureImage(results: voteResults, data: pickInfo)
+                    }
                 } else {
                     print("ERROR: pickInfo is nil")
                 }

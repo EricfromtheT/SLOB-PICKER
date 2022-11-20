@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import DGElasticPullToRefresh
 import Lottie
 
 class EntranceViewController: UIViewController {
@@ -17,10 +16,9 @@ class EntranceViewController: UIViewController {
     }
     @IBOutlet weak var entryButton: UIButton!
     var roomID: String?
-    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     var animationView: LottieAnimationView?
     let textFieldWidth = 300
-    let entryButtonWidth = 150
+    let entryButtonWidth = 250
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,13 +56,14 @@ class EntranceViewController: UIViewController {
     }
     
     func setUpEntryButton() {
-        entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - entryButtonWidth) / 2, y: Int(SPConstant.screenHeight), width: entryButtonWidth, height: 30)
+        entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - entryButtonWidth) / 2, y: Int(SPConstant.screenHeight), width: entryButtonWidth, height: 50)
+        entryButton.layer.cornerRadius = 10
     }
     
     func animateElement() {
         UIView.animate(withDuration: 0.4) {
             self.roomIDTextField.frame = CGRect(x: (Int(SPConstant.screenWidth) - self.textFieldWidth) / 2, y: Int(SPConstant.screenHeight) / 2 - 100, width: self.textFieldWidth, height: 40)
-            self.entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - self.entryButtonWidth) / 2, y: Int(SPConstant.screenHeight) / 2 + 100, width: self.entryButtonWidth, height: 30)
+            self.entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - self.entryButtonWidth) / 2, y: Int(SPConstant.screenHeight) / 2 + 100, width: self.entryButtonWidth, height: 50)
             self.view.layoutIfNeeded()
         }
     }
@@ -126,5 +125,6 @@ extension EntranceViewController: UITextFieldDelegate {
         if let content = textField.text {
             self.roomID = content
         }
+        
     }
 }

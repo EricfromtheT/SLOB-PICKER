@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "public-relation.png",
+      "filename" : "public-relation (1).png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "public-relation (2).png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "public-relation (3).png",
       "idiom" : "universal",
       "scale" : "3x"
     }

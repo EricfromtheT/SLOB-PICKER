@@ -9,6 +9,7 @@ import UIKit
 import DGElasticPullToRefresh
 import ViewAnimator
 import FirebaseAuth
+import DropDown
 
 class PublicViewController: UIViewController {
     @IBOutlet weak var hotTableView: UITableView! {
@@ -21,6 +22,7 @@ class PublicViewController: UIViewController {
     
     let group = DispatchGroup()
     let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+    let relationshipDropDown = DropDown()
     var newest: [Picker] = []
     var hottest: [Picker] = []
     private let animations = [AnimationType.from(direction: .top, offset: 30)]
@@ -28,6 +30,7 @@ class PublicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDGE()
+        setUpNavigation()
         // check whether user has logged in
         Auth.auth().addStateDidChangeListener { auth, user in
             
@@ -99,6 +102,59 @@ class PublicViewController: UIViewController {
             UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.6)
         }
     }
+    
+    func setUpNavigation() {
+        navigationItem.title = "群組Pick"
+        // set up bar button
+        let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
+        let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
+        navigationItem.rightBarButtonItems = [compose, relationship]
+        let menu = UIMenu(children: [
+            UIAction(title: "登出") { action in
+                FirebaseManager.shared.logOut()
+            }
+        ])
+        let profile = UIBarButtonItem(image: UIImage(systemName: "person"), menu: menu)
+        navigationItem.leftBarButtonItem = profile
+        // relationship
+        relationshipDropDown.anchorView = navigationItem.rightBarButtonItem
+        relationshipDropDown.width = 200
+        relationshipDropDown.dataSource = ["創建群組", "添加好友"]
+        relationshipDropDown.direction = .bottom
+        relationshipDropDown.bottomOffset = CGPoint(x: 0, y: 40)
+        relationshipDropDown.selectionAction = { index, _ in
+            let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
+            if index == 1 {
+                guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
+                    print("ERROR: SearchIDViewController didn't instanciate")
+                    return
+                }
+                self.show(friendVC, sender: self)
+            } else {
+                guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupCreateViewController.self)")
+                        as? GroupCreateViewController else {
+                    print("ERROR: GroupCreateViewController didn't instanciate")
+                    return
+                }
+                self.show(groupVC, sender: self)
+            }
+        }
+    }
+    
+    @objc func createNewGroup() {
+        relationshipDropDown.show()
+    }
+    
+    // call pickEditorViewController to edit a new picker
+    @objc func compose() {
+        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)")
+                as? PickerEditorViewController else {
+            fatalError("ERROR: cannot instantiate PickEditorViewController")
+        }
+        show(editorVC, sender: self)
+    }
+
 }
 
 // MARK: TableView DataSource

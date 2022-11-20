@@ -21,7 +21,13 @@ class TextOptionsCell: UITableViewCell {
 }
 
 extension TextOptionsCell: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if let content = textField.text {
+//            self.completion?(content, textField.tag)
+//        }
+//    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
         if let content = textField.text {
             self.completion?(content, textField.tag)
         }

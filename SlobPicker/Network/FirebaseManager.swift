@@ -8,6 +8,7 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseStorage
+import FirebaseAuth
 
 enum UserError: Error {
     case nodata
@@ -317,13 +318,13 @@ class FirebaseManager {
             }
         }
     }
-    
+//    whereField("created_time", isGreaterThan: mlseconds)
     func fetchHottestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
         let calendar = Calendar.current
         let date = Date()
         let today = calendar.startOfDay(for: date)
         let mlseconds = today.millisecondsSince1970
-        database.collection("publicPickers").whereField("created_time", isGreaterThan: mlseconds).order(by: "created_time", descending: true).limit(to: 10).order(by: "picked_count", descending: true).getDocuments { qrry, error in
+        database.collection("publicPickers").order(by: "picked_count", descending: true).limit(to: 10).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {
@@ -456,7 +457,7 @@ class FirebaseManager {
     func startLivePick(livePickerID: String, status: String , completion: @escaping (Result<String, Error>) -> Void) {
         database.collection("livePickers").document(livePickerID).updateData([
             "status": status,
-            "start_time": Date().millisecondsSince1970 + 9000
+            "start_time": Date().millisecondsSince1970 + 4500
         ]) { error in
             if let error = error {
                 completion(.failure(error))
@@ -480,6 +481,16 @@ class FirebaseManager {
             } else {
                 completion(.success("Success"))
             }
+        }
+    }
+    
+    // Authentication
+    func logOut() {
+        let auth = Auth.auth()
+        do {
+            try auth.signOut()
+        } catch let error as NSError {
+            print("error signing out: %@", error)
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import ProgressHUD
 
 class PickerEditorViewController: UIViewController {
     @IBOutlet weak var editorTableView: UITableView! {
@@ -36,7 +37,7 @@ class PickerEditorViewController: UIViewController {
     let semaphore = DispatchSemaphore(value: 0)
     
     // Image mode properties
-    var imageUploadCompletely: ((String, Int) -> Void)?
+    var imageUploadCompletely: ((String, UIImage, Int) -> Void)?
     var clickIndex: Int?
     
     // others' properties
@@ -47,6 +48,7 @@ class PickerEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigation()
+        ProgressHUD.animationType = .lineScaling
     }
     
     func setUpNavigation() {
@@ -54,6 +56,7 @@ class PickerEditorViewController: UIViewController {
     }
     
     @objc func uploadContent() {
+        ProgressHUD.show()
         guard let data = willBeUploadedImages else { fatalError("UIImages have not been found") }
         for image in data {
             // transform image file type
@@ -120,7 +123,7 @@ class PickerEditorViewController: UIViewController {
                 self.publish(picker: &publicPicker)
             case .forLive:
                 let random = String(Int.random(in: 100000...999999))
-                var livePicker = LivePicker(accessCode: random, authorID: FakeUserInfo.shared.userID, status: "waiting", contents: contents, title: title, description: inputDp ?? "")
+                var livePicker = LivePicker(accessCode: random, authorID: FakeUserInfo.shared.userID, status: "waiting", contents: contents, title: title, description: inputDp ?? "", type: type)
                 let passPicker = livePicker
                 FirebaseManager.shared.publishLivePicker(picker: &livePicker) { result in
                     switch result {
@@ -201,6 +204,7 @@ class PickerEditorViewController: UIViewController {
         case .forLive:
             break
         }
+        ProgressHUD.dismiss()
     }
 }
 // MARK: TableViewDataSource
@@ -227,19 +231,29 @@ extension PickerEditorViewController: UITableViewDataSource {
                 cell.configure()
                 cell.completion = { content, index in
                     if self.willBeUploadedStrings?.count ?? 0 >= index + 1 {
-                        self.willBeUploadedStrings?.remove(at: index)
-                        self.willBeUploadedStrings?.insert(content, at: index)
+                        self.willBeUploadedStrings?[index] = content
                     } else {
                         self.willBeUploadedStrings?.append(content)
                     }
-                    
                 }
                 return cell
             case .imageType:
                 self.willBeUploadedStrings = []
-                guard let cell = tableView.dequeueReusableCell(withIdentifier:
-                                                                "\(ImageOptionsCell.self)", for: indexPath) as? ImageOptionsCell else {
+                guard let cell = tableView
+                    .dequeueReusableCell(withIdentifier: "\(ImageOptionsCell.self)",
+                                         for: indexPath) as? ImageOptionsCell else {
                     fatalError("ERROR: ImageOptionsCell broke")
+                }
+                cell.deleteCompletion = { index in
+                    print(index)
+                    if index + 1 >= self.willBeUploadedImages?.count ?? 0 {
+                        if let idx = self.willBeUploadedImages?.endIndex {
+                            self.willBeUploadedImages?.remove(at: idx-1)
+                        }
+                    } else {
+                        self.willBeUploadedImages?.remove(at: index)
+                    }
+                    print(self.willBeUploadedImages?.count, "count of images")
                 }
                 cell.configure(superVC: self)
                 return cell
@@ -313,12 +327,11 @@ extension PickerEditorViewController: PHPickerViewControllerDelegate {
                     // TODO: 需要限制圖片上傳順序，按鈕依序開放 or else error
                     if let filename = itemProvider.suggestedName, let index = self.clickIndex {
                         if self.willBeUploadedImages?.count ?? 0 >= index + 1 {
-                            self.willBeUploadedImages?.remove(at: index)
-                            self.willBeUploadedImages?.insert(image, at: index)
+                            self.willBeUploadedImages?[index] = image
                         } else {
                             self.willBeUploadedImages?.append(image)
                         }
-                        self.imageUploadCompletely?(filename, index)
+                        self.imageUploadCompletely?(filename, image, index)
                     }
                 }
             }

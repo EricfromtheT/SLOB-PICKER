@@ -91,6 +91,7 @@ struct LivePicker: Codable {
     var contents: [String]
     var title: String
     var description: String
+    var type: Int
     
     enum CodingKeys: String, CodingKey {
         case accessCode = "access_code"
@@ -101,6 +102,7 @@ struct LivePicker: Codable {
         case contents
         case title
         case description
+        case type
     }
 }
 
