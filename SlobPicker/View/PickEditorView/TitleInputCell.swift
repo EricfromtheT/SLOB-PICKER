@@ -23,9 +23,11 @@ class TitleInputCell: UITableViewCell {
     func configure() {
         titleTextField.delegate = self
         dpTextView.delegate = self
-        dpTextView.layer.cornerRadius = 10
-        dpTextView.layer.borderWidth = 1.5
-        dpTextView.layer.borderColor = UIColor.lightGray.cgColor
+        dpTextView.layer.cornerRadius = 8
+        dpTextView.layer.borderWidth = 1.2
+        dpTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        dpTextView.text = "請輸入描述內容"
+        dpTextView.textColor = UIColor.lightGray
     }
     
     @IBAction func changeMode(_ sender: UISegmentedControl) {
@@ -39,13 +41,6 @@ class TitleInputCell: UITableViewCell {
 }
 
 extension TitleInputCell: UITextFieldDelegate {
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if let content = textField.text {
-//            delegate?.titleHasChanged(title: content)
-//        }
-//
-//    }
-    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if let content = textField.text {
             delegate?.titleHasChanged(title: content)
@@ -57,6 +52,20 @@ extension TitleInputCell: UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
         if let content = textView.text {
             delegate?.dpHasChanged(description: content)
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "請輸入描述內容"
+            textView.textColor = UIColor.lightGray
         }
     }
 }
