@@ -28,7 +28,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyV-kb-UPh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1208" y="-38"/>
+            <point key="canvasLocation" x="-1192" y="-20"/>
         </scene>
         <!--Public View Controller-->
         <scene sceneID="s0d-6b-0kx">
@@ -40,7 +40,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WLA-GB-ugH">
                                 <rect key="frame" x="0.0" y="91" width="390" height="670"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HotCell" id="6CI-CE-6Ae" customClass="HotCell" customModule="SlobPicker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="390" height="44"/>
@@ -51,7 +51,7 @@
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Kcy-N0-Kyt">
                                                     <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m0R-WW-02V">
                                                         <size key="itemSize" width="371" height="234"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -175,6 +175,7 @@
                                                     </cells>
                                                 </collectionView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Kcy-N0-Kyt" secondAttribute="bottom" id="4Rs-xz-AMC"/>
                                                 <constraint firstItem="Kcy-N0-Kyt" firstAttribute="top" secondItem="h3k-MF-9g3" secondAttribute="top" id="acM-9v-Suw"/>
@@ -182,6 +183,7 @@
                                                 <constraint firstItem="Kcy-N0-Kyt" firstAttribute="leading" secondItem="h3k-MF-9g3" secondAttribute="leading" id="gqe-PD-N93"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="hotPickerCollectionView" destination="Kcy-N0-Kyt" id="jve-VG-zye"/>
                                         </connections>
@@ -206,7 +208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-252.30769230769229" y="-37.677725118483409"/>
+            <point key="canvasLocation" x="-268" y="-21"/>
         </scene>
     </scenes>
     <resources>
