@@ -167,7 +167,6 @@ extension LivePickingViewController: MagicTimerViewDelegate {
         if elapsedTime == TimeInterval(floatLiteral: 0) {
             // show result controller
             self.presentedViewController?.dismiss(animated: true)
-            print("Times up")
             timer.stopCounting()
             timer.isActiveInBackground = false
             let storyboard = UIStoryboard(name: "PickerSelection", bundle: nil)
@@ -176,7 +175,6 @@ extension LivePickingViewController: MagicTimerViewDelegate {
             }
             if let livePicker = livePicker {
                 resultVC.mode = .forLive
-                print(livePicker, "data is here")
                 resultVC.livePickInfo = livePicker
                 resultVC.modalPresentationStyle = .fullScreen
                 present(resultVC, animated: true)

@@ -732,7 +732,7 @@
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                        <color key="value" systemColor="systemBackgroundColor"/>
+                                        <color key="value" name="navigationbar"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
                                         <real key="value" value="25"/>
@@ -868,6 +868,9 @@
         </namedColor>
         <namedColor name="card3right">
             <color red="0.96078431372549022" green="0.40000000000000002" blue="0.41960784313725491" alpha="0.89999997615814209" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="navigationbar">
+            <color red="0.59607843137254901" green="0.43529411764705883" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="navigationbar2">
             <color red="0.32156862745098042" green="0.48627450980392156" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

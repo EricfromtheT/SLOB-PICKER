@@ -173,6 +173,7 @@ class PickerEditorViewController: UIViewController {
                 }
             }
         }
+        ProgressHUD.dismiss()
     }
     
     func publish(picker: inout Picker) {
@@ -253,7 +254,6 @@ extension PickerEditorViewController: UITableViewDataSource {
                     } else {
                         self.willBeUploadedImages?.remove(at: index)
                     }
-                    print(self.willBeUploadedImages?.count, "count of images")
                 }
                 cell.configure(superVC: self)
                 return cell
