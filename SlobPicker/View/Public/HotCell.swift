@@ -12,7 +12,7 @@ class HotCell: UITableViewCell {
         didSet {
             hotPickerCollectionView.dataSource = self
             hotPickerCollectionView.delegate = self
-            hotPickerCollectionView.heightAnchor.constraint(equalToConstant: SPConstant.screenHeight * 0.2).isActive = true
+            hotPickerCollectionView.heightAnchor.constraint(equalToConstant: 160).isActive = true
         }
     }
     
@@ -125,7 +125,7 @@ extension HotCell: UICollectionViewDataSource {
 
 extension HotCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: SPConstant.screenWidth * 0.55, height: SPConstant.screenHeight * 0.2)
+        CGSize(width: SPConstant.screenWidth * 0.55, height: 160)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
