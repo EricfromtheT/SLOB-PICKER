@@ -127,7 +127,7 @@ class WaitingRoomViewController: UIViewController {
                     }
                     self.attendees = attendeeData
                     NSObject.cancelPreviousPerformRequests(withTarget: self)
-                    self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 0.3)
+                    self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 0.5)
                 } catch {
                     print(error, "error of decoding LivePicker data")
                 }

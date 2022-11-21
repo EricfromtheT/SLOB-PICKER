@@ -80,6 +80,7 @@ class FriendSelectViewController: UIViewController {
     }
 }
 
+// MARK: TableView datasource
 extension FriendSelectViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(FriendSelectCell.self)", for: indexPath) as? FriendSelectCell else {
@@ -95,6 +96,7 @@ extension FriendSelectViewController: UITableViewDataSource {
     }
 }
 
+// MARK: TableView Delegate
 extension FriendSelectViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: IndexPath(row: indexPath.row, section: 0)) as? FriendSelectCell else {

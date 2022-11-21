@@ -21,7 +21,9 @@ class HotPickerCell: UICollectionViewCell {
     var pickerID: String = ""
     var hasLikedC: Bool = false
     var hasPickedC: Bool = false
-    var clickCompletion: (() -> ())?
+    var goPickCompletion: (() -> ())?
+    var likedCompletion: (() -> ())?
+    var dislikedCompletion: (() -> ())?
     var leftColor: [UIColor?] = [UIColor.asset(.card1left), UIColor.asset(.card2left), UIColor.asset(.card3left), UIColor.asset(.card4left)]
     var rightColor: [UIColor?] = [UIColor.asset(.card1right), UIColor.asset(.card2right), UIColor.asset(.card3right), UIColor.asset(.card4right)]
     let gradientLayer = CAGradientLayer()
@@ -79,20 +81,22 @@ class HotPickerCell: UICollectionViewCell {
                 heartCountLabel.text = "\(num)"
                 heartImageView.image = UIImage(named: "empty-heart")
                 FirebaseManager.shared.dislikePicker(pickerID: pickerID)
-                hasLikedC.toggle()
+                hasLikedC = false
+                dislikedCompletion?()
             } else {
                 num += 1
                 heartCountLabel.text = "\(num)"
                 heartImageView.image = UIImage(named: "heart")
                 FirebaseManager.shared.likePicker(pickerID: pickerID)
-                hasLikedC.toggle()
+                hasLikedC = true
+                likedCompletion?()
             }
         }
     }
     
     @objc func goPick() {
         if !hasPickedC {
-            clickCompletion?()
+            goPickCompletion?()
         }
     }
 }

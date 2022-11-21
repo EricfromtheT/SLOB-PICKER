@@ -16,25 +16,35 @@ class HotCell: UITableViewCell {
         }
     }
     
+    var firstLoad = true
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 1)
+    
     var hottestPickers: [Picker] = [] {
         didSet {
+            if !hottestPickers.isEmpty {
+                data = hottestPickers
+            }
             let users = hottestPickers.map {
                 $0.authorID
             }
             fetchUser(userID: users)
         }
     }
-    
     var newestPickers: [Picker] = [] {
         didSet {
+            if !newestPickers.isEmpty {
+                data = newestPickers
+            }
             let users = newestPickers.map {
                 $0.authorID
             }
             fetchUser(userID: users)
         }
     }
+    
+
+    var data: [Picker] = []
     var mode: PublicMode = .hottest
     var usersInfo: [User] = []
     var superVC: PublicViewController?
@@ -69,6 +79,8 @@ class HotCell: UITableViewCell {
         let data = mode == .hottest ? hottestPickers : newestPickers
         pickVC.publicCompletion = {
             cell.picked()
+            self.data[indexPath.row].pickedIDs?.append(FakeUserInfo.shared.userID)
+            self.data[indexPath.row].pickedCount? += 1
             cell.pickImageView.isUserInteractionEnabled = false
         }
         pickVC.pickInfo = data[indexPath.row]
@@ -83,27 +95,31 @@ extension HotCell: UICollectionViewDataSource {
                 as? HotPickerCell else {
             fatalError("ERROR of instantiating HotPickerCell")
         }
-        var data: Picker?
-        switch mode {
-        case .hottest:
-            data = hottestPickers[indexPath.row]
-        case .newest:
-            data = newestPickers[indexPath.row]
-        }
-        if let data = data, let likedIDs = data.likedIDs, let pickedIDs = data.pickedIDs {
+        var picker: Picker?
+        picker = data[indexPath.row]
+        if let picker = picker, let likedIDs = picker.likedIDs, let pickedIDs = picker.pickedIDs {
             let user = usersInfo.filter { user in
-                user.userID == data.authorID
+                user.userID == picker.authorID
             }
-            cell.configure(data: data, imageURL: user[0].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID), index: indexPath.row)
+            cell.configure(data: picker, imageURL: user[0].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID), index: indexPath.row)
+            
+            cell.likedCompletion = {
+                self.data[indexPath.row].likedIDs?.append(FakeUserInfo.shared.userID)
+                self.data[indexPath.row].likedCount? += 1
+            }
+            cell.dislikedCompletion = {
+                self.data[indexPath.row].likedIDs?.removeAll(where: { $0 == FakeUserInfo.shared.userID })
+                self.data[indexPath.row].likedCount? -= 1
+            }
         }
-        cell.clickCompletion = {
+        cell.goPickCompletion = {
             self.showPickPage(indexPath: indexPath, cell: cell)
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        mode == .hottest ? hottestPickers.count : newestPickers.count
+        data.count
     }
 }
 
@@ -131,5 +147,4 @@ extension HotCell: UICollectionViewDelegate {
         resultVC.pickInfo = data[indexPath.row]
         superVC?.show(resultVC, sender: self)
     }
-
 }
