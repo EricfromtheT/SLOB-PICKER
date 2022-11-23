@@ -54,8 +54,9 @@ class LoginViewController: UIViewController {
         if let id = idField.text, let name = nameField.text {
             UserDefaults.standard.set(id, forKey: "userID")
             UserDefaults.standard.set(name, forKey: "userName")
-            FakeUserInfo.shared.userID = id
-            FakeUserInfo.shared.userName = name
+            // FIXME: 這個要改掉
+            UserInfo.shared.userID = id
+            UserInfo.shared.userName = name
             superVC.dismiss(animated: true)
         }
     }
@@ -104,7 +105,8 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential
             as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
@@ -134,21 +136,28 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     // User has signed in to Firebase with Apple
                     // See if this user is the new client
                     guard let auth = authResult else { fatalError("user is missed") }
-                    FirebaseManager.shared.searchUserID(userID: auth.user.uid) {
+                    FirebaseManager.shared.getUserInfo(userUUID: auth.user.uid) {
                         result in
                         switch result {
-                        case .success( _):
+                        case .success(let user):
                             // old user login in
-                            KeychainService.keychainManager.saveUserUID(uid: auth.user.uid)
-                            
+                            UserDefaults.standard.set(user.userID, forKey: UserInfo.userIDKey)
+                            UserDefaults.standard.set(user.userName, forKey: UserInfo.userNameKey)
+                            self.dismiss(animated: true)
                         case .failure(let error):
                             if error as? UserError == .nodata {
                                 // new user register and log in
-                                KeychainService.keychainManager.saveUserUID(uid: auth.user.uid)
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                guard let NewUserVC = storyboard.instantiateViewController(
+                                    withIdentifier: "\(NewUserViewController.self)") as? NewUserViewController
+                                else {
+                                    fatalError("New UserViewController cannot be instantiating")
+                                }
+                                NewUserVC.modalPresentationStyle = .fullScreen
+                                self.present(NewUserVC, animated: true)
                             } else {
                                 print(error, "error of getting user info")
                             }
-                            
                         }
                     }
                 }
@@ -156,7 +165,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         }
     }
     
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithError error: Error) {
         switch (error) {
         case ASAuthorizationError.canceled:
             break

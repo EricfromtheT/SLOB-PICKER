@@ -13,6 +13,7 @@ enum assetImage: String {
     case image
     case deleteButton
     case rainbow
+    case user
 }
 
 extension UIImage {

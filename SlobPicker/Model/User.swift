@@ -10,6 +10,7 @@ import Foundation
 struct User: Codable, Hashable {
     var userName: String
     var userID: String
+    var userUUID: String
     var profileURL: String
     // for live picker sorting
     var time: Int?
@@ -26,16 +27,17 @@ struct User: Codable, Hashable {
         case userName = "user_name"
         case userID = "user_id"
         case profileURL = "profile_url"
+        case userUUID = "user_uuid"
         case time
     }
 }
 
 struct Friend: Codable {
-    var userID: String
+    var userUUID: String
     var isHidden: Bool
     
     enum CodingKeys: String, CodingKey {
-        case userID = "user_id"
+        case userUUID = "user_uuid"
         case isHidden = "is_hidden"
     }
 }

@@ -16,8 +16,10 @@ enum UserError: Error {
 
 class FirebaseManager {
     static let shared = FirebaseManager()
+    static let auth = Auth.auth()
     let database = Firestore.firestore()
     let storageRef = Storage.storage().reference().child("imagesForPickers")
+    let profileImageRef = Storage.storage().reference().child("imagesForProfile")
     private let privatePickersRef = Firestore.firestore().collection("privatePickers")
     private let groupRef = Firestore.firestore().collection("groups")
     
@@ -39,7 +41,8 @@ class FirebaseManager {
     }
     
     func fetchAllPrivatePickers(completion: @escaping (Result<[Picker], Error>) -> Void) {
-        privatePickersRef.whereField("members_ids", arrayContains: FakeUserInfo.shared.userID).order(by: "created_time", descending: true).getDocuments { querySnapshot, error in
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        privatePickersRef.whereField("members_ids", arrayContains: uuid).order(by: "created_time", descending: true).getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -77,11 +80,12 @@ class FirebaseManager {
     
     func updatePrivateComment(comment: Comment, pickerID: String) {
         // TODO: change document path to real userID
-        privatePickersRef.document(pickerID).collection("all_comment").document(FakeUserInfo.shared.userID).setData([
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        privatePickersRef.document(pickerID).collection("all_comment").document(uuid).setData([
             "comment": comment.comment,
             "created_time": Date().millisecondsSince1970,
             "type": comment.type,
-            "user_id": FakeUserInfo.shared.userID
+            "user_uuid": uuid
         ]) { error in
             if let error = error {
                 print(error, "ERROR: updataPrivateComment method")
@@ -90,11 +94,12 @@ class FirebaseManager {
     }
     
     func updatePrivateResult(index: Int, pickerID: String) {
-        privatePickersRef.document(pickerID).collection("results").document(FakeUserInfo.shared.userID).setData([
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        privatePickersRef.document(pickerID).collection("results").document(uuid).setData([
             "choice": index,
             "created_time": Date().millisecondsSince1970,
             // change to new user
-            "user_id": FakeUserInfo.shared.userID
+            "user_uuid": uuid
         ]) { error in
             if let error = error {
                 print(error, "ERROR: updataPrivateResult method")
@@ -150,7 +155,36 @@ class FirebaseManager {
     }
     
     // MARK: Users
-    func searchUserID(userID: String, completion: @escaping (Result<User, Error>) -> Void) {
+    func createNewUser(user: inout User, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        let documentRef = database.collection("users").document(uuid)
+        do {
+            try documentRef.setData(from: user)
+            completion(.success("Success"))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func getUserInfo(userUUID: String, completion: @escaping (Result<User, Error>) -> Void) {
+        database.collection("users").document(userUUID).getDocument { qrry, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                do {
+                    if let userInfo = try qrry?.data(as: User.self) {
+                        completion(.success(userInfo))
+                    } else {
+                        completion(.failure(UserError.nodata))
+                    }
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func searchUser(userID: String, completion: @escaping (Result<User, Error>) -> Void) {
         database.collection("users").whereField("user_id", isEqualTo: userID).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
@@ -168,21 +202,23 @@ class FirebaseManager {
         }
     }
     
-    func addFriend(userID: String) {
+    func addFriend(userUUID: String) {
         // TODO: 不可讓雙方自動變為好友
         // add to yourself's
-        database.collection("users").document(FakeUserInfo.shared.userID).collection("friends").document(userID).setData([
+        // FIXME: 問題點，要先拿到對方的uuid
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("users").document(uuid).collection("friends").document(userUUID).setData([
             "is_hidden": false,
-            "user_id": userID
+            "user_uuid": userUUID
         ]) { error in
             if let error = error {
                 print(error, "ERROR: add friend to yourself")
             }
         }
         // add to friend's
-        database.collection("users").document(userID).collection("friends").document(FakeUserInfo.shared.userID).setData([
+        database.collection("users").document(userUUID).collection("friends").document(uuid).setData([
             "is_hidden": false,
-            "user_id": FakeUserInfo.shared.userID
+            "user_uuid": uuid
         ]) { error in
             if let error = error {
                 print(error, "ERROR: add friend to theirs'")
@@ -191,7 +227,8 @@ class FirebaseManager {
     }
     
     func fetchAllFriendsID(completion: @escaping (Result<[Friend], Error>) -> Void) {
-        database.collection("users").document(FakeUserInfo.shared.userID).collection("friends")
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("users").document(uuid).collection("friends")
             .whereField("is_hidden", isEqualTo: false).getDocuments { qrry, error in
                 if let error = error {
                     completion(.failure(error))
@@ -208,9 +245,9 @@ class FirebaseManager {
             }
     }
     
-    func fetchFriendsProfile(friendsID: [String], completion: @escaping (Result<[User], Error>) -> Void) {
+    func fetchFriendsProfile(friendsUUID: [String], completion: @escaping (Result<[User], Error>) -> Void) {
         // TODO: 一次最高可以填入10個friendsID
-        database.collection("users").whereField("user_id", in: friendsID).getDocuments { qrry, error in
+        database.collection("users").whereField("user_uuid", in: friendsUUID).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {
@@ -272,7 +309,8 @@ class FirebaseManager {
     }
     
     func fetchUserCurrentGroups(completion: @escaping (Result<[GroupInfo], Error>) -> Void) {
-        database.collection("users").document(FakeUserInfo.shared.userID).collection("groups").getDocuments {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("users").document(uuid).collection("groups").getDocuments {
             qrry, error in
             if let error = error {
                 completion(.failure(error))
@@ -341,35 +379,39 @@ class FirebaseManager {
     }
     
     func likePicker(pickerID: String) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         let ref = database.collection("publicPickers").document(pickerID)
         ref.updateData([
             "liked_count": FieldValue.increment(Int64(1)),
-            "liked_ids": FieldValue.arrayUnion([FakeUserInfo.shared.userID])
+            "liked_ids": FieldValue.arrayUnion([uuid])
         ])
     }
     
     func dislikePicker(pickerID: String) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         let ref = database.collection("publicPickers").document(pickerID)
         ref.updateData([
             "liked_count": FieldValue.increment(Int64(-1)),
-            "liked_ids": FieldValue.arrayRemove([FakeUserInfo.shared.userID])
+            "liked_ids": FieldValue.arrayRemove([uuid])
         ])
     }
     
     func pickPicker(pickerID: String) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         let ref = database.collection("publicPickers").document(pickerID)
         ref.updateData([
             "picked_count": FieldValue.increment(Int64(1)),
-            "picked_ids": FieldValue.arrayUnion([FakeUserInfo.shared.userID])
+            "picked_ids": FieldValue.arrayUnion([uuid])
         ])
     }
     
     func updatePublicComment(comment: Comment, pickerID: String) {
-        database.collection("publicPickers").document(pickerID).collection("all_comment").document(FakeUserInfo.shared.userID).setData([
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("publicPickers").document(pickerID).collection("all_comment").document(uuid).setData([
             "comment": comment.comment,
             "created_time": Date().millisecondsSince1970,
             "type": comment.type,
-            "user_id": FakeUserInfo.shared.userID
+            "user_uuid": uuid
         ]) { error in
             if let error = error {
                 print(error, "ERROR: updatePublicComment method")
@@ -378,11 +420,12 @@ class FirebaseManager {
     }
     
     func updatePublicResult(index: Int, pickerID: String) {
-        database.collection("publicPickers").document(pickerID).collection("results").document(FakeUserInfo.shared.userID).setData([
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("publicPickers").document(pickerID).collection("results").document(uuid).setData([
             "choice": index,
             "created_time": Date().millisecondsSince1970,
             // change to new user
-            "user_id": FakeUserInfo.shared.userID
+            "user_uuid": uuid
         ]) { error in
             if let error = error {
                 print(error, "ERROR: updataPublicResult method")
@@ -442,9 +485,10 @@ class FirebaseManager {
     }
     
     func attendLivePick(livePickerID: String, completion: @escaping (Result<String, Error>) -> Void) {
-        database.collection("livePickers").document(livePickerID).collection("attendees").document(FakeUserInfo.shared.userID).setData([
+        guard let userId = UserDefaults.standard.string(forKey: UserInfo.userIDKey) else { fatalError("No this user") }
+        database.collection("livePickers").document(livePickerID).collection("attendees").document(userId).setData([
             "attend_time": Date().millisecondsSince1970,
-            "user_id": FakeUserInfo.shared.userID
+            "user_id": userId
         ]) { error in
             if let error = error {
                 completion(.failure(error))
@@ -468,14 +512,16 @@ class FirebaseManager {
     }
     
     func voteForLivePicker(pickerID: String, choice: Int) {
-        database.collection("livePickers").document(pickerID).collection("results").document(FakeUserInfo.shared.userID).setData([
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("livePickers").document(pickerID).collection("results").document(uuid).setData([
             "choice": choice,
-            "user_id": FakeUserInfo.shared.userID
+            "user_id": uuid
         ])
     }
     
     func leaveLiveRoom(pickerID: String, completion: @escaping (Result<String, Error>) -> Void)  {
-        database.collection("livePickers").document(pickerID).collection("attendees").document(FakeUserInfo.shared.userID).delete() { error in
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("livePickers").document(pickerID).collection("attendees").document(uuid).delete() { error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -486,9 +532,8 @@ class FirebaseManager {
     
     // Authentication
     func logOut() {
-        let auth = Auth.auth()
         do {
-            try auth.signOut()
+            try FirebaseManager.auth.signOut()
         } catch let error as NSError {
             print("error signing out: %@", error)
         }

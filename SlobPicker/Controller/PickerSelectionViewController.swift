@@ -65,10 +65,10 @@ class PickerSelectionViewController: UIViewController {
         }
         semaphore.wait()
         //
-        let authors = Set(pickers.map { $0.authorID })
+        let authors = Set(pickers.map { $0.authorUUID })
         authors.forEach {
             group.enter()
-            FirebaseManager.shared.searchUserID(userID: $0) { result in
+            FirebaseManager.shared.getUserInfo(userUUID: $0) { result in
                 switch result {
                 case .success(let user):
                     self.users.append(user)
@@ -185,7 +185,7 @@ extension PickerSelectionViewController: UITableViewDataSource {
                 as? PickSelectionCell else {
             fatalError("ERROR: pickSelectionCell broke")
         }
-        let user = users.filter { $0.userID == pickers[indexPath.row].authorID }[0]
+        let user = users.filter { $0.userUUID == pickers[indexPath.row].authorUUID }[0]
         cell.configure(data: pickers[indexPath.row], index: indexPath.row, url: user.profileURL)
         return cell
     }
