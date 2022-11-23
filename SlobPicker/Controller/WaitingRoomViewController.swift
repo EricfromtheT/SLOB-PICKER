@@ -17,7 +17,8 @@ class WaitingRoomViewController: UIViewController {
     }
     @IBOutlet weak var startButton: UIButton! {
         didSet {
-            if livePicker?.authorID == FakeUserInfo.shared.userID {
+            guard let userId = userId else { fatalError("uuid in keychain is nil") }
+            if livePicker?.authorID == userId {
                 startButton.isHidden = false
             } else {
                 startButton.isHidden = true
@@ -39,6 +40,7 @@ class WaitingRoomViewController: UIViewController {
     var isFirstTime = true
     var livePicker: LivePicker?
     var attendees: [Attendee]?
+    let userId = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -66,7 +68,7 @@ class WaitingRoomViewController: UIViewController {
         }
         attendees?.forEach {
             group.enter()
-            FirebaseManager.shared.searchUserID(userID: $0.userID) { result in
+            FirebaseManager.shared.searchUser(userID: $0.userID) { result in
                 switch result {
                 case .success(var user):
                     // get the right attendee's ID

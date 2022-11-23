@@ -28,6 +28,7 @@ class PickViewController: UIViewController {
     private var additionalComment: String?
     var mode: PrivacyMode?
     var publicCompletion: (() -> Void)?
+    let uuid = FirebaseManager.auth.currentUser?.uid
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -43,19 +44,20 @@ class PickViewController: UIViewController {
     // confirm your selecting result
     @objc func donePick() {
         ProgressHUD.show()
+        guard let uuid = uuid else { fatalError("uuid in keychain is nil") }
         if let chosenIndex = chosenIndex, let pickerID = pickerID {
             switch mode {
             case .forPrivate:
                 FirebaseManager.shared.updatePrivateResult(index: chosenIndex, pickerID: pickerID)
                 if let comment = additionalComment, !comment.isEmpty {
-                    let commentInfo = Comment(userID: FakeUserInfo.shared.userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
+                    let commentInfo = Comment(userUUID: uuid, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
                     FirebaseManager.shared.updatePrivateComment(comment: commentInfo, pickerID: pickerID)
                 }
             case .forPublic:
                 publicCompletion?()
                 FirebaseManager.shared.updatePublicResult(index: chosenIndex, pickerID: pickerID)
                 if let comment = additionalComment, !comment.isEmpty {
-                    let commentInfo = Comment(userID: FakeUserInfo.shared.userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
+                    let commentInfo = Comment(userUUID: uuid, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
                     FirebaseManager.shared.updatePublicComment(comment: commentInfo, pickerID: pickerID)
                 }
                 FirebaseManager.shared.pickPicker(pickerID: pickerID)

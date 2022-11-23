@@ -21,11 +21,12 @@ class TitleInputCell: UITableViewCell {
     weak var delegate: TitleInputDelegate?
     
     func configure() {
+        modeSegment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .selected)
         titleTextField.delegate = self
         dpTextView.delegate = self
         dpTextView.layer.cornerRadius = 8
         dpTextView.layer.borderWidth = 1.2
-        dpTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        dpTextView.layer.borderColor = UIColor.systemGray6.cgColor
         dpTextView.text = "請輸入描述內容"
         dpTextView.textColor = UIColor.lightGray
     }

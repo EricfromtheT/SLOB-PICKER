@@ -31,9 +31,7 @@ class PublicViewController: UIViewController {
         super.viewDidLoad()
         setUpDGE()
         setUpNavigation()
-        // check whether user has logged in
         Auth.auth().addStateDidChangeListener { auth, user in
-            
             if user != nil {
                 print("user has logged in")
             } else {
@@ -154,7 +152,6 @@ class PublicViewController: UIViewController {
         }
         show(editorVC, sender: self)
     }
-
 }
 
 // MARK: TableView DataSource

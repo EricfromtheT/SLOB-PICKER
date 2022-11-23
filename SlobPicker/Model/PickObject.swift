@@ -32,6 +32,7 @@ struct Picker: Codable {
     var createdTime: Int?
     var authorID: String
     var authorName: String
+    var authorUUID: String
     // for private
     var groupID: String?
     var groupName: String?
@@ -55,17 +56,18 @@ struct Picker: Codable {
         case groupName = "group_name"
         case membersIDs = "members_ids"
         case pickedIDs = "picked_ids"
+        case authorUUID = "author_uuid"
     }
 }
 
 struct Comment: Codable {
-    var userID: String
+    var userUUID: String
     var type: Int
     var comment: String
     var createdTime: Int
     
     enum CodingKeys: String, CodingKey {
-        case userID = "user_id"
+        case userUUID = "user_uuid"
         case type
         case comment
         case createdTime = "created_time"
@@ -73,7 +75,7 @@ struct Comment: Codable {
     
     func toDict() -> [String: Any] {
         let dict: [String: Any] = [
-            "user_id": userID,
+            "user_uuid": userUUID,
             "type": type,
             "comment": comment,
             "created_time": createdTime

@@ -9,7 +9,7 @@ import UIKit
 
 class HotPickerCell: UICollectionViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userIDLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var heartImageView: UIImageView!
     @IBOutlet weak var heartCountLabel: UILabel!
@@ -38,8 +38,8 @@ class HotPickerCell: UICollectionViewCell {
         hasLikedC = hasLiked
         hasPickedC = hasPicked
         // content
-        profileImageView.loadImage(imageURL)
-        userNameLabel.text = data.authorName
+        profileImageView.loadImage(imageURL, placeHolder: UIImage.asset(.user))
+        userIDLabel.text = data.authorID
         titleLabel.text = data.title
         let heartImageName = hasLiked ? "heart" : "empty-heart"
         heartImageView.image = UIImage(named: heartImageName)
@@ -59,7 +59,7 @@ class HotPickerCell: UICollectionViewCell {
         bgView.layer.cornerRadius = 25
         bgView2.layer.cornerRadius = 22
         gradientLayer.cornerRadius = 25
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: SPConstant.screenWidth*0.55, height: 160)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: SPConstant.screenWidth*0.55, height: 165)
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         gradientLayer.colors = [leftColor[index % 4]?.cgColor , rightColor[index % 4]?.cgColor]

@@ -13,8 +13,8 @@ class FriendSelectCell: UITableViewCell {
     @IBOutlet weak var chosenMarkImageView: UIImageView!
     
     func configure(data: FriendListObject) {
-        profileImageView.loadImage(data.info.profileURL)
-        nameLabel.text = data.info.userName
+        profileImageView.loadImage(data.info.profileURL, placeHolder: UIImage.asset(.user))
+        nameLabel.text = data.info.userID
         chosenMarkImageView.image = UIImage(named: "check")
         chosenMarkImageView.isHidden = true
     }

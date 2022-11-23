@@ -28,10 +28,10 @@ class GroupCreateViewController: UIViewController {
             FirebaseManager.shared.fetchAllFriendsID { result in
                 switch result {
                 case .success(let friends):
-                    let friendsID = friends.map { friend in
-                        friend.userID
+                    let friendsUUID = friends.map { friend in
+                        friend.userUUID
                     }
-                    friendsVC.friendsID = friendsID
+                    friendsVC.friendsUUID = friendsUUID
                 case .failure(let error):
                     print(error, "ERROR of getting your friends' info")
                 }
