@@ -24,6 +24,7 @@ class PublicViewController: UIViewController {
     let relationshipDropDown = DropDown()
     var newest: [Picker] = []
     var hottest: [Picker] = []
+    var block: Set<String> = []
     private let animations = [AnimationType.from(direction: .top, offset: 30)]
     
     override func viewDidLoad() {
@@ -89,6 +90,21 @@ class PublicViewController: UIViewController {
             }
             self.group.leave()
         })
+        group.enter()
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        FirebaseManager.shared.getUserInfo(userUUID: uuid) { result in
+            switch result {
+            case .success(let user):
+                if let blockList = user.block {
+                    self.block = Set(blockList)
+                } else {
+                    print("user block list is not initialized")
+                }
+            case .failure(let error):
+                return print(error, "error of getting self user info")
+            }
+            self.group.leave()
+        }
         group.notify(queue: DispatchQueue.main) {
             self.hotTableView.reloadData()
             self.hotTableView.dg_stopLoading()
@@ -103,6 +119,10 @@ class PublicViewController: UIViewController {
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
         navigationItem.rightBarButtonItems = [compose, relationship]
         let menu = UIMenu(children: [
+            UIAction(title: "個人頁面") { action in
+                let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
+                self.show(profileVC, sender: self)
+            },
             UIAction(title: "登出") { action in
                 FirebaseManager.shared.logOut()
                 UserDefaults.standard.set(nil, forKey: UserInfo.userNameKey)
@@ -159,10 +179,16 @@ extension PublicViewController: UITableViewDataSource {
             fatalError("ERROR: cannot instantiate HotCell")
         }
         if indexPath.section == 0 {
-            cell.hottestPickers = hottest
+            let cleanHottest = hottest.filter {
+                !block.contains($0.authorUUID)
+            }
+            cell.hottestPickers = cleanHottest
             cell.mode = .hottest
         } else {
-            cell.newestPickers = newest
+            let cleanNewest = newest.filter {
+                !block.contains($0.authorUUID)
+            }
+            cell.newestPickers = cleanNewest
             cell.mode = .newest
         }
         cell.superVC = self

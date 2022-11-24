@@ -155,6 +155,34 @@ class FirebaseManager {
     }
     
     // MARK: Users
+    func block(authorID: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("users").document(uuid).updateData([
+            "block": FieldValue.arrayUnion([authorID])
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
+    func reportPicker(pickerID: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("reportedPost").document().setData([
+            "picker_id": pickerID,
+            "user_uuid": uuid,
+            "created_time": Date().millisecondsSince1970
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
     func createNewUser(user: inout User, completion: @escaping (Result<String, Error>) -> Void) {
         guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         let documentRef = database.collection("users").document(uuid)
@@ -340,7 +368,7 @@ class FirebaseManager {
     
     func fetchNewestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
         // newest picker
-        database.collection("publicPickers").order(by: "created_time", descending: true).limit(to: 10)
+        database.collection("publicPickers").order(by: "created_time", descending: true)
             .getDocuments{ qrry, error in
             if let error = error {
                 completion(.failure(error))
@@ -362,7 +390,7 @@ class FirebaseManager {
         let date = Date()
         let today = calendar.startOfDay(for: date)
         let mlseconds = today.millisecondsSince1970
-        database.collection("publicPickers").order(by: "picked_count", descending: true).limit(to: 10).getDocuments { qrry, error in
+        database.collection("publicPickers").order(by: "picked_count", descending: true).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {
@@ -530,7 +558,7 @@ class FirebaseManager {
         }
     }
     
-    // Authentication
+    // MARK: Authentication
     func logOut() {
         do {
             try FirebaseManager.auth.signOut()

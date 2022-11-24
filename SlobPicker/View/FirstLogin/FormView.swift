@@ -46,7 +46,7 @@ class FormView: UIView {
                 self.alertLabel.text = "ID不可為空"
                 self.alertLabel.textColor = .red
             } else {
-                self.alertLabel.text = "ID只可包含數字及英文字母"
+                self.alertLabel.text = "ID只可包含數字及小寫英文字母"
                 self.alertLabel.textColor = .red
             }
         }

@@ -12,6 +12,7 @@ struct User: Codable, Hashable {
     var userID: String
     var userUUID: String
     var profileURL: String
+    var block: [String]?
     // for live picker sorting
     var time: Int?
 
@@ -29,6 +30,7 @@ struct User: Codable, Hashable {
         case profileURL = "profile_url"
         case userUUID = "user_uuid"
         case time
+        case block
     }
 }
 
