@@ -10,7 +10,7 @@ import Foundation
 extension String {
     var isValid: Bool {
         return self.allSatisfy { character in
-            character.isNumber || character.isLetter
+            character.isNumber || character.isLowercase
         }
     }
 }

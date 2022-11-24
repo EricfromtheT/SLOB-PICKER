@@ -17,6 +17,7 @@ class HotPickerCell: UICollectionViewCell {
     @IBOutlet weak var pickImageView: UIImageView!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var bgView2: UIView!
+    @IBOutlet weak var optionalButton: UIButton!
     
     var pickerID: String = ""
     var hasLikedC: Bool = false
@@ -27,6 +28,7 @@ class HotPickerCell: UICollectionViewCell {
     var leftColor: [UIColor?] = [UIColor.asset(.card1left), UIColor.asset(.card2left), UIColor.asset(.card3left), UIColor.asset(.card4left)]
     var rightColor: [UIColor?] = [UIColor.asset(.card1right), UIColor.asset(.card2right), UIColor.asset(.card3right), UIColor.asset(.card4right)]
     let gradientLayer = CAGradientLayer()
+    var picker: Picker?
     
     func configure(data: Picker, imageURL: String, hasLiked: Bool, hasPicked: Bool, index: Int) {
         // assign
@@ -35,6 +37,7 @@ class HotPickerCell: UICollectionViewCell {
         } else {
             print("id is missing")
         }
+        picker = data
         hasLikedC = hasLiked
         hasPickedC = hasPicked
         // content
@@ -48,6 +51,7 @@ class HotPickerCell: UICollectionViewCell {
         heartCountLabel.text = "\(data.likedCount ?? 0 )"
         pickCountLabel.text = "\(data.pickedCount ?? 0 )"
         // setting
+        setUpOptionalButton()
         let heartGesture = UITapGestureRecognizer(target: self, action: #selector(clickLike))
         heartImageView.addGestureRecognizer(heartGesture)
         heartImageView.isUserInteractionEnabled = true
@@ -64,6 +68,39 @@ class HotPickerCell: UICollectionViewCell {
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         gradientLayer.colors = [leftColor[index % 4]?.cgColor , rightColor[index % 4]?.cgColor]
         bgView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func setUpOptionalButton() {
+        optionalButton.setTitle("", for: .normal)
+        optionalButton.showsMenuAsPrimaryAction = true
+        optionalButton.menu = UIMenu(children: [
+            UIAction(title: "檢舉此則投票", handler: { action in
+                FirebaseManager.shared.reportPicker(pickerID: self.pickerID) { result in
+                    switch result {
+                    case .success( _):
+                        let alert = UIAlertController(title: "檢舉完成", message: "我們將儘速審核該則投票", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+                        self.parentContainerViewController()?.present(alert, animated: true)
+                    case .failure(let error):
+                        print(error, "error of post report")
+                    }
+                }
+            }),
+            UIAction(title: "封鎖此作者", handler: { action in
+                if let picker = self.picker {
+                    FirebaseManager.shared.block(authorID: picker.authorUUID) { result in
+                        switch result {
+                        case .success( _):
+                            let alert = UIAlertController(title: "封鎖完成", message: "您將無法再看到此為作者的投票", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+                            self.parentContainerViewController()?.present(alert, animated: true)
+                        case .failure(let error):
+                            print(error, "error of block someone")
+                        }
+                    }
+                }
+            })
+        ])
     }
     
     func picked() {
