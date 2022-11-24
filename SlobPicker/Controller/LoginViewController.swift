@@ -21,8 +21,8 @@ class LoginViewController: UIViewController {
         // 如果是一直有在使用未刪app的用戶
         if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
             let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
-            self.view.window?.rootViewController = viewController
-            self.view.window?.makeKeyAndVisible()
+            UIApplication.shared.windows.first?.rootViewController = viewController
+            UIApplication.shared.windows.first?.makeKeyAndVisible()
         }
     }
     
@@ -133,7 +133,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     // User has signed in to Firebase with Apple
                     // See if this user is the new client
                     guard let auth = authResult else { fatalError("user is missed") }
-                    print(auth.user.uid)
                     FirebaseManager.shared.getUserInfo(userUUID: auth.user.uid) {
                         result in
                         switch result {

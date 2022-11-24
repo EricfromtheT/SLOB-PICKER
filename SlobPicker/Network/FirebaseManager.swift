@@ -167,12 +167,12 @@ class FirebaseManager {
     }
     
     func getUserInfo(userUUID: String, completion: @escaping (Result<User, Error>) -> Void) {
-        database.collection("users").document(userUUID).getDocument { qrry, error in
+        database.collection("users").whereField("user_uuid", isEqualTo: userUUID).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 do {
-                    if let userInfo = try qrry?.data(as: User.self) {
+                    if let userInfo = try qrry?.documents.first?.data(as: User.self) {
                         completion(.success(userInfo))
                     } else {
                         completion(.failure(UserError.nodata))

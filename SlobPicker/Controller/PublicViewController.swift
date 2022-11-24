@@ -58,10 +58,6 @@ class PublicViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    deinit {
-        hotTableView.dg_removePullToRefresh()
-    }
-    
     func setUpDGE() {
         loadingView.tintColor = UIColor.white
         hotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
