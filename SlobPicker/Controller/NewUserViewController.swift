@@ -154,8 +154,9 @@ class NewUserViewController: UIViewController {
                                     switch result {
                                     case .success( _):
                                         ProgressHUD.dismiss()
-                                        let rootVC = UIApplication.shared.windows.first?.rootViewController
-                                        rootVC?.dismiss(animated: true)
+                                        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+                                        self.view.window?.rootViewController = viewController
+                                        self.view.window?.makeKeyAndVisible()
                                     case .failure(let error):
                                         print(error, "error of add new document for user")
                                     }

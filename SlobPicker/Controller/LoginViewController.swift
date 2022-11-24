@@ -11,8 +11,6 @@ import FirebaseAuth
 import CryptoKit
 
 class LoginViewController: UIViewController {
-    @IBOutlet weak var idField: UITextField!
-    @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var appleLogInView: UIView!
     var superVC: PublicViewController!
     fileprivate var currentNonce: String?
@@ -20,6 +18,16 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpAppleButton()
+        // 如果是一直有在使用未刪app的用戶
+        if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
+            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+            self.view.window?.rootViewController = viewController
+            self.view.window?.makeKeyAndVisible()
+        }
+    }
+    
+    deinit {
+        print("login view controller has died")
     }
     
     func setUpAppleButton() {
@@ -48,17 +56,6 @@ class LoginViewController: UIViewController {
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-    }
-    
-    @IBAction func done() {
-        if let id = idField.text, let name = nameField.text {
-            UserDefaults.standard.set(id, forKey: "userID")
-            UserDefaults.standard.set(name, forKey: "userName")
-            // FIXME: 這個要改掉
-            UserInfo.shared.userID = id
-            UserInfo.shared.userName = name
-            superVC.dismiss(animated: true)
-        }
     }
     
     private func randomNonceString(length: Int = 32) -> String {
@@ -136,6 +133,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     // User has signed in to Firebase with Apple
                     // See if this user is the new client
                     guard let auth = authResult else { fatalError("user is missed") }
+                    print(auth.user.uid)
                     FirebaseManager.shared.getUserInfo(userUUID: auth.user.uid) {
                         result in
                         switch result {
@@ -143,7 +141,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             // old user login in
                             UserDefaults.standard.set(user.userID, forKey: UserInfo.userIDKey)
                             UserDefaults.standard.set(user.userName, forKey: UserInfo.userNameKey)
-                            self.dismiss(animated: true)
+                            // rootViewController change to tabbarviewcontroller
+                            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+                            self.view.window?.rootViewController = viewController
+                            self.view.window?.makeKeyAndVisible()
                         case .failure(let error):
                             if error as? UserError == .nodata {
                                 // new user register and log in
