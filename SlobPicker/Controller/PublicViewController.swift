@@ -8,7 +8,6 @@
 import UIKit
 import DGElasticPullToRefresh
 import ViewAnimator
-import FirebaseAuth
 import DropDown
 
 class PublicViewController: UIViewController {
@@ -31,7 +30,7 @@ class PublicViewController: UIViewController {
         super.viewDidLoad()
         setUpDGE()
         setUpNavigation()
-        Auth.auth().addStateDidChangeListener { auth, user in
+        FirebaseManager.auth.addStateDidChangeListener { auth, user in
             if user != nil {
                 print("user has logged in")
             } else {
@@ -57,10 +56,6 @@ class PublicViewController: UIViewController {
         navigationItem.titleView?.tintColor = .white
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    }
-    
-    deinit {
-        hotTableView.dg_removePullToRefresh()
     }
     
     func setUpDGE() {
@@ -110,6 +105,8 @@ class PublicViewController: UIViewController {
         let menu = UIMenu(children: [
             UIAction(title: "登出") { action in
                 FirebaseManager.shared.logOut()
+                UserDefaults.standard.set(nil, forKey: UserInfo.userNameKey)
+                UserDefaults.standard.set(nil, forKey: UserInfo.userIDKey)
             }
         ])
         let profile = UIBarButtonItem(image: UIImage(systemName: "person"), menu: menu)

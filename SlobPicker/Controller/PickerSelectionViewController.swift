@@ -47,11 +47,6 @@ class PickerSelectionViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    deinit {
-        pickersTableView.dg_removePullToRefresh()
-    }
-    
-    
     // MARK: SetUp
     func loadData() {
         FirebaseManager.shared.fetchAllPrivatePickers { result in
