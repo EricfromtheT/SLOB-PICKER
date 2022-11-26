@@ -11,7 +11,7 @@ class ChooseCell: UITableViewCell {
     var chosenImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.image = UIImage(named: "correct")
+        view.image = UIImage(named: "check")
         return view
     }()
     

@@ -25,8 +25,4 @@ class ProfileViewController: UIViewController {
         // 清空user在DB裡的資料
         // 刪除帳號
     }
-    
-    func deleteAppleID() {
-        
-    }
 }
