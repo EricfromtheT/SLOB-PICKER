@@ -80,12 +80,12 @@ class FirebaseManager {
     
     func updatePrivateComment(comment: Comment, pickerID: String) {
         // TODO: change document path to real userID
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        privatePickersRef.document(pickerID).collection("all_comment").document(uuid).setData([
+        privatePickersRef.document(pickerID).collection("all_comment").document(comment.userUUID).setData([
             "comment": comment.comment,
             "created_time": Date().millisecondsSince1970,
             "type": comment.type,
-            "user_uuid": uuid
+            "user_uuid": comment.userUUID,
+            "user_id": comment.userID
         ]) { error in
             if let error = error {
                 print(error, "ERROR: updataPrivateComment method")
@@ -138,7 +138,7 @@ class FirebaseManager {
                     completion(.success(comments))
                 } catch {
                     completion(.failure(error))
-                    print("second error")
+                    print("decoding error")
                 }
             }
         }
@@ -434,12 +434,12 @@ class FirebaseManager {
     }
     
     func updatePublicComment(comment: Comment, pickerID: String) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        database.collection("publicPickers").document(pickerID).collection("all_comment").document(uuid).setData([
+        database.collection("publicPickers").document(pickerID).collection("all_comment").document(comment.userUUID).setData([
             "comment": comment.comment,
             "created_time": Date().millisecondsSince1970,
             "type": comment.type,
-            "user_uuid": uuid
+            "user_uuid": comment.userUUID,
+            "user_id": comment.userID
         ]) { error in
             if let error = error {
                 print(error, "ERROR: updatePublicComment method")

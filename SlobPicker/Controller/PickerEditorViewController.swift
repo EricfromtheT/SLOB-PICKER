@@ -34,7 +34,7 @@ class PickerEditorViewController: UIViewController {
     private var inputDp: String?
     private var urlStrings: [String]? = []
     private var mode: PickerType = .textType
-    private var target: PrivacyMode = .forPublic
+    private var target: PrivacyMode?
     let uuid = FirebaseManager.auth.currentUser?.uid
     let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
     let userName = UserDefaults.standard.string(forKey: UserInfo.userNameKey)
@@ -61,11 +61,37 @@ class PickerEditorViewController: UIViewController {
     }
     
     @objc func uploadContent() {
+        if inputTitle == nil {
+            let alert = UIAlertController(title: "請填入主題", message: "picker必須包含主題", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            return
+        }
+        if target == nil {
+            let alert = UIAlertController(title: "請選擇對象", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            return
+        }
+        if target == .forPrivate && selectedGroupIndex == nil {
+            let alert = UIAlertController(title: "請選擇目標群組", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            return
+        }
+
         ProgressHUD.show()
         for index in 0...3 {
             if let image = imagesDict[index], let image = image {
                 willBeUploadedImages?.append(image)
             }
+        }
+        if mode == .imageType, willBeUploadedImages?.count == 0 {
+            let alert = UIAlertController(title: "選項不足", message: "請至少新增一選項", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            ProgressHUD.dismiss()
+            return
         }
         guard let data = willBeUploadedImages else { fatalError("UIImages have not been found") }
         for image in data {
@@ -102,6 +128,13 @@ class PickerEditorViewController: UIViewController {
             if let string = stringsDict[index], let string = string {
                 willBeUploadedStrings?.append(string)
             }
+        }
+        if mode == .textType, willBeUploadedStrings?.count == 0 {
+            let alert = UIAlertController(title: "選項不足", message: "請至少新增一選項", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            ProgressHUD.dismiss()
+            return
         }
         if let title = inputTitle, let urls = urlStrings, let strings = willBeUploadedStrings {
             var contents: [String] = []
@@ -150,6 +183,8 @@ class PickerEditorViewController: UIViewController {
                         print(error, "error of publising LivePicker")
                     }
                 }
+            case .none:
+                break
             }
         }
     }
@@ -218,7 +253,7 @@ class PickerEditorViewController: UIViewController {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             }
-        case .forLive:
+        default:
             break
         }
         ProgressHUD.dismiss()

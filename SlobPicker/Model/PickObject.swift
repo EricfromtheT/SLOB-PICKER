@@ -62,6 +62,7 @@ struct Picker: Codable {
 
 struct Comment: Codable {
     var userUUID: String
+    var userID: String
     var type: Int
     var comment: String
     var createdTime: Int
@@ -71,6 +72,7 @@ struct Comment: Codable {
         case type
         case comment
         case createdTime = "created_time"
+        case userID = "user_id"
     }
     
     func toDict() -> [String: Any] {

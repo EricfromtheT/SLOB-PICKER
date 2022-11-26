@@ -126,7 +126,19 @@ class PickResultViewController: UIViewController {
 extension PickResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickResultCell.self)", for: indexPath) as? PickResultCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickResultTitleCell.self)",
+                                                           for: indexPath)
+                    as? PickResultTitleCell else {
+                fatalError("ERROR of dequeuing pickResultTitleCell")
+            }
+            if let pickInfo = pickInfo {
+                cell.configure(title: pickInfo.title, description: pickInfo.description)
+            }
+            return cell
+        } else if indexPath.row == 1 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickResultCell.self)",
+                                                           for: indexPath)
+                as? PickResultCell else {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
             switch mode {
@@ -156,12 +168,12 @@ extension PickResultViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickCommentsCell.self)", for: indexPath) as? PickCommentsCell else {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
-            cell.configure(data: pickerComments[indexPath.row - 1])
+            cell.configure(data: pickerComments[indexPath.row - 2])
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        pickerComments.count + 1
+        pickerComments.count + 2
     }
 }

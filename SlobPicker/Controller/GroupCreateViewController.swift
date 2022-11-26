@@ -8,7 +8,13 @@
 import UIKit
 
 class GroupCreateViewController: UIViewController {
-    @IBOutlet weak var groupNameTextField: UITextField!
+    @IBOutlet weak var groupNameTextField: UITextField! {
+        didSet {
+            groupNameTextField.layer.cornerRadius = 5
+            groupNameTextField.layer.borderWidth = 2
+            groupNameTextField.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        }
+    }
     let group = DispatchGroup()
     
     override func viewDidLoad() {
