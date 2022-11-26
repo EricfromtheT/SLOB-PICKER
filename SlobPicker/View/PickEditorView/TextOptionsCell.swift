@@ -13,6 +13,9 @@ class TextOptionsCell: UITableViewCell {
     
     func configure() {
         for (idx, textField) in textFields.enumerated() {
+            textField.layer.borderWidth = 2
+            textField.layer.cornerRadius = 5
+            textField.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
             textField.delegate = self
             textField.text = nil
             textField.tag = idx

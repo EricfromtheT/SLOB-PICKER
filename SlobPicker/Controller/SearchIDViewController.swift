@@ -8,7 +8,13 @@
 import UIKit
 
 class SearchIDViewController: UIViewController {
-    @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var idTextField: UITextField! {
+        didSet {
+            idTextField.layer.cornerRadius = 5
+            idTextField.layer.borderWidth = 2
+            idTextField.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        }
+    }
     @IBOutlet weak var profileImageView: UIImageView! {
         didSet {
             profileImageView.layer.cornerRadius

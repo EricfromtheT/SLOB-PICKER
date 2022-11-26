@@ -14,6 +14,7 @@ enum assetImage: String {
     case deleteButton
     case rainbow
     case user
+    case background_color
 }
 
 extension UIImage {
