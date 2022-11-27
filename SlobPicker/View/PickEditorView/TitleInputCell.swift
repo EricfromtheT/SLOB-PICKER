@@ -62,7 +62,6 @@ extension TitleInputCell: UITextViewDelegate {
             textView.textColor = UIColor.black
         }
     }
-    
 //    func textViewDidEndEditing(_ textView: UITextView) {
 //        if textView.text.isEmpty {
 //            textView.text = "請輸入描述內容"
