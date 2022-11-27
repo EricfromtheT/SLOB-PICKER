@@ -125,7 +125,7 @@ class PickResultCell: UITableViewCell {
             }
             // Contents
             if !ordered.isEmpty {
-                imageView.loadImage(data.contents[ordered[index].choice])
+                imageView.loadImage(data.contents[ordered[index].choice], placeHolder: UIImage.asset(.image))
                 votesLabel.text = String(ordered[index].votes)
             }
         }
@@ -167,7 +167,7 @@ class PickResultCell: UITableViewCell {
             }
             // Contents
             if !ordered.isEmpty {
-                imageView.loadImage(data.contents[ordered[index].choice])
+                imageView.loadImage(data.contents[ordered[index].choice], placeHolder: UIImage.asset(.image))
                 votesLabel.text = String(ordered[index].votes)
             }
         }
