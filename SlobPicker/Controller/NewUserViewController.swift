@@ -117,7 +117,7 @@ class NewUserViewController: UIViewController {
         willBeUploadedName = willBeUploadedName?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    @IBAction func finishSetting() {
+    @IBAction func finishSetting(_ sender: UIButton) {
         // 先判斷illegal format
         formatter()
         guard let willBeUploadedId = willBeUploadedId, let willBeUploadedName = willBeUploadedName, !willBeUploadedId.isEmpty, !willBeUploadedName.isEmpty, willBeUploadedId.isValid else {
@@ -127,6 +127,7 @@ class NewUserViewController: UIViewController {
             return
         }
         ProgressHUD.show()
+        sender.isEnabled = false
         // 先整理初步data
         guard let uuid = self.uuid else { fatalError("uuid in keychain is nil") }
         var user = User(userName: willBeUploadedName, userID: willBeUploadedId, userUUID: uuid, profileURL: "", block: [])
