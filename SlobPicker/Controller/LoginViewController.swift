@@ -10,15 +10,18 @@ import AuthenticationServices
 import FirebaseAuth
 import CryptoKit
 import SwiftJWT
+import Lottie
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var appleLogInView: UIView!
     var superVC: PublicViewController!
+    var animationView: LottieAnimationView?
     fileprivate var currentNonce: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpAppleButton()
+        setUpLottie()
         // 如果是一直有在使用未刪app的用戶
         if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
             let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
@@ -27,8 +30,18 @@ class LoginViewController: UIViewController {
         }
     }
     
-    deinit {
-        print("login view controller has died")
+    func setUpLottie() {
+        animationView = .init(name: "choose")
+        animationView?.loopMode = .loop
+        animationView?.frame = CGRect(x: SPConstant.screenWidth*0.2,
+                                      y: 100,
+                                      width: SPConstant.screenWidth*0.6,
+                                      height: SPConstant.screenHeight*0.5)
+        animationView?.contentMode = .scaleAspectFill
+        animationView?.animationSpeed = 1
+        view.addSubview(animationView!)
+        view.sendSubviewToBack(animationView!)
+        animationView?.play()
     }
     
     func setUpAppleButton() {
@@ -139,8 +152,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         switch result {
                         case .success(let user):
                             // old user login in
-                            UserDefaults.standard.set(user.userID, forKey: UserInfo.userIDKey)
-                            UserDefaults.standard.set(user.userName, forKey: UserInfo.userNameKey)
+                            UserDefaults.standard.set(user.userID,
+                                                      forKey: UserInfo.userIDKey)
+                            UserDefaults.standard.set(user.userName,
+                                                      forKey: UserInfo.userNameKey)
                             // rootViewController change to tabbarviewcontroller
                             let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                             self.view.window?.rootViewController = viewController
@@ -150,8 +165,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 // new user register and log in
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 guard let NewUserVC = storyboard.instantiateViewController(
-                                    withIdentifier: "\(NewUserViewController.self)") as? NewUserViewController
-                                else {
+                                    withIdentifier: "\(NewUserViewController.self)")
+                                        as? NewUserViewController else {
                                     fatalError("New UserViewController cannot be instantiating")
                                 }
                                 NewUserVC.modalPresentationStyle = .fullScreen
