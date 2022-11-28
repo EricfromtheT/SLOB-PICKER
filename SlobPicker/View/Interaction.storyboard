@@ -11,11 +11,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--LivePick-->
+        <!--即時pick-->
         <scene sceneID="wt2-Ma-zzp">
             <objects>
                 <navigationController id="o8u-Wi-eg6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="LivePick" id="wC1-3R-5Tw"/>
+                    <tabBarItem key="tabBarItem" title="即時pick" id="wC1-3R-5Tw"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="g57-rj-4OH">
                         <rect key="frame" x="0.0" y="47" width="390" height="44"/>
