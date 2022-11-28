@@ -512,11 +512,12 @@ class FirebaseManager {
         }
     }
     
-    func attendLivePick(livePickerID: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func attendLivePick(livePickerID: String, user: User ,completion: @escaping (Result<String, Error>) -> Void) {
         guard let userId = UserDefaults.standard.string(forKey: UserInfo.userIDKey) else { fatalError("No this user") }
         database.collection("livePickers").document(livePickerID).collection("attendees").document(userId).setData([
             "attend_time": Date().millisecondsSince1970,
-            "user_id": userId
+            "user_id": userId,
+            "profile_url": user.profileURL
         ]) { error in
             if let error = error {
                 completion(.failure(error))
@@ -548,8 +549,10 @@ class FirebaseManager {
     }
     
     func leaveLiveRoom(pickerID: String, completion: @escaping (Result<String, Error>) -> Void)  {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        database.collection("livePickers").document(pickerID).collection("attendees").document(uuid).delete() { error in
+        guard let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey) else {
+            fatalError("no userID in UserDefault")
+        }
+        database.collection("livePickers").document(pickerID).collection("attendees").document(userID).delete() { error in
             if let error = error {
                 completion(.failure(error))
             } else {
