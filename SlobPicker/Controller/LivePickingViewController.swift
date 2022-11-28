@@ -89,7 +89,7 @@ class LivePickingViewController: UIViewController {
     func addResultListener() {
         if let livePicker = livePicker, let pickerID = livePicker.pickerID {
             resultListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).collection("results").addSnapshotListener { [weak self] (qrry, error) in
-                guard let `self` = self else {
+                guard let self = self else {
                     fatalError()
                 }
                 if let error = error {

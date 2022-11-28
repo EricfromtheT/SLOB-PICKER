@@ -20,6 +20,8 @@ enum assetColor: String {
     case navigationbar2
     case livePick
     case livePickBG
+    case choose
+    case chose
 }
 
 extension UIColor {

@@ -62,9 +62,9 @@ class LoginViewController: UIViewController {
         authorizationAppleIDButton
             .addTarget(self, action: #selector(pressSignInWithAppleButton),
                        for: UIControl.Event.touchUpInside)
+        appleLogInView.addSubview(authorizationAppleIDButton)
+        authorizationAppleIDButton.frame = appleLogInView.bounds
         
-        authorizationAppleIDButton.frame = self.appleLogInView.bounds
-        self.appleLogInView.addSubview(authorizationAppleIDButton)
     }
     
     @objc func pressSignInWithAppleButton() {
@@ -178,6 +178,7 @@ class LoginViewController: UIViewController {
             let decoder = JSONDecoder()
             do {
                 let refreshData = try decoder.decode(RefreshResponse.self, from: data)
+                print(refreshData.refreshToken, "refresh token")
                 KeychainService.keychainManager.save(refreshData.refreshToken, for: KeychainService.refreshTokenAccount)
             } catch {
                 return print(error, "error of decoding refresh token data")

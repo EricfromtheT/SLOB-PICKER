@@ -18,7 +18,7 @@ class KeychainService {
                                         kSecAttrAccount as String: account,
                                         kSecValueData as String: password]
             let status = SecItemAdd(query as CFDictionary, nil)
-            guard status == errSecSuccess else { return print("save error") }
+            guard status == errSecSuccess else { return print(status, "save error") }
     }
     
     func retrivePassword(for account: String) -> String? {

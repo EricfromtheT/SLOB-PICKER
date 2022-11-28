@@ -543,7 +543,7 @@ class FirebaseManager {
         guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         database.collection("livePickers").document(pickerID).collection("results").document(uuid).setData([
             "choice": choice,
-            "user_id": uuid
+            "user_uuid": uuid
         ])
     }
     
