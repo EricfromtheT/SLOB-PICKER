@@ -191,6 +191,7 @@ class PickerEditorViewController: UIViewController {
     
     func goToLiveWaitingRoom(roomID: String) {
         var picker: LivePicker?
+        var userInfo: User?
         FirebaseManager.shared.fetchLivePicker(roomID: roomID) { result in
             print(result)
             switch result {
@@ -205,21 +206,36 @@ class PickerEditorViewController: UIViewController {
                     print(error, "error of getting LivePicker")
                 }
             }
-            if let picker = picker, let pickerID = picker.pickerID {
-                FirebaseManager.shared.attendLivePick(livePickerID: pickerID) {
-                    result in
-                    switch result {
-                    case .success( _):
-                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                        guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
-                            fatalError("error cannot instantiate WaitingRoomViewController")
+            guard let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
+            else {
+                return print("user id is not in user default")
+            }
+            FirebaseManager.shared.searchUser(userID: userID) {
+                result in
+                switch result {
+                case .success(let user):
+                    userInfo = user
+                case .failure(let error):
+                    return print(error, "error of getting userdata from firebase")
+                }
+                if let picker = picker,
+                   let pickerID = picker.pickerID,
+                   let userInfo = userInfo {
+                    FirebaseManager.shared.attendLivePick(livePickerID: pickerID, user: userInfo) {
+                        result in
+                        switch result {
+                        case .success( _):
+                            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                            guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
+                                fatalError("error cannot instantiate WaitingRoomViewController")
+                            }
+                            waitingVC.livePicker = picker
+                            waitingVC.modalTransitionStyle = .crossDissolve
+                            waitingVC.modalPresentationStyle = .fullScreen
+                            self.present(waitingVC, animated: true)
+                        case .failure(let error):
+                            print(error, "error of attending a live pick")
                         }
-                        waitingVC.livePicker = picker
-                        waitingVC.modalTransitionStyle = .crossDissolve
-                        waitingVC.modalPresentationStyle = .fullScreen
-                        self.present(waitingVC, animated: true)
-                    case .failure(let error):
-                        print(error, "error of attending a live pick")
                     }
                 }
             }
