@@ -11,7 +11,7 @@ class AttendeeCell: UICollectionViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     
-    func configure(data: User) {
+    func configure(data: Attendee) {
         profileImageView.loadImage(data.profileURL, placeHolder: UIImage.asset(.user))
         NameLabel.text = data.userID
         profileImageView.layer.cornerRadius = 30

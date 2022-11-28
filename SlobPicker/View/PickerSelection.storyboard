@@ -357,10 +357,10 @@
                         <constraints>
                             <constraint firstItem="7WZ-aR-rOs" firstAttribute="top" secondItem="EdP-hN-mgU" secondAttribute="top" id="2Jx-WM-biM"/>
                             <constraint firstItem="O1Y-Zf-Mrj" firstAttribute="trailing" secondItem="7WZ-aR-rOs" secondAttribute="trailing" id="MKp-ng-zZ1"/>
+                            <constraint firstItem="7WZ-aR-rOs" firstAttribute="bottom" secondItem="EdP-hN-mgU" secondAttribute="bottom" id="djy-uu-SeB"/>
                             <constraint firstItem="u0Z-2V-eP9" firstAttribute="leading" secondItem="O1Y-Zf-Mrj" secondAttribute="leading" id="gae-PD-pfL"/>
                             <constraint firstItem="u0Z-2V-eP9" firstAttribute="top" secondItem="O1Y-Zf-Mrj" secondAttribute="top" id="kFg-qi-b1M"/>
                             <constraint firstItem="7WZ-aR-rOs" firstAttribute="leading" secondItem="O1Y-Zf-Mrj" secondAttribute="leading" id="oYZ-5E-mGo"/>
-                            <constraint firstAttribute="bottom" secondItem="7WZ-aR-rOs" secondAttribute="bottom" id="qWD-cb-eCB"/>
                         </constraints>
                     </view>
                     <connections>

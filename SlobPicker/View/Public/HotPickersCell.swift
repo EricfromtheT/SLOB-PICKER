@@ -63,7 +63,7 @@ class HotPickerCell: UICollectionViewCell {
         bgView.layer.cornerRadius = 25
         bgView2.layer.cornerRadius = 22
         gradientLayer.cornerRadius = 25
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: SPConstant.screenWidth*0.55, height: 165)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: SPConstant.screenWidth*0.65, height: 180)
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         gradientLayer.colors = [leftColor[index % 4]?.cgColor , rightColor[index % 4]?.cgColor]
