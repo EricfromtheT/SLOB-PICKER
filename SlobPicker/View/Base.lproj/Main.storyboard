@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -44,19 +43,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcx-nh-4DO">
-                                <rect key="frame" x="70" y="560" width="250" height="50"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="45" y="560" width="300" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Xvv-Xc-ioz"/>
-                                    <constraint firstAttribute="width" constant="250" id="nfW-4G-VHr"/>
+                                    <constraint firstAttribute="width" constant="300" id="nfW-4G-VHr"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請先進行登入以取回用戶資料，新用戶則需登入註冊並創建屬於您的個人資訊，一起進入Slob Picker的世界吧!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uet-CG-h1x">
+                                <rect key="frame" x="30" y="511.33333333333331" width="330" height="28.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="b1e-Ei-UxQ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="navigationbar2"/>
                         <constraints>
                             <constraint firstItem="b1e-Ei-UxQ" firstAttribute="bottom" secondItem="xcx-nh-4DO" secondAttribute="bottom" constant="200" id="FlY-HN-Gj3"/>
                             <constraint firstItem="xcx-nh-4DO" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="HpK-fi-jLR"/>
+                            <constraint firstItem="uet-CG-h1x" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="T4t-1U-rSY"/>
+                            <constraint firstItem="xcx-nh-4DO" firstAttribute="top" secondItem="b1e-Ei-UxQ" secondAttribute="top" constant="513" id="Tdi-XZ-XoR"/>
+                            <constraint firstItem="xcx-nh-4DO" firstAttribute="top" secondItem="uet-CG-h1x" secondAttribute="bottom" constant="20" id="gbZ-mD-Dsb"/>
+                            <constraint firstItem="uet-CG-h1x" firstAttribute="leading" secondItem="b1e-Ei-UxQ" secondAttribute="leading" constant="30" id="jlT-Hs-Nzi"/>
+                            <constraint firstItem="b1e-Ei-UxQ" firstAttribute="trailing" secondItem="uet-CG-h1x" secondAttribute="trailing" constant="30" id="pbh-tg-KKf"/>
                         </constraints>
                     </view>
                     <connections>
@@ -153,7 +163,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="開始你的旅程"/>
                                         <connections>
-                                            <action selector="finishSetting" destination="aQY-BW-s41" eventType="touchUpInside" id="d3g-hs-2VI"/>
+                                            <action selector="finishSetting:" destination="aQY-BW-s41" eventType="touchUpInside" id="mkg-qQ-ART"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -239,10 +249,7 @@
         <image name="arrow.forward" catalog="system" width="128" height="95"/>
         <image name="user" width="512" height="512"/>
         <namedColor name="navigationbar2">
-            <color red="0.32156862745098042" green="0.48627450980392156" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.33333333333333331" green="0.62352941176470589" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

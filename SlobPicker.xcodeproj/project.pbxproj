@@ -24,6 +24,7 @@
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
 		3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738C0222931E45900DF82CA /* PickResultTitleCell.swift */; };
 		377323A52934B05A007D0B64 /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A42934B05A007D0B64 /* gameRoom.json */; };
+		377323A729352C0B007D0B64 /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A629352C0B007D0B64 /* choose.json */; };
 		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
 		377852EE291D0B6100780E8D /* RoomIDInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377852ED291D0B6100780E8D /* RoomIDInputView.xib */; };
 		377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852EF291D0BEA00780E8D /* RoomIDInputView.swift */; };
@@ -98,6 +99,7 @@
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3738C0222931E45900DF82CA /* PickResultTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultTitleCell.swift; sourceTree = "<group>"; };
 		377323A42934B05A007D0B64 /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
+		377323A629352C0B007D0B64 /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
 		377852ED291D0B6100780E8D /* RoomIDInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomIDInputView.xib; sourceTree = "<group>"; };
 		377852EF291D0BEA00780E8D /* RoomIDInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomIDInputView.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */,
 				37DD01852929B3200078352F /* countDown.json */,
 				37D05E04292C7F3B00D8A2AA /* congrats.json */,
+				377323A629352C0B007D0B64 /* choose.json */,
 				377323A42934B05A007D0B64 /* gameRoom.json */,
 				37DE8AF3290FD67600F737A7 /* SPConstant.swift */,
 				37DE8AF72910047100F737A7 /* GoogleService-Info.plist */,
@@ -460,6 +463,7 @@
 				37DD01862929B3200078352F /* countDown.json in Resources */,
 				37D05E05292C7F3C00D8A2AA /* congrats.json in Resources */,
 				37DE8AE1290EBC0F00F737A7 /* Interaction.storyboard in Resources */,
+				377323A729352C0B007D0B64 /* choose.json in Resources */,
 				37A4A0AE29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 in Resources */,
 				37DE8AB0290C15CA00F737A7 /* LaunchScreen.storyboard in Resources */,
 				37192989292BAF2400722759 /* CustomChooseCell.xib in Resources */,

@@ -37,6 +37,7 @@ private struct RefreshResponse: Codable {
 }
 
 class ProfileViewController: UIViewController {
+    
     fileprivate var currentNonce: String?
     
     override func viewDidLoad() {
@@ -45,7 +46,11 @@ class ProfileViewController: UIViewController {
     
     @IBAction func deleteAccount() {
         let alert = UIAlertController(title: "是否確定要刪除帳號",
-                                      message: "帳號刪除後將無法找回任何個人資料及使用紀錄，並刪除您的app與apple帳戶的連結",
+                                      message:
+                                      "確認刪除後需進行重新登入以驗證您的身份，" +
+                                      "帳號刪除後將無法找回任何個人資料及使用紀錄，" +
+                                      "並會解除SLOB PICKER與apple帳戶的連結。"
+                                      ,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "取消", style: .cancel))
         alert.addAction(UIAlertAction(title: "確認刪除", style: .destructive){ action in
@@ -61,7 +66,7 @@ class ProfileViewController: UIViewController {
                 // reauthenticate
                 self.reAppleLogin()
             } else {
-                print("Success")
+                self.reAppleLogin()
             }
         }
     }
@@ -128,7 +133,11 @@ class ProfileViewController: UIViewController {
     private func genRefreshToken(authCode: Data) {
         // gen JWT
         let myHeader = Header(kid: Secret.keyID.rawValue)
-        let myClaims = MyClaims(iss: Secret.teamID.rawValue, iat: Date(), sub: Secret.clientID.rawValue, exp: Date(timeIntervalSinceNow: 3600), aud: "https://appleid.apple.com", admin: true)
+        let myClaims = MyClaims(iss: Secret.teamID.rawValue,
+                                iat: Date(), sub: Secret.clientID.rawValue,
+                                exp: Date(timeIntervalSinceNow: 3600),
+                                aud: "https://appleid.apple.com",
+                                admin: true)
         var appleJWT = JWT(header: myHeader, claims: myClaims)
         var signedJWT: String = ""
         // sign JWT tokeni
@@ -153,7 +162,8 @@ class ProfileViewController: UIViewController {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
+        request.setValue("application/x-www-form-urlencoded",
+                         forHTTPHeaderField: "content-type")
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         components?.queryItems = [
             URLQueryItem(name: "client_id", value: Secret.clientID.rawValue),
@@ -192,7 +202,8 @@ class ProfileViewController: UIViewController {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
+        request.setValue("application/x-www-form-urlencoded"
+                         , forHTTPHeaderField: "content-type")
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         components?.queryItems = [
             URLQueryItem(name: "client_id", value: Secret.clientID.rawValue),
@@ -217,20 +228,23 @@ class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: ASAuthorizationControllerDelegate
 extension ProfileViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential
-            as? ASAuthorizationAppleIDCredential, let authorizationCode = appleIDCredential.authorizationCode {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+           let authorizationCode = appleIDCredential.authorizationCode {
             guard let nonce = currentNonce else {
-                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                fatalError("Invalid state: A login callback was received," +
+                           "but no login request was sent.")
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
                 print("Unable to fetch identity token")
                 return
             }
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                print("Unable to serialize token string from data:" +
+                      "\(appleIDToken.debugDescription)")
                 return
             }
             // get refresh token and save to keychain manager
@@ -248,9 +262,17 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                         if let _ = error {
                             fatalError("problem with delete account after reauthenticate")
                         } else {
-                            FirebaseManager.shared.logOut()
-                            UserDefaults.standard.set(nil, forKey: UserInfo.userNameKey)
-                            UserDefaults.standard.set(nil, forKey: UserInfo.userIDKey)
+                            FirebaseManager.shared.setUserToNone() { result in
+                                switch result {
+                                case .success( _):
+                                    break
+                                case .failure(let error):
+                                    return print(error, "error of updating user info to none")
+                                }
+                                FirebaseManager.shared.logOut()
+                                UserDefaults.standard.set(nil, forKey: UserInfo.userNameKey)
+                                UserDefaults.standard.set(nil, forKey: UserInfo.userIDKey)
+                            }
                         }
                     }
                 }
@@ -278,7 +300,7 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
     }
 }
 
-
+// MARK: ASAuthorizationControllerPresentationContextProviding
 extension ProfileViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         guard let window = self.view.window else {
