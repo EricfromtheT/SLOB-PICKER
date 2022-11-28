@@ -10,9 +10,11 @@ import UIKit
 class ChoiceCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var votesLabel: UILabel!
+    @IBOutlet weak var bgView: UIView!
     
     func configure(title: String, result: VoteResult) {
         titleLabel.text = title
         votesLabel.text = "\(result.votes)"
+        bgView.layer.cornerRadius = 20
     }
 }

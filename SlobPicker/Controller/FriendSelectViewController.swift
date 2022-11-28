@@ -23,7 +23,7 @@ class FriendSelectViewController: UIViewController {
     var friendsUUID: [String]? {
         didSet {
             // TODO: Use for loop to limit each request up to 10 friend ID
-            if let friendsUUID = friendsUUID {
+            if let friendsUUID = friendsUUID, !friendsUUID.isEmpty {
                 FirebaseManager.shared.fetchFriendsProfile(friendsUUID: friendsUUID) { result in
                     switch result {
                     case .success(let users):
@@ -38,6 +38,15 @@ class FriendSelectViewController: UIViewController {
                         self.friendListTableView.reloadData()
                     }
                 }
+            } else {
+                let label = UILabel()
+                label.text = "你沒有任何好友"
+                label.font = UIFont.systemFont(ofSize: 25)
+                view.addSubview(label)
+                label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+                label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+                navigationItem.rightBarButtonItem?.isEnabled = false
+                friendListTableView.isHidden = true
             }
         }
     }
@@ -50,6 +59,11 @@ class FriendSelectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigation()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.layoutIfNeeded()
     }
     
     func setUpNavigation() {
