@@ -13,15 +13,14 @@ import SwiftJWT
 import Lottie
 
 class LoginViewController: UIViewController {
-    @IBOutlet weak var appleLogInView: UIView!
     var superVC: PublicViewController!
     var animationView: LottieAnimationView?
     fileprivate var currentNonce: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpAppleButton()
         setUpLottie()
+        setUpAppleButton()
         // 如果是一直有在使用未刪app的用戶
         if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
             let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
@@ -47,12 +46,25 @@ class LoginViewController: UIViewController {
     func setUpAppleButton() {
         let authorizationAppleIDButton: ASAuthorizationAppleIDButton
         = ASAuthorizationAppleIDButton()
+        let directionLabel = UILabel()
         authorizationAppleIDButton
             .addTarget(self, action: #selector(pressSignInWithAppleButton),
                        for: UIControl.Event.touchUpInside)
-        appleLogInView.addSubview(authorizationAppleIDButton)
-        authorizationAppleIDButton.frame = appleLogInView.bounds
-        
+        view.addSubview(authorizationAppleIDButton)
+        view.addSubview(directionLabel)
+        authorizationAppleIDButton.frame = CGRect(x: SPConstant.screenWidth*0.2,
+                                                  y: SPConstant.screenHeight - 200,
+                                                  width: SPConstant.screenWidth*0.6,
+                                                  height: 50)
+        directionLabel.translatesAutoresizingMaskIntoConstraints = false
+        directionLabel.textAlignment = .center
+        directionLabel.text = "請先進行登入以取回用戶資料，新用戶則需登入註冊並創建屬於您的個人資訊，一起進入Slob Picker的世界吧!"
+        directionLabel.numberOfLines = 0
+        directionLabel.font = UIFont.systemFont(ofSize: 12)
+        directionLabel.textColor = UIColor.darkGray
+        directionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        directionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        directionLabel.bottomAnchor.constraint(equalTo: authorizationAppleIDButton.topAnchor, constant: -10).isActive = true
     }
     
     @objc func pressSignInWithAppleButton() {
