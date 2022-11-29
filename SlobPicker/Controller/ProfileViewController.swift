@@ -10,6 +10,7 @@ import AuthenticationServices
 import CryptoKit
 import SwiftJWT
 import FirebaseAuth
+import SafariServices
 
 private struct MyClaims: Claims {
     let iss: String
@@ -36,7 +37,7 @@ private struct RefreshResponse: Codable {
     }
 }
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     
     fileprivate var currentNonce: String?
     
@@ -47,7 +48,7 @@ class ProfileViewController: UIViewController {
     @IBAction func deleteAccount() {
         let alert = UIAlertController(title: "是否確定要刪除帳號",
                                       message:
-                                      "確認刪除後需進行重新登入以驗證您的身份，" +
+                                        "確認刪除後需進行重新登入以驗證您的身份，" +
                                       "帳號刪除後將無法找回任何個人資料及使用紀錄，" +
                                       "並會解除SLOB PICKER與apple帳戶的連結。"
                                       ,
@@ -59,16 +60,18 @@ class ProfileViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    func deleteFirebaseAppleAccount() {
-        FirebaseManager.auth.currentUser?.delete() {
-            error in
-            if let _ = error {
-                // reauthenticate
-                self.reAppleLogin()
-            } else {
-                self.reAppleLogin()
-            }
+    @IBAction func openPrivacy(_ sender: UIButton) {
+        if let url =
+            URL(string: "https://www.privacypolicies.com/live/4062ac64-f047-4818-bc02-22aea3d81b03") {
+            let safari = SFSafariViewController(url: url)
+            safari.delegate = self
+            present(safari, animated: true)
         }
+    }
+    
+    // MARK: Deal with reauthentication
+    func deleteFirebaseAppleAccount() {
+        self.reAppleLogin()
     }
     
     func reAppleLogin() {
@@ -180,8 +183,8 @@ class ProfileViewController: UIViewController {
                 return print(error, "error in tasking")
             }
             guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200,
-                    let data = data else {
+                  httpResponse.statusCode == 200,
+                  let data = data else {
                 return print("response problem or data is empty")
             }
             let decoder = JSONDecoder()
@@ -220,7 +223,7 @@ class ProfileViewController: UIViewController {
                 return print(error, "error in tasking")
             }
             guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else {
+                  httpResponse.statusCode == 200 else {
                 return print("response problem or data is empty")
             }
         }
@@ -258,18 +261,17 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                 if let error = error {
                     return print(error, "error of reauthenticating with firebase")
                 } else {
-                    FirebaseManager.auth.currentUser?.delete() { error in
-                        if let _ = error {
-                            fatalError("problem with delete account after reauthenticate")
-                        } else {
-                            FirebaseManager.shared.setUserToNone() { result in
-                                switch result {
-                                case .success( _):
-                                    break
-                                case .failure(let error):
-                                    return print(error, "error of updating user info to none")
-                                }
-                                FirebaseManager.shared.logOut()
+                    FirebaseManager.shared.setUserToNone() { result in
+                        switch result {
+                        case .success( _):
+                            break
+                        case .failure(let error):
+                            return print(error, "error of updating user info to none")
+                        }
+                        FirebaseManager.auth.currentUser?.delete() { error in
+                            if let _ = error {
+                                fatalError("problem with delete account after reauthenticate")
+                            } else {
                                 UserDefaults.standard.set(nil, forKey: UserInfo.userNameKey)
                                 UserDefaults.standard.set(nil, forKey: UserInfo.userIDKey)
                             }

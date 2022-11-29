@@ -210,9 +210,11 @@ extension PickResultViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickCommentsCell.self)", for: indexPath) as? PickCommentsCell else {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
+            let userInfo = self.users.filter {
+                $0.userUUID == pickerComments[indexPath.row - 2].userUUID
+            }
             cell.configure(data: pickerComments[indexPath.row - 2],
-                           imageURL: self.users.filter {
-                $0.userUUID == pickerComments[indexPath.row - 2].userUUID }[0].profileURL)
+                           userInfo: userInfo[0])
             return cell
         }
     }
