@@ -50,6 +50,7 @@ class PublicViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appearance = UINavigationBarAppearance()
+//        appearance.configureWithTransparentBackground()
         appearance.backgroundColor = UIColor.asset(.navigationbar2)
         // cancel navigationbar seperator
         appearance.shadowColor = nil

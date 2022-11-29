@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,26 +41,9 @@
                     <view key="view" contentMode="scaleToFill" id="Kvl-WZ-x0b">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcx-nh-4DO">
-                                <rect key="frame" x="70" y="560" width="250" height="50"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Xvv-Xc-ioz"/>
-                                    <constraint firstAttribute="width" constant="250" id="nfW-4G-VHr"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="b1e-Ei-UxQ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="b1e-Ei-UxQ" firstAttribute="bottom" secondItem="xcx-nh-4DO" secondAttribute="bottom" constant="200" id="FlY-HN-Gj3"/>
-                            <constraint firstItem="xcx-nh-4DO" firstAttribute="centerX" secondItem="b1e-Ei-UxQ" secondAttribute="centerX" id="HpK-fi-jLR"/>
-                        </constraints>
+                        <color key="backgroundColor" name="navigationbar2"/>
                     </view>
-                    <connections>
-                        <outlet property="appleLogInView" destination="xcx-nh-4DO" id="lox-o2-oxX"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2p-hL-peb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -153,7 +135,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="開始你的旅程"/>
                                         <connections>
-                                            <action selector="finishSetting" destination="aQY-BW-s41" eventType="touchUpInside" id="d3g-hs-2VI"/>
+                                            <action selector="finishSetting:" destination="aQY-BW-s41" eventType="touchUpInside" id="mkg-qQ-ART"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -239,10 +221,7 @@
         <image name="arrow.forward" catalog="system" width="128" height="95"/>
         <image name="user" width="512" height="512"/>
         <namedColor name="navigationbar2">
-            <color red="0.32156862745098042" green="0.48627450980392156" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.33333333333333331" green="0.62352941176470589" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
