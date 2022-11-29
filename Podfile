@@ -21,5 +21,6 @@ pod 'ViewAnimator'
 pod 'lottie-ios'
 pod 'ProgressHUD'
 pod 'SwiftJWT'
+pod 'Firebase/Crashlytics'
 
 end

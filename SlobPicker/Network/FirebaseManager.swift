@@ -155,6 +155,22 @@ class FirebaseManager {
     }
     
     // MARK: Users
+    func setUserToNone(completion: @escaping (Result<String, Error>) -> Void) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else {
+            fatalError("no uuid with this user")
+        }
+        database.collection("users").document(uuid).updateData([
+            "profile_url": "",
+            "user_id": "此用戶已被刪除"
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
     func block(authorID: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         database.collection("users").document(uuid).updateData([
