@@ -386,6 +386,27 @@ class FirebaseManager {
         // newest picker
         database.collection("publicPickers").order(by: "created_time", descending: true)
             .getDocuments{ qrry, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let documents = qrry?.documents {
+                    do {
+                        let pickers = try documents.map {
+                            try $0.data(as: Picker.self)
+                        }
+                        completion(.success(pickers))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            }
+    }
+    //    whereField("created_time", isGreaterThan: mlseconds)
+    func fetchHottestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
+        //        let calendar = Calendar.current
+        //        let date = Date()
+        //        let today = calendar.startOfDay(for: date)
+        //        let mlseconds = today.millisecondsSince1970
+        database.collection("publicPickers").order(by: "picked_count", descending: true).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {
@@ -400,13 +421,10 @@ class FirebaseManager {
             }
         }
     }
-//    whereField("created_time", isGreaterThan: mlseconds)
-    func fetchHottestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
-        let calendar = Calendar.current
-        let date = Date()
-        let today = calendar.startOfDay(for: date)
-        let mlseconds = today.millisecondsSince1970
-        database.collection("publicPickers").order(by: "picked_count", descending: true).getDocuments { qrry, error in
+    
+    func fetchLovestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
+        database.collection("publicPickers").order(by: "liked_count", descending: true).getDocuments {
+            qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {

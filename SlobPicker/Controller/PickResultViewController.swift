@@ -126,6 +126,7 @@ class PickResultViewController: UIViewController {
             }
         }
     }
+    
     // TODO: 現在有user的uuid，要再擷取each user資料來顯示留言以及最終投票結果
     func organizeResult(data: [PickResult]) {
         switch mode {
