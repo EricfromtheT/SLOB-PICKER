@@ -70,8 +70,8 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dc-V9-P28">
-                                                            <rect key="frame" x="20.000000000000004" y="15" width="46.333333333333343" height="30"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <rect key="frame" x="20.000000000000004" y="15" width="49.333333333333343" height="30"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                                                             <color key="textColor" systemColor="systemBackgroundColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -157,7 +157,9 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Vyi-kg-gF7" secondAttribute="bottom" id="ucV-31-EQb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bzI-zd-8P5"/>
+                    <navigationItem key="navigationItem" id="bzI-zd-8P5">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Evt-12-hZs"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="pickersTableView" destination="Vyi-kg-gF7" id="krd-y3-Yog"/>
                     </connections>
@@ -379,7 +381,7 @@
         <image name="picking" width="512" height="512"/>
         <image name="user" width="512" height="512"/>
         <namedColor name="navigationbar2">
-            <color red="0.32156862745098042" green="0.48627450980392156" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.33333333333333331" green="0.62352941176470589" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

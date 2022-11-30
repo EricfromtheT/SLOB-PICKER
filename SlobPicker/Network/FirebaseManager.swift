@@ -155,6 +155,22 @@ class FirebaseManager {
     }
     
     // MARK: Users
+    func setUserToNone(completion: @escaping (Result<String, Error>) -> Void) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else {
+            fatalError("no uuid with this user")
+        }
+        database.collection("users").document(uuid).updateData([
+            "profile_url": "",
+            "user_id": "此用戶已被刪除"
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
     func block(authorID: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         database.collection("users").document(uuid).updateData([
@@ -370,6 +386,27 @@ class FirebaseManager {
         // newest picker
         database.collection("publicPickers").order(by: "created_time", descending: true)
             .getDocuments{ qrry, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let documents = qrry?.documents {
+                    do {
+                        let pickers = try documents.map {
+                            try $0.data(as: Picker.self)
+                        }
+                        completion(.success(pickers))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            }
+    }
+    //    whereField("created_time", isGreaterThan: mlseconds)
+    func fetchHottestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
+        //        let calendar = Calendar.current
+        //        let date = Date()
+        //        let today = calendar.startOfDay(for: date)
+        //        let mlseconds = today.millisecondsSince1970
+        database.collection("publicPickers").order(by: "picked_count", descending: true).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {
@@ -384,13 +421,10 @@ class FirebaseManager {
             }
         }
     }
-//    whereField("created_time", isGreaterThan: mlseconds)
-    func fetchHottestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
-        let calendar = Calendar.current
-        let date = Date()
-        let today = calendar.startOfDay(for: date)
-        let mlseconds = today.millisecondsSince1970
-        database.collection("publicPickers").order(by: "picked_count", descending: true).getDocuments { qrry, error in
+    
+    func fetchLovestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
+        database.collection("publicPickers").order(by: "liked_count", descending: true).getDocuments {
+            qrry, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documents = qrry?.documents {

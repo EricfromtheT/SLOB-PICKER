@@ -43,6 +43,19 @@ class HotCell: UITableViewCell {
             fetchUser(userUUID: usersUUID)
         }
     }
+    
+    var lovestPickers: [Picker] = [] {
+        didSet {
+            if !lovestPickers.isEmpty {
+                data = lovestPickers
+            }
+            let usersUUID = lovestPickers.map {
+                $0.authorUUID
+            }
+            fetchUser(userUUID: usersUUID)
+        }
+    }
+    
     var data: [Picker] = []
     var mode: PublicMode = .hottest
     var usersInfo: [User] = []
@@ -76,7 +89,15 @@ class HotCell: UITableViewCell {
             print("PickViewController rendering error")
             return
         }
-        let data = mode == .hottest ? hottestPickers : newestPickers
+        var data: [Picker] = []
+        switch mode {
+        case .hottest:
+            data = hottestPickers
+        case .newest:
+             data = newestPickers
+        case .lovest:
+            data = lovestPickers
+        }
         pickVC.publicCompletion = {
             cell.picked()
             self.data[indexPath.row].pickedIDs?.append(uuid)
@@ -143,7 +164,15 @@ extension HotCell: UICollectionViewDelegate {
             print("PickResultViewController rendering error")
             return
         }
-        let data = mode == .hottest ? hottestPickers : newestPickers
+        var data: [Picker] = []
+        switch mode {
+        case .hottest:
+            data = hottestPickers
+        case .newest:
+             data = newestPickers
+        case .lovest:
+            data = lovestPickers
+        }
         resultVC.mode = .forPublic
         resultVC.pickInfo = data[indexPath.row]
         superVC?.show(resultVC, sender: self)

@@ -10,39 +10,16 @@ import AuthenticationServices
 import FirebaseAuth
 import CryptoKit
 import SwiftJWT
-
-private struct MyClaims: Claims {
-    let iss: String
-    let iat: Date
-    let sub: String
-    let exp: Date
-    let aud: String
-    let admin: Bool
-}
-
-private struct RefreshResponse: Codable {
-    let accessToken: String
-    let tokenType: String
-    let expiresIn: Int
-    let refreshToken: String
-    let idToken: String
-    
-    enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-        case tokenType = "token_type"
-        case expiresIn = "expires_in"
-        case refreshToken = "refresh_token"
-        case idToken = "id_token"
-    }
-}
+import Lottie
 
 class LoginViewController: UIViewController {
-    @IBOutlet weak var appleLogInView: UIView!
     var superVC: PublicViewController!
+    var animationView: LottieAnimationView?
     fileprivate var currentNonce: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpLottie()
         setUpAppleButton()
         // 如果是一直有在使用未刪app的用戶
         if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
@@ -52,19 +29,42 @@ class LoginViewController: UIViewController {
         }
     }
     
-    deinit {
-        print("login view controller has died")
+    func setUpLottie() {
+        animationView = .init(name: "choose")
+        animationView?.loopMode = .loop
+        animationView?.frame = CGRect(x: SPConstant.screenWidth*0.2,
+                                      y: 100,
+                                      width: SPConstant.screenWidth*0.6,
+                                      height: SPConstant.screenHeight*0.5)
+        animationView?.contentMode = .scaleAspectFill
+        animationView?.animationSpeed = 1
+        view.addSubview(animationView!)
+        view.sendSubviewToBack(animationView!)
+        animationView?.play()
     }
     
     func setUpAppleButton() {
         let authorizationAppleIDButton: ASAuthorizationAppleIDButton
         = ASAuthorizationAppleIDButton()
+        let directionLabel = UILabel()
         authorizationAppleIDButton
             .addTarget(self, action: #selector(pressSignInWithAppleButton),
                        for: UIControl.Event.touchUpInside)
-        appleLogInView.addSubview(authorizationAppleIDButton)
-        authorizationAppleIDButton.frame = appleLogInView.bounds
-        
+        view.addSubview(authorizationAppleIDButton)
+        view.addSubview(directionLabel)
+        authorizationAppleIDButton.frame = CGRect(x: SPConstant.screenWidth*0.2,
+                                                  y: SPConstant.screenHeight - 200,
+                                                  width: SPConstant.screenWidth*0.6,
+                                                  height: 50)
+        directionLabel.translatesAutoresizingMaskIntoConstraints = false
+        directionLabel.textAlignment = .center
+        directionLabel.text = "請先進行登入以取回用戶資料，新用戶則需登入註冊並創建屬於您的個人資訊，一起進入Slob Picker的世界吧!"
+        directionLabel.numberOfLines = 0
+        directionLabel.font = UIFont.systemFont(ofSize: 12)
+        directionLabel.textColor = UIColor.darkGray
+        directionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        directionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        directionLabel.bottomAnchor.constraint(equalTo: authorizationAppleIDButton.topAnchor, constant: -10).isActive = true
     }
     
     @objc func pressSignInWithAppleButton() {
@@ -125,74 +125,13 @@ class LoginViewController: UIViewController {
         
         return hashString
     }
-    
-    private func genRefreshToken(authCode: Data) {
-        // gen JWT
-        let myHeader = Header(kid: Secret.keyID.rawValue)
-        let myClaims = MyClaims(iss: Secret.teamID.rawValue, iat: Date(), sub: Secret.clientID.rawValue, exp: Date(timeIntervalSinceNow: 3600), aud: "https://appleid.apple.com", admin: true)
-        var appleJWT = JWT(header: myHeader, claims: myClaims)
-        var signedJWT: String = ""
-        // sign JWT tokeni
-        let path = Bundle.main.path(forResource: Secret.filePath.rawValue, ofType: "p8")
-        do {
-            if let path = path {
-                let contents = try String(contentsOfFile: path)
-                if let privateKey = contents.data(using: .utf8) {
-                    let jwtSigner = JWTSigner.es256(privateKey: privateKey)
-                    signedJWT = try appleJWT.sign(using: jwtSigner)
-                }
-            }
-        } catch {
-            return print(error)
-        }
-        // gen refresh token
-        guard let url = URL(string: "https://appleid.apple.com/auth/token") else {
-            return print("error of creating refresh url")
-        }
-        guard let authCodeToString = String(data: authCode, encoding: .utf8) else {
-            fatalError("Error of turning authCode data to string")
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        components?.queryItems = [
-            URLQueryItem(name: "client_id", value: Secret.clientID.rawValue),
-            URLQueryItem(name: "client_secret", value: signedJWT),
-            URLQueryItem(name: "code", value: authCodeToString),
-            URLQueryItem(name: "grant_type", value: "authorization_code")
-        ]
-        if let query = components?.url?.query {
-            request.httpBody = Data(query.utf8)
-        }
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                return print(error, "error in tasking")
-            }
-            guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200,
-                    let data = data else {
-                return print("response problem or data is empty")
-            }
-            let decoder = JSONDecoder()
-            do {
-                let refreshData = try decoder.decode(RefreshResponse.self, from: data)
-                print(refreshData.refreshToken, "refresh token")
-                KeychainService.keychainManager.save(refreshData.refreshToken, for: KeychainService.refreshTokenAccount)
-            } catch {
-                return print(error, "error of decoding refresh token data")
-            }
-        }
-        task.resume()
-    }
 }
 
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential
-            as? ASAuthorizationAppleIDCredential, let authorizationCode = appleIDCredential.authorizationCode {
+            as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
             }
@@ -204,8 +143,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                 print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                 return
             }
-            // get refresh token and save to keychain manager
-            genRefreshToken(authCode: authorizationCode)
             // Initialize a Firebase credential
             let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                       idToken: idTokenString,
@@ -227,8 +164,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         switch result {
                         case .success(let user):
                             // old user login in
-                            UserDefaults.standard.set(user.userID, forKey: UserInfo.userIDKey)
-                            UserDefaults.standard.set(user.userName, forKey: UserInfo.userNameKey)
+                            UserDefaults.standard.set(user.userID,
+                                                      forKey: UserInfo.userIDKey)
+                            UserDefaults.standard.set(user.userName,
+                                                      forKey: UserInfo.userNameKey)
                             // rootViewController change to tabbarviewcontroller
                             let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                             self.view.window?.rootViewController = viewController
@@ -238,8 +177,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 // new user register and log in
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 guard let NewUserVC = storyboard.instantiateViewController(
-                                    withIdentifier: "\(NewUserViewController.self)") as? NewUserViewController
-                                else {
+                                    withIdentifier: "\(NewUserViewController.self)")
+                                        as? NewUserViewController else {
                                     fatalError("New UserViewController cannot be instantiating")
                                 }
                                 NewUserVC.modalPresentationStyle = .fullScreen

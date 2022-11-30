@@ -15,6 +15,7 @@ enum PickerType {
 enum PublicMode {
     case hottest
     case newest
+    case lovest
 }
 
 enum PrivacyMode: String {
