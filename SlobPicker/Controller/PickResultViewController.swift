@@ -61,6 +61,7 @@ class PickResultViewController: UIViewController {
         if mode != .forLive {
             ProgressHUD.show()
         }
+        navigationItem.title = "投票結果"
     }
     
     override func viewWillAppear(_ animated: Bool) {

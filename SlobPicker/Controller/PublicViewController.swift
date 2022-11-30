@@ -118,7 +118,7 @@ class PublicViewController: UIViewController {
         group.notify(queue: DispatchQueue.main) {
             self.hotTableView.reloadData()
             self.hotTableView.dg_stopLoading()
-            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.6)
+            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.4)
         }
     }
     
@@ -138,7 +138,7 @@ class PublicViewController: UIViewController {
                 UserDefaults.standard.set(nil, forKey: UserInfo.userIDKey)
             }
         ])
-        let profile = UIBarButtonItem(image: UIImage(systemName: "person"), menu: profileMenu)
+        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: profileMenu)
         // relationship
         let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
         let relationshipMenu = UIMenu(children: [
@@ -159,7 +159,7 @@ class PublicViewController: UIViewController {
                 self.show(groupVC, sender: self)
             }
         ])
-        let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), menu: relationshipMenu)
+        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"), menu: relationshipMenu)
         navigationItem.rightBarButtonItems = [compose, relationship, profile]
         navigationItem.leftBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "logo2"), style: .plain, target: nil, action: nil),

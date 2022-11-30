@@ -19,6 +19,7 @@ class GroupCreateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "創建群組"
     }
     
     @IBAction func selectFriends() {
