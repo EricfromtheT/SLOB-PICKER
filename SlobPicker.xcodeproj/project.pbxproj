@@ -41,6 +41,7 @@
 		37A4A0AE29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */; };
 		37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */; };
 		37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C9582925183700604A4A /* UIImage+Extension.swift */; };
+		37B27DDF293749CB00C30D98 /* waiting.json in Resources */ = {isa = PBXBuildFile; fileRef = 37B27DDE293749CB00C30D98 /* waiting.json */; };
 		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
 		37D05E03292C7EDD00D8A2AA /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */; };
 		37D05E05292C7F3C00D8A2AA /* congrats.json in Resources */ = {isa = PBXBuildFile; fileRef = 37D05E04292C7F3B00D8A2AA /* congrats.json */; };
@@ -117,6 +118,7 @@
 		37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		37A7C9582925183700604A4A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		37A7C9642927350100604A4A /* SlobPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SlobPicker.entitlements; sourceTree = "<group>"; };
+		37B27DDE293749CB00C30D98 /* waiting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waiting.json; sourceTree = "<group>"; };
 		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
 		37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		37D05E04292C7F3B00D8A2AA /* congrats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congrats.json; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */,
 				37DD01852929B3200078352F /* countDown.json */,
 				37D05E04292C7F3B00D8A2AA /* congrats.json */,
+				37B27DDE293749CB00C30D98 /* waiting.json */,
 				377323A629352C0B007D0B64 /* choose.json */,
 				377323A42934B05A007D0B64 /* gameRoom.json */,
 				37DE8AF3290FD67600F737A7 /* SPConstant.swift */,
@@ -461,6 +464,7 @@
 			files = (
 				377852EE291D0B6100780E8D /* RoomIDInputView.xib in Resources */,
 				37DD01862929B3200078352F /* countDown.json in Resources */,
+				37B27DDF293749CB00C30D98 /* waiting.json in Resources */,
 				37D05E05292C7F3C00D8A2AA /* congrats.json in Resources */,
 				37DE8AE1290EBC0F00F737A7 /* Interaction.storyboard in Resources */,
 				377323A729352C0B007D0B64 /* choose.json in Resources */,

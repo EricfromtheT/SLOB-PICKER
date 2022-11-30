@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import Lottie
 
 class WaitingRoomViewController: UIViewController {
     // MARK: IBOutlet
@@ -37,6 +38,7 @@ class WaitingRoomViewController: UIViewController {
     var votingListener: ListenerRegistration?
     var group = DispatchGroup()
     var isFirstTime = true
+    var animationView: LottieAnimationView?
     var livePicker: LivePicker?
     var attendees: [Attendee]?
     let userId = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
@@ -45,6 +47,7 @@ class WaitingRoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDataSource()
+        setUpLottie()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +69,25 @@ class WaitingRoomViewController: UIViewController {
         group.notify(queue: DispatchQueue.main) {
             self.configureSnap()
         }
+    }
+    
+    func setUpLottie() {
+        animationView = .init(name: "waiting")
+        animationView?.loopMode = .loop
+        animationView?.contentMode = .scaleAspectFill
+        animationView?.animationSpeed = 1
+        view.addSubview(animationView!)
+        animationView?.translatesAutoresizingMaskIntoConstraints = false
+        animationView?.heightAnchor
+            .constraint(equalToConstant: 40).isActive = true
+        animationView?.widthAnchor
+            .constraint(equalToConstant: 100).isActive = true
+        animationView?.bottomAnchor
+            .constraint(equalTo: accessCodeLabel.topAnchor).isActive = true
+        animationView?.centerXAnchor
+            .constraint(equalTo: accessCodeLabel.centerXAnchor).isActive = true
+        view.sendSubviewToBack(animationView!)
+        animationView?.play()
     }
     
     func configureDataSource() {

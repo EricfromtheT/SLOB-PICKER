@@ -107,7 +107,7 @@ class PickerSelectionViewController: UIViewController {
                 FirebaseManager.shared.logOut()
             }
         ])
-        let profile = UIBarButtonItem(image: UIImage(systemName: "person"), menu: menu)
+        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: menu)
         let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
         let relationshipMenu = UIMenu(children: [
             UIAction(title: "添加好友") { action in
@@ -126,7 +126,7 @@ class PickerSelectionViewController: UIViewController {
                 self.show(groupVC, sender: self)
             }
         ])
-        let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), menu: relationshipMenu)
+        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"), menu: relationshipMenu)
         navigationItem.rightBarButtonItems = [compose, relationship, profile]
         navigationItem.leftBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "logo2"), style: .plain, target: nil, action: nil),
