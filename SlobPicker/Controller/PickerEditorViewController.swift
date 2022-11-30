@@ -54,10 +54,11 @@ class PickerEditorViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigation()
         ProgressHUD.animationType = .lineScaling
+        navigationItem.title = "編輯新picker"
     }
     
     func setUpNavigation() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .done, target: self, action: #selector(uploadContent))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "發布", style: .done, target: self, action: #selector(uploadContent))
     }
     
     @objc func uploadContent() {
@@ -328,13 +329,13 @@ extension PickerEditorViewController: UITableViewDataSource {
             cell.setUpTarget()
             cell.targetCompletion = { index in
                 if index == 1 {
-                    cell.groupButton.isHidden = false
+                    cell.groupBgView.isHidden = false
                     self.target = .forPrivate
                 } else if index == 0 {
-                    cell.groupButton.isHidden = true
+                    cell.groupBgView.isHidden = true
                     self.target = .forPublic
                 } else {
-                    cell.groupButton.isHidden = true
+                    cell.groupBgView.isHidden = true
                     self.target = .forLive
                 }
             }

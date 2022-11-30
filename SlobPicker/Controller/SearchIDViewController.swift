@@ -33,6 +33,7 @@ class SearchIDViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "添加好友"
     }
     
     @IBAction func searchUser() {

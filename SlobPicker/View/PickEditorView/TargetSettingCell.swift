@@ -11,16 +11,23 @@ import DropDown
 class TargetSettingCell: UITableViewCell {
     @IBOutlet weak var groupButton: UIButton!
     @IBOutlet weak var targetButton: UIButton!
+    @IBOutlet weak var targetBgView: UIView!
+    @IBOutlet weak var groupBgView: UIView!
     let groupDropDown = DropDown()
     let targetDropDown = DropDown()
     var groupCompletion: ((Int) -> Void)?
     var targetCompletion: ((Int) -> Void)?
     
     func setUpGroup(groups: [String]) {
-        groupButton.isHidden = true
+        groupBgView.layer.cornerRadius = 8
+        groupBgView.layer.borderWidth = 2
+        groupBgView.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        groupBgView.isHidden = true
         groupButton.addTarget(self, action: #selector(groupClick), for: .touchUpInside)
-        groupDropDown.anchorView = groupButton
-        groupDropDown.width = 200
+        groupDropDown.cornerRadius = 8
+        groupDropDown.backgroundColor = .white
+        groupDropDown.anchorView = groupBgView
+        groupDropDown.width = groupBgView.bounds.width
         groupDropDown.bottomOffset = CGPoint(x: 0, y: 40)
         groupDropDown.dataSource = groups
         groupDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
@@ -30,9 +37,14 @@ class TargetSettingCell: UITableViewCell {
     }
     
     func setUpTarget() {
+        targetBgView.layer.cornerRadius = 8
+        targetBgView.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        targetBgView.layer.borderWidth = 2
         targetButton.addTarget(self, action: #selector(targetClick), for: .touchUpInside)
-        targetDropDown.anchorView = targetButton
-        targetDropDown.width = 150
+        targetDropDown.anchorView = targetBgView
+        targetDropDown.cornerRadius = 8
+        targetDropDown.backgroundColor = .white
+        targetDropDown.width = targetBgView.bounds.width
         targetDropDown.bottomOffset = CGPoint(x: 0, y: 40)
         targetDropDown.dataSource = ["公開", "群組", "限時picker"]
         targetDropDown.selectionAction = { [unowned self] (index: Int, item: String) in

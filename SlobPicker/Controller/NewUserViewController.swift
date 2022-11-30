@@ -117,8 +117,7 @@ class NewUserViewController: UIViewController {
         willBeUploadedName = willBeUploadedName?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    @IBAction func finishSetting() {
-        // 先判斷illegal format
+    @IBAction func finishSetting(_ sender: UIButton) {
         formatter()
         guard let willBeUploadedId = willBeUploadedId, let willBeUploadedName = willBeUploadedName, !willBeUploadedId.isEmpty, !willBeUploadedName.isEmpty, willBeUploadedId.isValid else {
             let alert = UIAlertController(title: "ID不可使用或暱稱尚未填入", message: "請將資訊填寫正確及完整唷", preferredStyle: .alert)
@@ -127,6 +126,7 @@ class NewUserViewController: UIViewController {
             return
         }
         ProgressHUD.show()
+        sender.isEnabled = false
         // 先整理初步data
         guard let uuid = self.uuid else { fatalError("uuid in keychain is nil") }
         var user = User(userName: willBeUploadedName, userID: willBeUploadedId, userUUID: uuid, profileURL: "", block: [])
@@ -153,7 +153,7 @@ class NewUserViewController: UIViewController {
             }
         }
         group.notify(queue: .main) {
-           //上傳user data
+            //上傳user data
             FirebaseManager.shared.createNewUser(user: &user) { result in
                 switch result {
                 case .success( _):
@@ -174,6 +174,7 @@ class NewUserViewController: UIViewController {
             }
         }
     }
+    
     
     func uploadImageToFirebase() {
         if let uploadData = willBeUploadedImage?.jpegData(compressionQuality: 0) {
