@@ -54,6 +54,7 @@ class PickResultViewController: UIViewController {
             }
         }
     }
+    var contentCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,6 +140,10 @@ class PickResultViewController: UIViewController {
                     }
                     let vote = VoteResult(choice: index, votes: result.count)
                     voteResults.append(vote)
+                    voteResults.sort {
+                        $0.votes > $1.votes
+                    }
+                    contentCount = voteResults.count
                 }
             } else {
                 print("ERROR: pickinfo is nil")
@@ -151,6 +156,10 @@ class PickResultViewController: UIViewController {
                     }
                     let vote = VoteResult(choice: index, votes: result.count)
                     voteResults.append(vote)
+                    voteResults.sort() {
+                        $0.votes > $1.votes
+                    }
+                    contentCount = voteResults.count
                 }
             } else {
                 print("ERROR: pickinfo is nil")
@@ -167,6 +176,23 @@ class PickResultViewController: UIViewController {
 // MARK: TableView DataSource
 extension PickResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var contents: [String] = []
+        var title = ""
+        var type = 0
+        switch mode {
+        case .forLive:
+            if let pickInfo = livePickInfo {
+                contents = pickInfo.contents
+                title = pickInfo.title
+                type = pickInfo.type
+            }
+        default:
+            if let pickInfo = pickInfo {
+                contents = pickInfo.contents
+                title = pickInfo.title
+                type = pickInfo.type
+            }
+        }
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickResultTitleCell.self)",
                                                            for: indexPath)
@@ -179,33 +205,16 @@ extension PickResultViewController: UITableViewDataSource {
                 cell.configure(title: pickInfo.title, description: pickInfo.description)
             }
             return cell
-        } else if indexPath.row == 1 {
+        } else if indexPath.row <= contents.count {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickResultCell.self)",
                                                            for: indexPath)
                 as? PickResultCell else {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
-            switch mode {
-            case .forLive:
-                if let pickInfo = livePickInfo {
-                    if pickInfo.type == 0 {
-                        cell.configureLive(results: voteResults, data: pickInfo)
-                    } else {
-                        cell.configureLiveImage(results: voteResults, data: pickInfo)
-                    }
-                } else {
-                    print("ERROR: pickInfo is nil")
-                }
-            default:
-                if let pickInfo = pickInfo {
-                    if pickInfo.type == 0 {
-                        cell.configure(results: voteResults, data: pickInfo)
-                    } else {
-                        cell.configureImage(results: voteResults, data: pickInfo)
-                    }
-                } else {
-                    print("ERROR: pickInfo is nil")
-                }
+            if type == 0 {
+                cell.configureText(content: contents[voteResults[indexPath.row-1].choice], votes: voteResults[indexPath.row-1].votes, total: pickerResults.count, index: indexPath.row-1)
+            } else {
+                cell.configureImage(content: contents[voteResults[indexPath.row-1].choice], votes: voteResults[indexPath.row-1].votes, total: pickerResults.count, index: indexPath.row-1)
             }
             return cell
         } else {
@@ -213,15 +222,15 @@ extension PickResultViewController: UITableViewDataSource {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
             let userInfo = self.users.filter {
-                $0.userUUID == pickerComments[indexPath.row - 2].userUUID
+                $0.userUUID == pickerComments[indexPath.row-1-contentCount].userUUID
             }
-            cell.configure(data: pickerComments[indexPath.row - 2],
+            cell.configure(data: pickerComments[indexPath.row-1-contentCount],
                            userInfo: userInfo[0])
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        pickerComments.count + 2
+        pickerComments.count + contentCount + 1
     }
 }

@@ -311,6 +311,7 @@ extension PickerEditorViewController: UITableViewDataSource {
                 }
                 cell.deleteCompletion = { index in
                     self.imagesDict.updateValue(nil, forKey: index)
+                    cell.imageNameLabels[index].text = "請上傳照片"
                 }
                 cell.configure(superVC: self)
                 return cell
