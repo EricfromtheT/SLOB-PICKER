@@ -21,7 +21,7 @@ class TargetSettingCell: UITableViewCell {
     func setUpGroup(groups: [String]) {
         groupBgView.layer.cornerRadius = 8
         groupBgView.layer.borderWidth = 2
-        groupBgView.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        groupBgView.layer.borderColor = UIColor.asset(.chose)?.cgColor
         groupBgView.isHidden = true
         groupButton.addTarget(self, action: #selector(groupClick), for: .touchUpInside)
         groupDropDown.cornerRadius = 8
@@ -38,7 +38,7 @@ class TargetSettingCell: UITableViewCell {
     
     func setUpTarget() {
         targetBgView.layer.cornerRadius = 8
-        targetBgView.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        targetBgView.layer.borderColor = UIColor.asset(.chose)?.cgColor
         targetBgView.layer.borderWidth = 2
         targetButton.addTarget(self, action: #selector(targetClick), for: .touchUpInside)
         targetDropDown.anchorView = targetBgView
