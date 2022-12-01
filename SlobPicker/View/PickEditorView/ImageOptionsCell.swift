@@ -36,8 +36,8 @@ class ImageOptionsCell: UITableViewCell {
             imgView.layer.cornerRadius = 15
             imgView.contentMode = .scaleAspectFill
             imgView.clipsToBounds = true
-            imageNameLabels[idx].text = "照片\(idx)"
-            imagePickView[idx].image = UIImage.asset(.image)
+            imageNameLabels[idx].text = "請上傳照片"
+            imagePickView[idx].image = UIImage.asset(.upload)
             deleteView[idx].isHidden = true
             deleteView[idx].tag = idx
             deleteView[idx].isUserInteractionEnabled = true
@@ -64,7 +64,7 @@ class ImageOptionsCell: UITableViewCell {
     
     @objc func deletePic(_ sender: UITapGestureRecognizer) {
         if let view = sender.view {
-            imagePickView[view.tag].image = UIImage.asset(.image)
+            imagePickView[view.tag].image = UIImage.asset(.upload)
             deleteView[view.tag].isHidden = true
             deleteCompletion?(view.tag)
         } else {

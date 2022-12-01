@@ -38,6 +38,7 @@
 		377F0E15292F36C100A24BD5 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 377F0E14292F36C100A24BD5 /* Profile.storyboard */; };
 		377F0E17292F36E800A24BD5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377F0E16292F36E800A24BD5 /* ProfileViewController.swift */; };
 		377F0E192930568600A24BD5 /* topSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377F0E182930568600A24BD5 /* topSecret.swift */; };
+		379277B429389413004C336B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379277B329389413004C336B /* UIImageView+Extension.swift */; };
 		37A4A0AE29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */; };
 		37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */; };
 		37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C9582925183700604A4A /* UIImage+Extension.swift */; };
@@ -114,6 +115,7 @@
 		377F0E14292F36C100A24BD5 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		377F0E16292F36E800A24BD5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		377F0E182930568600A24BD5 /* topSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topSecret.swift; sourceTree = "<group>"; };
+		379277B329389413004C336B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_LKZC93PABX.p8; sourceTree = "<group>"; };
 		37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		37A7C9582925183700604A4A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				370050CD29227F6400E1EA35 /* UIColor+Extension.swift */,
 				37A7C9582925183700604A4A /* UIImage+Extension.swift */,
 				37D05E0D292DCA3700D8A2AA /* String+Extension.swift */,
+				379277B329389413004C336B /* UIImageView+Extension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,
 				37D5758C2914DFF800DC344D /* PickResultViewController.swift in Sources */,
+				379277B429389413004C336B /* UIImageView+Extension.swift in Sources */,
 				37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */,
 				3711415029169CFB00C567EF /* Group.swift in Sources */,
 				37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */,

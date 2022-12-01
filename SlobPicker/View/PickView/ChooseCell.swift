@@ -30,14 +30,14 @@ class ChooseCell: UITableViewCell {
             button.setTitle(optionsString[unit], for: .normal)
             button.backgroundColor = UIColor.asset(.choose)
             button.layer.cornerRadius = 25
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
             button.setTitleColor(.black, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.tag = unit
             button.addTarget(self, action: #selector(choose), for: .touchUpInside)
             // Constraints
             button.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.7).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 70).isActive = true
         }
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .vertical)

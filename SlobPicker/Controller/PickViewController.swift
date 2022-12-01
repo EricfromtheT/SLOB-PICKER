@@ -36,6 +36,7 @@ class PickViewController: UIViewController {
         super.viewDidLoad()
         configureNavigation()
         ProgressHUD.animationType = .lineScaling
+        navigationItem.title = "投票"
     }
     
     func configureNavigation() {

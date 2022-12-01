@@ -16,7 +16,6 @@ class PickResultTitleCell: UITableViewCell {
         titleLabel.text = title
         dpLabel.text = description
         bgView.clipsToBounds = true
-        bgView.layer.cornerRadius = 20
-        bgView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        bgView.layer.cornerRadius = 15
     }
 }
