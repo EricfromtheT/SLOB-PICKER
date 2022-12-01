@@ -370,28 +370,28 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="wEX-wX-5Hr">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="wEX-wX-5Hr">
                                                     <rect key="frame" x="240" y="10.333333333333336" width="60" height="60.000000000000007"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="wEX-wX-5Hr" secondAttribute="height" id="VAd-Y5-XjY"/>
                                                         <constraint firstAttribute="width" constant="60" id="kZa-0Y-N2h"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="1fu-wD-b9I">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="1fu-wD-b9I">
                                                     <rect key="frame" x="240" y="90.666666666666671" width="60" height="60.000000000000014"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="1fu-wD-b9I" secondAttribute="height" id="IHt-ag-Kkd"/>
                                                         <constraint firstAttribute="width" constant="60" id="dYp-jQ-e2E"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="Ss3-qR-sIz">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="Ss3-qR-sIz">
                                                     <rect key="frame" x="240" y="171" width="60" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="A2x-l9-5Cc"/>
                                                         <constraint firstAttribute="width" secondItem="Ss3-qR-sIz" secondAttribute="height" id="k3S-cm-thy"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="20f-qf-5uD">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="20f-qf-5uD">
                                                     <rect key="frame" x="240" y="251.33333333333337" width="60" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="20f-qf-5uD" secondAttribute="height" id="3BC-Db-Bbb"/>
@@ -932,7 +932,7 @@
     <resources>
         <image name="Icons_24px_CleanAll" width="24" height="24"/>
         <image name="deleteButton" width="512" height="512"/>
-        <image name="image" width="512" height="512"/>
+        <image name="upload" width="512" height="512"/>
         <namedColor name="card2left">
             <color red="0.94117647058823528" green="0.90588235294117647" blue="0.35686274509803922" alpha="0.89999997615814209" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

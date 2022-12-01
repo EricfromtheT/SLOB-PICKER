@@ -15,6 +15,7 @@ enum assetImage: String {
     case rainbow
     case user
     case background_color
+    case upload
 }
 
 extension UIImage {
