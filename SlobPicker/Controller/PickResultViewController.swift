@@ -8,6 +8,7 @@
 import UIKit
 import ProgressHUD
 import Lottie
+import ViewAnimator
 
 class PickResultViewController: UIViewController {
     @IBOutlet weak var resultTableView: UITableView! {
@@ -29,6 +30,7 @@ class PickResultViewController: UIViewController {
     var users: [User] = []
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 0)
+    private let animations = [AnimationType.from(direction: .top, offset: 30)]
     // data should be pre supplied
     var mode: PrivacyMode = .forPrivate
     var pickInfo: Picker? {
@@ -124,6 +126,7 @@ class PickResultViewController: UIViewController {
         group.notify(queue: DispatchQueue.main) {
             if let tableView = self.resultTableView {
                 tableView.reloadData()
+                UIView.animate(views: self.resultTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.4)
                 ProgressHUD.dismiss()
             }
         }
@@ -177,7 +180,6 @@ class PickResultViewController: UIViewController {
 extension PickResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var contents: [String] = []
-        var title = ""
         var type = 0
         switch mode {
         case .forLive:
@@ -231,6 +233,6 @@ extension PickResultViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        pickerComments.count + contentCount + 1
+        contentCount != 0 ? pickerComments.count + contentCount + 1 : 0
     }
 }

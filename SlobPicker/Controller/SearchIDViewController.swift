@@ -19,12 +19,35 @@ class SearchIDViewController: UIViewController {
         didSet {
             profileImageView.layer.cornerRadius
             = profileImageView.bounds.width / 2
+            profileImageView.layer.borderColor = UIColor.black.cgColor
+            profileImageView.layer.borderWidth = 1
         }
     }
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sendInvitationButton: UIButton! {
         didSet {
             sendInvitationButton.isEnabled = false
+        }
+    }
+    @IBOutlet weak var searchButton: UIButton! {
+        didSet {
+            searchButton.layer.cornerRadius = 10
+            searchButton.layer.borderWidth = 1
+            searchButton.layer.borderColor = UIColor.systemGray4.cgColor
+        }
+    }
+    @IBOutlet weak var cancelButton: UIButton! {
+        didSet {
+            cancelButton.layer.cornerRadius = 10
+            cancelButton.layer.borderWidth = 1
+            cancelButton.layer.borderColor = UIColor.systemGray4.cgColor
+        }
+    }
+    @IBOutlet weak var sendButton: UIButton! {
+        didSet {
+            sendButton.layer.cornerRadius = 10
+            sendButton.layer.borderWidth = 1
+            sendButton.layer.borderColor = UIColor.systemGray4.cgColor
         }
     }
     
@@ -68,7 +91,7 @@ class SearchIDViewController: UIViewController {
         if self.userInfo == nil {
             self.sendInvitationButton.isEnabled = false
             self.nameLabel.text = "無此用戶"
-            self.profileImageView.image = UIImage(named: "image")
+            self.profileImageView.image = UIImage.asset(.user)
             let alert = UIAlertController(title: "無此用戶", message: "查無此ID用戶", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "好", style: .cancel))
             self.present(alert, animated: true)
@@ -85,5 +108,9 @@ class SearchIDViewController: UIViewController {
                 self.present(alert, animated: true)
             }
         }
+    }
+    
+    @IBAction func cancel() {
+        idTextField.text = ""
     }
 }

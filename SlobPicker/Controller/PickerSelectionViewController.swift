@@ -36,11 +36,11 @@ class PickerSelectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.navigationbar2)
+        appearance.backgroundColor = UIColor.asset(.background)
         // cancel navigationbar seperator
         appearance.shadowColor = nil
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationItem.titleView?.tintColor = .white
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
+//        navigationItem.titleView?.tintColor = UIColor.asset(.navigationbar2)
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -79,7 +79,7 @@ class PickerSelectionViewController: UIViewController {
     }
     
     func setUpDGE() {
-        loadingView.tintColor = UIColor.white
+        loadingView.tintColor = UIColor.asset(.navigationbar2)
         pickersTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             guard let self = self else {
                 fatalError("no pickerselectionViewController")
@@ -89,7 +89,7 @@ class PickerSelectionViewController: UIViewController {
                 self.loadData()
             }
         }, loadingView: loadingView)
-        pickersTableView.dg_setPullToRefreshFillColor(UIColor.asset(.navigationbar2) ?? .clear)
+        pickersTableView.dg_setPullToRefreshFillColor(UIColor.asset(.background) ?? .clear)
         pickersTableView.dg_setPullToRefreshBackgroundColor(pickersTableView.backgroundColor!)
     }
     

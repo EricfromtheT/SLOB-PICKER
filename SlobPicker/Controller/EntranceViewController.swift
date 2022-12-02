@@ -15,6 +15,14 @@ class EntranceViewController: UIViewController {
         }
     }
     @IBOutlet weak var entryButton: UIButton!
+    @IBOutlet weak var cancelImageView: UIImageView! {
+        didSet {
+            cancelImageView.isUserInteractionEnabled = true
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(cancel))
+            cancelImageView.addGestureRecognizer(gesture)
+        }
+    }
+    @IBOutlet weak var buttonShadow: UIView!
     var roomID: String?
     var animationView: LottieAnimationView?
     let textFieldWidth = 300
@@ -58,6 +66,7 @@ class EntranceViewController: UIViewController {
     func setUpEntryButton() {
         entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - entryButtonWidth) / 2, y: Int(SPConstant.screenHeight), width: entryButtonWidth, height: 50)
         entryButton.layer.cornerRadius = 10
+        buttonShadow.layer.cornerRadius = 10
     }
     
     func animateElement() {
@@ -78,8 +87,17 @@ class EntranceViewController: UIViewController {
         view.sendSubviewToBack(animationView!)
     }
     
+    @objc func cancel() {
+        dismiss(animated: true)
+    }
+    
     @IBAction func confirm() {
         //取得該房號所屬的picker資料，提取出pickerID後索取此議題目前的參加者，進行Waiting room第一次的畫面渲染
+        UIView.animate(withDuration: 0.1) {
+            self.entryButton.transform = CGAffineTransform(translationX: 0, y: 5)
+        } completion: { _ in
+            self.entryButton.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
         var picker: LivePicker?
         var userInfo: User?
         if let roomID = roomID {
