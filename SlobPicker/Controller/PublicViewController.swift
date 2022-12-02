@@ -8,8 +8,6 @@
 import UIKit
 import DGElasticPullToRefresh
 import ViewAnimator
-import FirebaseAuth
-import DropDown
 
 class PublicViewController: UIViewController {
     @IBOutlet weak var hotTableView: UITableView! {
@@ -22,18 +20,17 @@ class PublicViewController: UIViewController {
     
     let group = DispatchGroup()
     let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-    let relationshipDropDown = DropDown()
     var newest: [Picker] = []
     var hottest: [Picker] = []
+    var lovest: [Picker] = []
+    var block: Set<String> = []
     private let animations = [AnimationType.from(direction: .top, offset: 30)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDGE()
         setUpNavigation()
-        // check whether user has logged in
-        Auth.auth().addStateDidChangeListener { auth, user in
-            
+        FirebaseManager.auth.addStateDidChangeListener { auth, user in
             if user != nil {
                 print("user has logged in")
             } else {
@@ -46,32 +43,29 @@ class PublicViewController: UIViewController {
                 self.present(loginVC, animated: false)
             }
         }
-        navigationItem.title = "公開Pick"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.navigationbar2)
+        //        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = UIColor.asset(.background)
         // cancel navigationbar seperator
         appearance.shadowColor = nil
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationItem.titleView?.tintColor = .white
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
+//        navigationItem.titleView?.tintColor = UIColor.asset(.background)
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    deinit {
-        hotTableView.dg_removePullToRefresh()
-    }
-    
+    // MARK: PULL DOWN third party
     func setUpDGE() {
-        loadingView.tintColor = UIColor.white
+        loadingView.tintColor = UIColor.asset(.navigationbar2)
         hotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             guard let self = self else { return }
             self.fetchPublicData()
         }, loadingView: loadingView)
-        hotTableView.dg_setPullToRefreshFillColor(UIColor.asset(.navigationbar2) ?? .clear)
+        hotTableView.dg_setPullToRefreshFillColor(UIColor.asset(.background) ?? .clear)
         hotTableView.dg_setPullToRefreshBackgroundColor(hotTableView.backgroundColor!)
     }
     
@@ -96,41 +90,67 @@ class PublicViewController: UIViewController {
             }
             self.group.leave()
         })
+        group.enter()
+        FirebaseManager.shared.fetchLovestPublicPicker { result in
+            switch result {
+            case .success(let lovest):
+                self.lovest = lovest
+            case .failure(let error):
+                print(error, "error of getting lovest public picker")
+            }
+            self.group.leave()
+        }
+        group.enter()
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        FirebaseManager.shared.getUserInfo(userUUID: uuid) { result in
+            switch result {
+            case .success(let user):
+                if let blockList = user.block {
+                    self.block = Set(blockList)
+                } else {
+                    print("user block list is not initialized")
+                }
+            case .failure(let error):
+                return print(error, "error of getting self user info")
+            }
+            self.group.leave()
+        }
         group.notify(queue: DispatchQueue.main) {
             self.hotTableView.reloadData()
             self.hotTableView.dg_stopLoading()
-            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.6)
+            UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.4)
         }
     }
     
+    // MARK: Navigation
     func setUpNavigation() {
-        navigationItem.title = "群組Pick"
         // set up bar button
-        let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
-        navigationItem.rightBarButtonItems = [compose, relationship]
-        let menu = UIMenu(children: [
+        // profile
+        let profileMenu = UIMenu(children: [
+            UIAction(title: "個人頁面") { action in
+                let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
+                self.show(profileVC, sender: self)
+            },
             UIAction(title: "登出") { action in
                 FirebaseManager.shared.logOut()
+                UserDefaults.standard.set(nil, forKey: UserInfo.userNameKey)
+                UserDefaults.standard.set(nil, forKey: UserInfo.userIDKey)
             }
         ])
-        let profile = UIBarButtonItem(image: UIImage(systemName: "person"), menu: menu)
-        navigationItem.leftBarButtonItem = profile
+        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: profileMenu)
         // relationship
-        relationshipDropDown.anchorView = navigationItem.rightBarButtonItem
-        relationshipDropDown.width = 200
-        relationshipDropDown.dataSource = ["創建群組", "添加好友"]
-        relationshipDropDown.direction = .bottom
-        relationshipDropDown.bottomOffset = CGPoint(x: 0, y: 40)
-        relationshipDropDown.selectionAction = { index, _ in
-            let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
-            if index == 1 {
+        let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
+        let relationshipMenu = UIMenu(children: [
+            UIAction(title: "添加好友") { action in
                 guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
                     print("ERROR: SearchIDViewController didn't instanciate")
                     return
                 }
                 self.show(friendVC, sender: self)
-            } else {
+            },
+            UIAction(title: "創建群組") { action in
+                
                 guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupCreateViewController.self)")
                         as? GroupCreateViewController else {
                     print("ERROR: GroupCreateViewController didn't instanciate")
@@ -138,11 +158,14 @@ class PublicViewController: UIViewController {
                 }
                 self.show(groupVC, sender: self)
             }
-        }
-    }
-    
-    @objc func createNewGroup() {
-        relationshipDropDown.show()
+        ])
+        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"), menu: relationshipMenu)
+        navigationItem.rightBarButtonItems = [compose, relationship, profile]
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "logo2"), style: .plain, target: nil, action: nil),
+            UIBarButtonItem(title: "                    ", style: .done, target: nil, action: nil),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        ]
     }
     
     // call pickEditorViewController to edit a new picker
@@ -154,7 +177,6 @@ class PublicViewController: UIViewController {
         }
         show(editorVC, sender: self)
     }
-
 }
 
 // MARK: TableView DataSource
@@ -165,11 +187,23 @@ extension PublicViewController: UITableViewDataSource {
             fatalError("ERROR: cannot instantiate HotCell")
         }
         if indexPath.section == 0 {
-            cell.hottestPickers = hottest
+            let cleanHottest = hottest.filter {
+                !block.contains($0.authorUUID)
+            }
+            cell.hottestPickers = cleanHottest
             cell.mode = .hottest
-        } else {
-            cell.newestPickers = newest
+        } else if indexPath.section == 1 {
+            let cleanNewest = newest.filter {
+                !block.contains($0.authorUUID)
+            }
+            cell.newestPickers = cleanNewest
             cell.mode = .newest
+        } else {
+            let cleanLovest = lovest.filter {
+                !block.contains($0.authorUUID)
+            }
+            cell.lovestPickers = cleanLovest
+            cell.mode = .lovest
         }
         cell.superVC = self
         return cell
@@ -180,13 +214,19 @@ extension PublicViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        3
     }
 }
 
 // MARK: TableView Delegate
 extension PublicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        section == 0 ? "熱門Pickers" : "最新Pickers"
+        if section == 0 {
+            return "熱門投票"
+        } else if section == 1 {
+            return "最新投票"
+        } else {
+            return "最受喜愛"
+        }
     }
 }

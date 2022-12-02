@@ -9,28 +9,62 @@ import UIKit
 import AuthenticationServices
 import FirebaseAuth
 import CryptoKit
+import SwiftJWT
+import Lottie
 
 class LoginViewController: UIViewController {
-    @IBOutlet weak var idField: UITextField!
-    @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var appleLogInView: UIView!
     var superVC: PublicViewController!
+    var animationView: LottieAnimationView?
     fileprivate var currentNonce: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpLottie()
         setUpAppleButton()
+        // 如果是一直有在使用未刪app的用戶
+        if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
+            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+            UIApplication.shared.windows.first?.rootViewController = viewController
+            UIApplication.shared.windows.first?.makeKeyAndVisible()
+        }
+    }
+    
+    func setUpLottie() {
+        animationView = .init(name: "choose")
+        animationView?.loopMode = .loop
+        animationView?.frame = CGRect(x: SPConstant.screenWidth*0.2,
+                                      y: 100,
+                                      width: SPConstant.screenWidth*0.6,
+                                      height: SPConstant.screenHeight*0.5)
+        animationView?.contentMode = .scaleAspectFill
+        animationView?.animationSpeed = 1
+        view.addSubview(animationView!)
+        view.sendSubviewToBack(animationView!)
+        animationView?.play()
     }
     
     func setUpAppleButton() {
         let authorizationAppleIDButton: ASAuthorizationAppleIDButton
         = ASAuthorizationAppleIDButton()
+        let directionLabel = UILabel()
         authorizationAppleIDButton
             .addTarget(self, action: #selector(pressSignInWithAppleButton),
                        for: UIControl.Event.touchUpInside)
-        
-        authorizationAppleIDButton.frame = self.appleLogInView.bounds
-        self.appleLogInView.addSubview(authorizationAppleIDButton)
+        view.addSubview(authorizationAppleIDButton)
+        view.addSubview(directionLabel)
+        authorizationAppleIDButton.frame = CGRect(x: SPConstant.screenWidth*0.2,
+                                                  y: SPConstant.screenHeight - 200,
+                                                  width: SPConstant.screenWidth*0.6,
+                                                  height: 50)
+        directionLabel.translatesAutoresizingMaskIntoConstraints = false
+        directionLabel.textAlignment = .center
+        directionLabel.text = "請先進行登入以取回用戶資料，新用戶則需登入註冊並創建屬於您的個人資訊，一起進入Slob Picker的世界吧!"
+        directionLabel.numberOfLines = 0
+        directionLabel.font = UIFont.systemFont(ofSize: 12)
+        directionLabel.textColor = UIColor.darkGray
+        directionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        directionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        directionLabel.bottomAnchor.constraint(equalTo: authorizationAppleIDButton.topAnchor, constant: -10).isActive = true
     }
     
     @objc func pressSignInWithAppleButton() {
@@ -48,16 +82,6 @@ class LoginViewController: UIViewController {
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-    }
-    
-    @IBAction func done() {
-        if let id = idField.text, let name = nameField.text {
-            UserDefaults.standard.set(id, forKey: "userID")
-            UserDefaults.standard.set(name, forKey: "userName")
-            FakeUserInfo.shared.userID = id
-            FakeUserInfo.shared.userName = name
-            superVC.dismiss(animated: true)
-        }
     }
     
     private func randomNonceString(length: Int = 32) -> String {
@@ -104,7 +128,8 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential
             as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
@@ -134,21 +159,33 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     // User has signed in to Firebase with Apple
                     // See if this user is the new client
                     guard let auth = authResult else { fatalError("user is missed") }
-                    FirebaseManager.shared.searchUserID(userID: auth.user.uid) {
+                    FirebaseManager.shared.getUserInfo(userUUID: auth.user.uid) {
                         result in
                         switch result {
-                        case .success( _):
+                        case .success(let user):
                             // old user login in
-                            KeychainService.keychainManager.saveUserUID(uid: auth.user.uid)
-                            
+                            UserDefaults.standard.set(user.userID,
+                                                      forKey: UserInfo.userIDKey)
+                            UserDefaults.standard.set(user.userName,
+                                                      forKey: UserInfo.userNameKey)
+                            // rootViewController change to tabbarviewcontroller
+                            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+                            self.view.window?.rootViewController = viewController
+                            self.view.window?.makeKeyAndVisible()
                         case .failure(let error):
                             if error as? UserError == .nodata {
                                 // new user register and log in
-                                KeychainService.keychainManager.saveUserUID(uid: auth.user.uid)
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                guard let NewUserVC = storyboard.instantiateViewController(
+                                    withIdentifier: "\(NewUserViewController.self)")
+                                        as? NewUserViewController else {
+                                    fatalError("New UserViewController cannot be instantiating")
+                                }
+                                NewUserVC.modalPresentationStyle = .fullScreen
+                                self.present(NewUserVC, animated: true)
                             } else {
                                 print(error, "error of getting user info")
                             }
-                            
                         }
                     }
                 }
@@ -156,7 +193,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         }
     }
     
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithError error: Error) {
         switch (error) {
         case ASAuthorizationError.canceled:
             break

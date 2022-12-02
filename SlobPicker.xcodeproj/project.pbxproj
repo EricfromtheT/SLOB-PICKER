@@ -15,11 +15,16 @@
 		3708B0382919021B00397035 /* HotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B0372919021B00397035 /* HotCell.swift */; };
 		3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B03929192C4E00397035 /* HotPickersCell.swift */; };
 		3711415029169CFB00C567EF /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711414F29169CFB00C567EF /* Group.swift */; };
+		37192988292BAF2400722759 /* CustomChooseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37192986292BAF2400722759 /* CustomChooseCell.swift */; };
+		37192989292BAF2400722759 /* CustomChooseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37192987292BAF2400722759 /* CustomChooseCell.xib */; };
 		371C17582916572E00B3B115 /* FriendSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C17572916572E00B3B115 /* FriendSelectCell.swift */; };
 		372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FA29126055007D677B /* TitleInputCell.swift */; };
 		372AE2FD2912606D007D677B /* TextOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FC2912606D007D677B /* TextOptionsCell.swift */; };
 		372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FE29126088007D677B /* ImageOptionsCell.swift */; };
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
+		3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738C0222931E45900DF82CA /* PickResultTitleCell.swift */; };
+		377323A52934B05A007D0B64 /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A42934B05A007D0B64 /* gameRoom.json */; };
+		377323A729352C0B007D0B64 /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A629352C0B007D0B64 /* choose.json */; };
 		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
 		377852EE291D0B6100780E8D /* RoomIDInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377852ED291D0B6100780E8D /* RoomIDInputView.xib */; };
 		377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852EF291D0BEA00780E8D /* RoomIDInputView.swift */; };
@@ -30,10 +35,19 @@
 		377852FC291FCF6300780E8D /* LivePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852FB291FCF6300780E8D /* LivePickingViewController.swift */; };
 		377852FE2920921600780E8D /* LiveOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852FD2920921600780E8D /* LiveOptionsViewController.swift */; };
 		377853002920A41100780E8D /* ChoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852FF2920A41100780E8D /* ChoiceCell.swift */; };
+		377F0E15292F36C100A24BD5 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 377F0E14292F36C100A24BD5 /* Profile.storyboard */; };
+		377F0E17292F36E800A24BD5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377F0E16292F36E800A24BD5 /* ProfileViewController.swift */; };
+		377F0E192930568600A24BD5 /* topSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377F0E182930568600A24BD5 /* topSecret.swift */; };
+		379277B429389413004C336B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379277B329389413004C336B /* UIImageView+Extension.swift */; };
+		37A4A0AE29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */; };
+		37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */; };
 		37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C9582925183700604A4A /* UIImage+Extension.swift */; };
-		37A7C95D292613C400604A4A /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 37A7C95C292613C400604A4A /* gameRoom.json */; };
-		37A7C96329267AC600604A4A /* ProgressHUDHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C96229267AC600604A4A /* ProgressHUDHelper.swift */; };
+		37B27DDF293749CB00C30D98 /* waiting.json in Resources */ = {isa = PBXBuildFile; fileRef = 37B27DDE293749CB00C30D98 /* waiting.json */; };
 		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
+		37D05E03292C7EDD00D8A2AA /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */; };
+		37D05E05292C7F3C00D8A2AA /* congrats.json in Resources */ = {isa = PBXBuildFile; fileRef = 37D05E04292C7F3B00D8A2AA /* congrats.json */; };
+		37D05E0C292CB9FE00D8A2AA /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E0B292CB9FE00D8A2AA /* FormView.swift */; };
+		37D05E0E292DCA3700D8A2AA /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E0D292DCA3700D8A2AA /* String+Extension.swift */; };
 		37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575802913A1C600DC344D /* PickerSelection.storyboard */; };
 		37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575832913AFEA00DC344D /* PickSelectionCell.swift */; };
 		37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575852913B02900DC344D /* PickerSelectionViewController.swift */; };
@@ -48,7 +62,6 @@
 		37D5759829154B3400DC344D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5759729154B3400DC344D /* User.swift */; };
 		37DD01862929B3200078352F /* countDown.json in Resources */ = {isa = PBXBuildFile; fileRef = 37DD01852929B3200078352F /* countDown.json */; };
 		37DD018A2929C9840078352F /* ChoiceImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD01892929C9840078352F /* ChoiceImageCell.swift */; };
-		37DD018C292A02EC0078352F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD018B292A02EC0078352F /* KeychainService.swift */; };
 		37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA3290C15C900F737A7 /* AppDelegate.swift */; };
 		37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */; };
 		37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA7290C15C900F737A7 /* ViewController.swift */; };
@@ -78,12 +91,17 @@
 		3708B0372919021B00397035 /* HotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotCell.swift; sourceTree = "<group>"; };
 		3708B03929192C4E00397035 /* HotPickersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPickersCell.swift; sourceTree = "<group>"; };
 		3711414F29169CFB00C567EF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		37192986292BAF2400722759 /* CustomChooseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChooseCell.swift; sourceTree = "<group>"; };
+		37192987292BAF2400722759 /* CustomChooseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomChooseCell.xib; sourceTree = "<group>"; };
 		371C17572916572E00B3B115 /* FriendSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSelectCell.swift; sourceTree = "<group>"; };
 		372AE2FA29126055007D677B /* TitleInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleInputCell.swift; sourceTree = "<group>"; };
 		372AE2FC2912606D007D677B /* TextOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptionsCell.swift; sourceTree = "<group>"; };
 		372AE2FE29126088007D677B /* ImageOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOptionsCell.swift; sourceTree = "<group>"; };
 		372AE30029127616007D677B /* TargetSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetSettingCell.swift; sourceTree = "<group>"; };
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3738C0222931E45900DF82CA /* PickResultTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultTitleCell.swift; sourceTree = "<group>"; };
+		377323A42934B05A007D0B64 /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
+		377323A629352C0B007D0B64 /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
 		377852ED291D0B6100780E8D /* RoomIDInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomIDInputView.xib; sourceTree = "<group>"; };
 		377852EF291D0BEA00780E8D /* RoomIDInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomIDInputView.swift; sourceTree = "<group>"; };
@@ -94,11 +112,20 @@
 		377852FB291FCF6300780E8D /* LivePickingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePickingViewController.swift; sourceTree = "<group>"; };
 		377852FD2920921600780E8D /* LiveOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveOptionsViewController.swift; sourceTree = "<group>"; };
 		377852FF2920A41100780E8D /* ChoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCell.swift; sourceTree = "<group>"; };
+		377F0E14292F36C100A24BD5 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		377F0E16292F36E800A24BD5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		377F0E182930568600A24BD5 /* topSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topSecret.swift; sourceTree = "<group>"; };
+		379277B329389413004C336B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_LKZC93PABX.p8; sourceTree = "<group>"; };
+		37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		37A7C9582925183700604A4A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		37A7C95C292613C400604A4A /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
-		37A7C96229267AC600604A4A /* ProgressHUDHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUDHelper.swift; sourceTree = "<group>"; };
 		37A7C9642927350100604A4A /* SlobPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SlobPicker.entitlements; sourceTree = "<group>"; };
+		37B27DDE293749CB00C30D98 /* waiting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waiting.json; sourceTree = "<group>"; };
 		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
+		37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
+		37D05E04292C7F3B00D8A2AA /* congrats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congrats.json; sourceTree = "<group>"; };
+		37D05E0B292CB9FE00D8A2AA /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		37D05E0D292DCA3700D8A2AA /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		37D575802913A1C600DC344D /* PickerSelection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickerSelection.storyboard; sourceTree = "<group>"; };
 		37D575832913AFEA00DC344D /* PickSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSelectionCell.swift; sourceTree = "<group>"; };
 		37D575852913B02900DC344D /* PickerSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSelectionViewController.swift; sourceTree = "<group>"; };
@@ -113,7 +140,6 @@
 		37D5759729154B3400DC344D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		37DD01852929B3200078352F /* countDown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countDown.json; sourceTree = "<group>"; };
 		37DD01892929C9840078352F /* ChoiceImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceImageCell.swift; sourceTree = "<group>"; };
-		37DD018B292A02EC0078352F /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		37DE8AA0290C15C900F737A7 /* SlobPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlobPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37DE8AA3290C15C900F737A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -183,11 +209,20 @@
 			path = PickEditorView;
 			sourceTree = "<group>";
 		};
+		37D05E08292CAAE700D8A2AA /* FirstLogin */ = {
+			isa = PBXGroup;
+			children = (
+				37D05E0B292CB9FE00D8A2AA /* FormView.swift */,
+			);
+			path = FirstLogin;
+			sourceTree = "<group>";
+		};
 		37D575822913AFD700DC344D /* PickSelection */ = {
 			isa = PBXGroup;
 			children = (
 				37D575832913AFEA00DC344D /* PickSelectionCell.swift */,
 				37D575892914C25300DC344D /* PickResultCell.swift */,
+				3738C0222931E45900DF82CA /* PickResultTitleCell.swift */,
 				37D5758D2914EA8200DC344D /* PickCommentsCell.swift */,
 			);
 			path = PickSelection;
@@ -241,6 +276,8 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AA7290C15C900F737A7 /* ViewController.swift */,
+				377F0E16292F36E800A24BD5 /* ProfileViewController.swift */,
+				37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */,
 				377852FB291FCF6300780E8D /* LivePickingViewController.swift */,
 				377852F3291E29CC00780E8D /* WaitingRoomViewController.swift */,
 				377852E8291CE85C00780E8D /* EntranceViewController.swift */,
@@ -262,6 +299,7 @@
 		37DE8ADB290EA55800F737A7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				37D05E08292CAAE700D8A2AA /* FirstLogin */,
 				377852EC291D0AEB00780E8D /* LivePick */,
 				3708B036291901E700397035 /* Public */,
 				37D57599291656CB00DC344D /* FriendSelectView */,
@@ -269,6 +307,7 @@
 				37B5D8982911FD2F00A7BC98 /* PickEditorView */,
 				37DE8AEA290FCC3000F737A7 /* PickView */,
 				37DE8AA9290C15C900F737A7 /* Main.storyboard */,
+				377F0E14292F36C100A24BD5 /* Profile.storyboard */,
 				37D575802913A1C600DC344D /* PickerSelection.storyboard */,
 				37DE8AE0290EBC0F00F737A7 /* Interaction.storyboard */,
 				37D575872914B51F00DC344D /* Relationship.storyboard */,
@@ -286,6 +325,8 @@
 				37D5759729154B3400DC344D /* User.swift */,
 				3711414F29169CFB00C567EF /* Group.swift */,
 				377852F7291E6A6500780E8D /* LivePick.swift */,
+				377F0E182930568600A24BD5 /* topSecret.swift */,
+				37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,10 +343,13 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AAC290C15CA00F737A7 /* Assets.xcassets */,
-				37A7C95C292613C400604A4A /* gameRoom.json */,
+				37A4A0AD29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 */,
 				37DD01852929B3200078352F /* countDown.json */,
+				37D05E04292C7F3B00D8A2AA /* congrats.json */,
+				37B27DDE293749CB00C30D98 /* waiting.json */,
+				377323A629352C0B007D0B64 /* choose.json */,
+				377323A42934B05A007D0B64 /* gameRoom.json */,
 				37DE8AF3290FD67600F737A7 /* SPConstant.swift */,
-				37DD018B292A02EC0078352F /* KeychainService.swift */,
 				37DE8AF72910047100F737A7 /* GoogleService-Info.plist */,
 			);
 			path = Resources;
@@ -315,6 +359,8 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AEB290FCC5000F737A7 /* TitleCell.swift */,
+				37192986292BAF2400722759 /* CustomChooseCell.swift */,
+				37192987292BAF2400722759 /* CustomChooseCell.xib */,
 				37DE8AED290FCC7200F737A7 /* ChooseCell.swift */,
 				37DE8AF1290FCCAE00F737A7 /* AdditionCell.swift */,
 			);
@@ -335,7 +381,8 @@
 				37DE8AFF2910C70E00F737A7 /* DateHelper.swift */,
 				370050CD29227F6400E1EA35 /* UIColor+Extension.swift */,
 				37A7C9582925183700604A4A /* UIImage+Extension.swift */,
-				37A7C96229267AC600604A4A /* ProgressHUDHelper.swift */,
+				37D05E0D292DCA3700D8A2AA /* String+Extension.swift */,
+				379277B329389413004C336B /* UIImageView+Extension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -420,15 +467,21 @@
 			files = (
 				377852EE291D0B6100780E8D /* RoomIDInputView.xib in Resources */,
 				37DD01862929B3200078352F /* countDown.json in Resources */,
-				37A7C95D292613C400604A4A /* gameRoom.json in Resources */,
+				37B27DDF293749CB00C30D98 /* waiting.json in Resources */,
+				37D05E05292C7F3C00D8A2AA /* congrats.json in Resources */,
 				37DE8AE1290EBC0F00F737A7 /* Interaction.storyboard in Resources */,
+				377323A729352C0B007D0B64 /* choose.json in Resources */,
+				37A4A0AE29307A0D00FDCC70 /* AuthKey_LKZC93PABX.p8 in Resources */,
 				37DE8AB0290C15CA00F737A7 /* LaunchScreen.storyboard in Resources */,
+				37192989292BAF2400722759 /* CustomChooseCell.xib in Resources */,
 				37D575882914B51F00DC344D /* Relationship.storyboard in Resources */,
 				37DE8AF82910047100F737A7 /* GoogleService-Info.plist in Resources */,
 				37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */,
 				37DE8AAD290C15CA00F737A7 /* Assets.xcassets in Resources */,
 				37DE8AAB290C15C900F737A7 /* Main.storyboard in Resources */,
+				377F0E15292F36C100A24BD5 /* Profile.storyboard in Resources */,
 				3708B0332918FC5700397035 /* Public.storyboard in Resources */,
+				377323A52934B05A007D0B64 /* gameRoom.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,21 +549,23 @@
 				37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */,
 				37DD018A2929C9840078352F /* ChoiceImageCell.swift in Sources */,
 				37D5758A2914C25300DC344D /* PickResultCell.swift in Sources */,
+				377F0E192930568600A24BD5 /* topSecret.swift in Sources */,
+				37D05E0C292CB9FE00D8A2AA /* FormView.swift in Sources */,
 				377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */,
 				3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */,
 				372AE30129127616007D677B /* TargetSettingCell.swift in Sources */,
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
 				370050CE29227F6400E1EA35 /* UIColor+Extension.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
-				37A7C96329267AC600604A4A /* ProgressHUDHelper.swift in Sources */,
 				37DE8AEC290FCC5000F737A7 /* TitleCell.swift in Sources */,
 				37DE8AEE290FCC7200F737A7 /* ChooseCell.swift in Sources */,
+				377F0E17292F36E800A24BD5 /* ProfileViewController.swift in Sources */,
 				37DE8AF6290FF02700F737A7 /* KingFisherWrapper.swift in Sources */,
+				37D05E0E292DCA3700D8A2AA /* String+Extension.swift in Sources */,
 				37D5758E2914EA8200DC344D /* PickCommentsCell.swift in Sources */,
 				37D5759629154B1E00DC344D /* Result.swift in Sources */,
 				377852F2291D380A00780E8D /* ContainerView.swift in Sources */,
 				377852FC291FCF6300780E8D /* LivePickingViewController.swift in Sources */,
-				37DD018C292A02EC0078352F /* KeychainService.swift in Sources */,
 				37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */,
 				3708B0352918FC6B00397035 /* PublicViewController.swift in Sources */,
 				377853002920A41100780E8D /* ChoiceCell.swift in Sources */,
@@ -519,11 +574,16 @@
 				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,
 				37D5758C2914DFF800DC344D /* PickResultViewController.swift in Sources */,
+				379277B429389413004C336B /* UIImageView+Extension.swift in Sources */,
 				37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */,
 				3711415029169CFB00C567EF /* Group.swift in Sources */,
 				37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */,
+				37192988292BAF2400722759 /* CustomChooseCell.swift in Sources */,
+				37D05E03292C7EDD00D8A2AA /* NewUserViewController.swift in Sources */,
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
+				37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */,
 				377852F8291E6A6500780E8D /* LivePick.swift in Sources */,
+				3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */,
 				37D5759229153F0600DC344D /* FriendSelectViewController.swift in Sources */,
 				377852F4291E29CC00780E8D /* WaitingRoomViewController.swift in Sources */,
 				37DE8AF4290FD67600F737A7 /* SPConstant.swift in Sources */,
@@ -675,8 +735,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=*]" = "";
@@ -687,14 +748,16 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -711,8 +774,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -722,14 +786,16 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

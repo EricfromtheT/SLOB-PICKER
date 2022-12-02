@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import Lottie
 
 class WaitingRoomViewController: UIViewController {
     // MARK: IBOutlet
@@ -17,7 +18,8 @@ class WaitingRoomViewController: UIViewController {
     }
     @IBOutlet weak var startButton: UIButton! {
         didSet {
-            if livePicker?.authorID == FakeUserInfo.shared.userID {
+            guard let userId = userId else { fatalError("uuid in keychain is nil") }
+            if livePicker?.authorID == userId {
                 startButton.isHidden = false
             } else {
                 startButton.isHidden = true
@@ -31,19 +33,21 @@ class WaitingRoomViewController: UIViewController {
     }
     
     // MARK: Variables
-    var dataSource: UICollectionViewDiffableDataSource<Int, User>!
+    var dataSource: UICollectionViewDiffableDataSource<Int, Attendee>!
     var waitingListener: ListenerRegistration?
     var votingListener: ListenerRegistration?
     var group = DispatchGroup()
-    var users: [User]? = []
     var isFirstTime = true
+    var animationView: LottieAnimationView?
     var livePicker: LivePicker?
     var attendees: [Attendee]?
+    let userId = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDataSource()
+        setUpLottie()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,41 +60,38 @@ class WaitingRoomViewController: UIViewController {
         super.viewWillDisappear(true)
         waitingListener?.remove()
         votingListener?.remove()
-        
     }
     
     @objc func attendeeHasChanged() {
-        self.users = []
         attendees?.sort {
             $0.attendTime < $1.attendTime
-        }
-        attendees?.forEach {
-            group.enter()
-            FirebaseManager.shared.searchUserID(userID: $0.userID) { result in
-                switch result {
-                case .success(var user):
-                    // get the right attendee's ID
-                    let attendees = self.attendees?.filter {
-                        $0.userID == user.userID
-                    }
-                    // give user time property
-                    if let attendee = attendees?[0] {
-                        user.time = attendee.attendTime
-                        self.users?.append(user)
-                    }
-                case .failure(let error):
-                    print(error, "error of getting user info")
-                }
-                self.group.leave()
-            }
         }
         group.notify(queue: DispatchQueue.main) {
             self.configureSnap()
         }
     }
     
+    func setUpLottie() {
+        animationView = .init(name: "waiting")
+        animationView?.loopMode = .loop
+        animationView?.contentMode = .scaleAspectFill
+        animationView?.animationSpeed = 1
+        view.addSubview(animationView!)
+        animationView?.translatesAutoresizingMaskIntoConstraints = false
+        animationView?.heightAnchor
+            .constraint(equalToConstant: 40).isActive = true
+        animationView?.widthAnchor
+            .constraint(equalToConstant: 100).isActive = true
+        animationView?.bottomAnchor
+            .constraint(equalTo: accessCodeLabel.topAnchor).isActive = true
+        animationView?.centerXAnchor
+            .constraint(equalTo: accessCodeLabel.centerXAnchor).isActive = true
+        view.sendSubviewToBack(animationView!)
+        animationView?.play()
+    }
+    
     func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Int, User>(collectionView: attendeeCollectionView) {
+        dataSource = UICollectionViewDiffableDataSource<Int, Attendee>(collectionView: attendeeCollectionView) {
             (collectionView, indexPath, user) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(AttendeeCell.self)", for: indexPath)
                     as? AttendeeCell else {
@@ -102,13 +103,10 @@ class WaitingRoomViewController: UIViewController {
     }
     
     func configureSnap() {
-        var snapShot = NSDiffableDataSourceSnapshot<Int, User>()
+        var snapShot = NSDiffableDataSourceSnapshot<Int, Attendee>()
         snapShot.appendSections([0])
-        if let users = users {
-            let sortedUsers = users.sorted {
-                $0.time! < $1.time!
-            }
-            snapShot.appendItems(sortedUsers)
+        if let attendees = attendees {
+            snapShot.appendItems(attendees)
         }
         dataSource.apply(snapShot)
     }
@@ -125,6 +123,7 @@ class WaitingRoomViewController: UIViewController {
                     let attendeeData = try documents.map {
                         try $0.data(as: Attendee.self)
                     }
+                    print(attendeeData, "================")
                     self.attendees = attendeeData
                     NSObject.cancelPreviousPerformRequests(withTarget: self)
                     self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 0.5)

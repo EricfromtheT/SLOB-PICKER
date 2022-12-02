@@ -27,12 +27,17 @@ class PickerEditorViewController: UIViewController {
     // TODO: can be refactor to struct
     private var willBeUploadedImages: [UIImage]? = []
     private var willBeUploadedStrings: [String]? = []
+    private var imagesDict: [Int: UIImage?] = [:]
+    private var stringsDict: [Int: String?] = [:]
     
     private var inputTitle: String?
     private var inputDp: String?
     private var urlStrings: [String]? = []
     private var mode: PickerType = .textType
-    private var target: PrivacyMode = .forPublic
+    private var target: PrivacyMode?
+    let uuid = FirebaseManager.auth.currentUser?.uid
+    let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
+    let userName = UserDefaults.standard.string(forKey: UserInfo.userNameKey)
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 0)
     
@@ -49,14 +54,46 @@ class PickerEditorViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigation()
         ProgressHUD.animationType = .lineScaling
+        navigationItem.title = "編輯新picker"
     }
     
     func setUpNavigation() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .done, target: self, action: #selector(uploadContent))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "發布", style: .done, target: self, action: #selector(uploadContent))
     }
     
     @objc func uploadContent() {
+        if inputTitle == nil {
+            let alert = UIAlertController(title: "請填入主題", message: "picker必須包含主題", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            return
+        }
+        if target == nil {
+            let alert = UIAlertController(title: "請選擇對象", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            return
+        }
+        if target == .forPrivate && selectedGroupIndex == nil {
+            let alert = UIAlertController(title: "請選擇目標群組", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            return
+        }
+
         ProgressHUD.show()
+        for index in 0...3 {
+            if let image = imagesDict[index], let image = image {
+                willBeUploadedImages?.append(image)
+            }
+        }
+        if mode == .imageType, willBeUploadedImages?.count == 0 {
+            let alert = UIAlertController(title: "選項不足", message: "請至少新增一選項", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            ProgressHUD.dismiss()
+            return
+        }
         guard let data = willBeUploadedImages else { fatalError("UIImages have not been found") }
         for image in data {
             // transform image file type
@@ -88,24 +125,38 @@ class PickerEditorViewController: UIViewController {
     }
     
     func publishPicker() {
+        for index in 0...3 {
+            if let string = stringsDict[index], let string = string {
+                willBeUploadedStrings?.append(string)
+            }
+        }
+        if mode == .textType, willBeUploadedStrings?.count == 0 {
+            let alert = UIAlertController(title: "選項不足", message: "請至少新增一選項", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "好的", style: .cancel))
+            present(alert, animated: true)
+            ProgressHUD.dismiss()
+            return
+        }
         if let title = inputTitle, let urls = urlStrings, let strings = willBeUploadedStrings {
             var contents: [String] = []
             var type = 0
             var membersID: [String] = []
             if mode == .textType {
                 contents = strings.filter { string in
-                    !string.isEmpty
+                    !string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 }
             } else {
                 type = 1
                 contents = urls
             }
+            guard let uuid = uuid, let userID = userID, let userName = userName
+            else { fatalError("user info is nil") }
             switch target {
             case .forPrivate:
                 guard let index = selectedGroupIndex else {
                     print("groupindex is nil")
                     return }
-                var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, groupID: groupInfos[index].groupID, groupName: groupInfos[index].groupName)
+                var privatePicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: userID, authorName: userName, authorUUID: uuid, groupID: groupInfos[index].groupID, groupName: groupInfos[index].groupName)
                 FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID, completion: {
                     result in
                     print("==========")
@@ -119,12 +170,11 @@ class PickerEditorViewController: UIViewController {
                     }
                 })
             case .forPublic:
-                var publicPicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: FakeUserInfo.shared.userID, authorName: FakeUserInfo.shared.userName, likedCount: 0, likedIDs: [], pickedCount: 0, pickedIDs: [])
+                var publicPicker = Picker(title: title, description: inputDp ?? "", type: type, contents: contents, authorID: userID, authorName: userName, authorUUID: uuid, likedCount: 0, likedIDs: [], pickedCount: 0, pickedIDs: [])
                 self.publish(picker: &publicPicker)
             case .forLive:
                 let random = String(Int.random(in: 100000...999999))
-                var livePicker = LivePicker(accessCode: random, authorID: FakeUserInfo.shared.userID, status: "waiting", contents: contents, title: title, description: inputDp ?? "", type: type)
-                let passPicker = livePicker
+                var livePicker = LivePicker(accessCode: random, authorID: userID, status: "waiting", contents: contents, title: title, description: inputDp ?? "", type: type)
                 FirebaseManager.shared.publishLivePicker(picker: &livePicker) { result in
                     switch result {
                     case .success(let success):
@@ -134,12 +184,15 @@ class PickerEditorViewController: UIViewController {
                         print(error, "error of publising LivePicker")
                     }
                 }
+            case .none:
+                break
             }
         }
     }
     
     func goToLiveWaitingRoom(roomID: String) {
         var picker: LivePicker?
+        var userInfo: User?
         FirebaseManager.shared.fetchLivePicker(roomID: roomID) { result in
             print(result)
             switch result {
@@ -154,25 +207,41 @@ class PickerEditorViewController: UIViewController {
                     print(error, "error of getting LivePicker")
                 }
             }
-            if let picker = picker, let pickerID = picker.pickerID {
-                FirebaseManager.shared.attendLivePick(livePickerID: pickerID) {
-                    result in
-                    switch result {
-                    case .success( _):
-                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                        guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
-                            fatalError("error cannot instantiate WaitingRoomViewController")
+            guard let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
+            else {
+                return print("user id is not in user default")
+            }
+            FirebaseManager.shared.searchUser(userID: userID) {
+                result in
+                switch result {
+                case .success(let user):
+                    userInfo = user
+                case .failure(let error):
+                    return print(error, "error of getting userdata from firebase")
+                }
+                if let picker = picker,
+                   let pickerID = picker.pickerID,
+                   let userInfo = userInfo {
+                    FirebaseManager.shared.attendLivePick(livePickerID: pickerID, user: userInfo) {
+                        result in
+                        switch result {
+                        case .success( _):
+                            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                            guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
+                                fatalError("error cannot instantiate WaitingRoomViewController")
+                            }
+                            waitingVC.livePicker = picker
+                            waitingVC.modalTransitionStyle = .crossDissolve
+                            waitingVC.modalPresentationStyle = .fullScreen
+                            self.present(waitingVC, animated: true)
+                        case .failure(let error):
+                            print(error, "error of attending a live pick")
                         }
-                        waitingVC.livePicker = picker
-                        waitingVC.modalTransitionStyle = .crossDissolve
-                        waitingVC.modalPresentationStyle = .fullScreen
-                        self.present(waitingVC, animated: true)
-                    case .failure(let error):
-                        print(error, "error of attending a live pick")
                     }
                 }
             }
         }
+        ProgressHUD.dismiss()
     }
     
     func publish(picker: inout Picker) {
@@ -201,7 +270,7 @@ class PickerEditorViewController: UIViewController {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             }
-        case .forLive:
+        default:
             break
         }
         ProgressHUD.dismiss()
@@ -223,37 +292,26 @@ extension PickerEditorViewController: UITableViewDataSource {
         } else if row == 1 {
             switch mode {
             case .textType:
-                self.willBeUploadedImages = []
+                self.imagesDict = [:]
                 guard let cell = tableView.dequeueReusableCell(withIdentifier:
                                                                 "\(TextOptionsCell.self)", for: indexPath) as? TextOptionsCell else {
                     fatalError("ERROR: TextOptionsCell broke")
                 }
                 cell.configure()
                 cell.completion = { content, index in
-                    if self.willBeUploadedStrings?.count ?? 0 >= index + 1 {
-                        self.willBeUploadedStrings?[index] = content
-                    } else {
-                        self.willBeUploadedStrings?.append(content)
-                    }
+                    self.stringsDict.updateValue(content, forKey: index)
                 }
                 return cell
             case .imageType:
-                self.willBeUploadedStrings = []
+                self.stringsDict = [:]
                 guard let cell = tableView
                     .dequeueReusableCell(withIdentifier: "\(ImageOptionsCell.self)",
                                          for: indexPath) as? ImageOptionsCell else {
                     fatalError("ERROR: ImageOptionsCell broke")
                 }
                 cell.deleteCompletion = { index in
-                    print(index)
-                    if index + 1 >= self.willBeUploadedImages?.count ?? 0 {
-                        if let idx = self.willBeUploadedImages?.endIndex {
-                            self.willBeUploadedImages?.remove(at: idx-1)
-                        }
-                    } else {
-                        self.willBeUploadedImages?.remove(at: index)
-                    }
-                    print(self.willBeUploadedImages?.count, "count of images")
+                    self.imagesDict.updateValue(nil, forKey: index)
+                    cell.imageNameLabels[index].text = "請上傳照片"
                 }
                 cell.configure(superVC: self)
                 return cell
@@ -272,13 +330,13 @@ extension PickerEditorViewController: UITableViewDataSource {
             cell.setUpTarget()
             cell.targetCompletion = { index in
                 if index == 1 {
-                    cell.groupButton.isHidden = false
+                    cell.groupBgView.isHidden = false
                     self.target = .forPrivate
                 } else if index == 0 {
-                    cell.groupButton.isHidden = true
+                    cell.groupBgView.isHidden = true
                     self.target = .forPublic
                 } else {
-                    cell.groupButton.isHidden = true
+                    cell.groupBgView.isHidden = true
                     self.target = .forLive
                 }
             }
@@ -326,11 +384,7 @@ extension PickerEditorViewController: PHPickerViewControllerDelegate {
                     // UI updates, images name
                     // TODO: 需要限制圖片上傳順序，按鈕依序開放 or else error
                     if let filename = itemProvider.suggestedName, let index = self.clickIndex {
-                        if self.willBeUploadedImages?.count ?? 0 >= index + 1 {
-                            self.willBeUploadedImages?[index] = image
-                        } else {
-                            self.willBeUploadedImages?.append(image)
-                        }
+                        self.imagesDict.updateValue(image, forKey: index)
                         self.imageUploadCompletely?(filename, image, index)
                     }
                 }

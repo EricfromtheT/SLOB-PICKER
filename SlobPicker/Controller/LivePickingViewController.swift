@@ -38,7 +38,7 @@ class LivePickingViewController: UIViewController {
     func setUpTimer() {
         var remainTime: Int = 0
         if let livePicker = livePicker, let startTime = livePicker.startTime {
-            let endTime = startTime + 30000
+            let endTime = startTime + 15000
             remainTime = endTime - Date().millisecondsSince1970
         }
         magicTimer.isActiveInBackground = true
@@ -89,7 +89,7 @@ class LivePickingViewController: UIViewController {
     func addResultListener() {
         if let livePicker = livePicker, let pickerID = livePicker.pickerID {
             resultListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).collection("results").addSnapshotListener { [weak self] (qrry, error) in
-                guard let `self` = self else {
+                guard let self = self else {
                     fatalError()
                 }
                 if let error = error {
@@ -166,8 +166,8 @@ extension LivePickingViewController: MagicTimerViewDelegate {
     func timerElapsedTimeDidChange(timer: MagicTimerView, elapsedTime: TimeInterval) {
         if elapsedTime == TimeInterval(floatLiteral: 0) {
             // show result controller
-            self.presentedViewController?.dismiss(animated: true)
-            print("Times up")
+            self.presentedViewController?.view.isUserInteractionEnabled = false
+            self.presentedViewController?.dismiss(animated: false)
             timer.stopCounting()
             timer.isActiveInBackground = false
             let storyboard = UIStoryboard(name: "PickerSelection", bundle: nil)
@@ -176,7 +176,6 @@ extension LivePickingViewController: MagicTimerViewDelegate {
             }
             if let livePicker = livePicker {
                 resultVC.mode = .forLive
-                print(livePicker, "data is here")
                 resultVC.livePickInfo = livePicker
                 resultVC.modalPresentationStyle = .fullScreen
                 present(resultVC, animated: true)

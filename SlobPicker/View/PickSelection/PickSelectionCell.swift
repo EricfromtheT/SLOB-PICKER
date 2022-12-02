@@ -20,10 +20,10 @@ class PickSelectionCell: UITableViewCell {
     let gradientLayer = CAGradientLayer()
     
     func configure(data: Picker, index: Int, url: String?) {
-        profileImageView.loadImage(url)
+        profileImageView.loadImage(url, placeHolder: UIImage.asset(.user))
         profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
         titleLabel.text = data.title
-        authorLabel.text = data.authorName
+        authorLabel.text = data.authorID
         groupNameLabel.text = data.groupName
         pickButton.tag = index
         resultButton.tag = index

@@ -20,11 +20,11 @@ class FriendSelectViewController: UIViewController {
         }
     }
     
-    var friendsID: [String]? {
+    var friendsUUID: [String]? {
         didSet {
             // TODO: Use for loop to limit each request up to 10 friend ID
-            if let friendsID = friendsID {
-                FirebaseManager.shared.fetchFriendsProfile(friendsID: friendsID) { result in
+            if let friendsUUID = friendsUUID, !friendsUUID.isEmpty {
+                FirebaseManager.shared.fetchFriendsProfile(friendsUUID: friendsUUID) { result in
                     switch result {
                     case .success(let users):
                         for user in users {
@@ -38,6 +38,15 @@ class FriendSelectViewController: UIViewController {
                         self.friendListTableView.reloadData()
                     }
                 }
+            } else {
+                let label = UILabel()
+                label.text = "你沒有任何好友"
+                label.font = UIFont.systemFont(ofSize: 25)
+                view.addSubview(label)
+                label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+                label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+                navigationItem.rightBarButtonItem?.isEnabled = false
+                friendListTableView.isHidden = true
             }
         }
     }
@@ -45,10 +54,16 @@ class FriendSelectViewController: UIViewController {
     var groupName: String?
     var didSelectNum: [Int] = []
     private var friendsProfile: [FriendListObject] = []
+    let uuid = FirebaseManager.auth.currentUser?.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigation()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.layoutIfNeeded()
     }
     
     func setUpNavigation() {
@@ -60,11 +75,13 @@ class FriendSelectViewController: UIViewController {
             let members = friendsProfile.filter { object in
                 object.hasSelected == true
             }
-            var membersID = members.map { member in
-                member.info.userID
+            var membersUUID = members.map { member in
+                member.info.userUUID
             }
-            membersID.append(FakeUserInfo.shared.userID)
-            var newGroup = Group(title: groupName, members: membersID, pickersIDs: [], createdTime: Date().millisecondsSince1970)
+            guard let uuid = uuid else { fatalError("uuid in keychain is nil") }
+            // add yourself to group
+            membersUUID.append(uuid)
+            var newGroup = Group(title: groupName, members: membersUUID, pickersIDs: [], createdTime: Date().millisecondsSince1970)
             FirebaseManager.shared.publishNewGroup(group: &newGroup) { result in
                 switch result {
                 case .success(let success):

@@ -8,11 +8,26 @@
 import UIKit
 
 class GroupCreateViewController: UIViewController {
-    @IBOutlet weak var groupNameTextField: UITextField!
+    @IBOutlet weak var groupNameTextField: UITextField! {
+        didSet {
+            groupNameTextField.layer.cornerRadius = 5
+            groupNameTextField.layer.borderWidth = 2
+            groupNameTextField.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        }
+    }
+    @IBOutlet weak var chooseButton: UIButton! {
+        didSet {
+            chooseButton.layer.cornerRadius = 10
+            chooseButton.layer.borderWidth = 1
+            chooseButton.layer.borderColor = UIColor.systemGray4.cgColor
+        }
+    }
+    
     let group = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "創建群組"
     }
     
     @IBAction func selectFriends() {
@@ -28,10 +43,10 @@ class GroupCreateViewController: UIViewController {
             FirebaseManager.shared.fetchAllFriendsID { result in
                 switch result {
                 case .success(let friends):
-                    let friendsID = friends.map { friend in
-                        friend.userID
+                    let friendsUUID = friends.map { friend in
+                        friend.userUUID
                     }
-                    friendsVC.friendsID = friendsID
+                    friendsVC.friendsUUID = friendsUUID
                 case .failure(let error):
                     print(error, "ERROR of getting your friends' info")
                 }

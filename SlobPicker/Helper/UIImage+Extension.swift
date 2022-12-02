@@ -12,6 +12,10 @@ enum assetImage: String {
     case Icons_24px_CleanAll
     case image
     case deleteButton
+    case rainbow
+    case user
+    case background_color
+    case upload
 }
 
 extension UIImage {

@@ -15,6 +15,14 @@ class EntranceViewController: UIViewController {
         }
     }
     @IBOutlet weak var entryButton: UIButton!
+    @IBOutlet weak var cancelImageView: UIImageView! {
+        didSet {
+            cancelImageView.isUserInteractionEnabled = true
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(cancel))
+            cancelImageView.addGestureRecognizer(gesture)
+        }
+    }
+    @IBOutlet weak var buttonShadow: UIView!
     var roomID: String?
     var animationView: LottieAnimationView?
     let textFieldWidth = 300
@@ -58,6 +66,7 @@ class EntranceViewController: UIViewController {
     func setUpEntryButton() {
         entryButton.frame = CGRect(x: (Int(SPConstant.screenWidth) - entryButtonWidth) / 2, y: Int(SPConstant.screenHeight), width: entryButtonWidth, height: 50)
         entryButton.layer.cornerRadius = 10
+        buttonShadow.layer.cornerRadius = 10
     }
     
     func animateElement() {
@@ -78,9 +87,19 @@ class EntranceViewController: UIViewController {
         view.sendSubviewToBack(animationView!)
     }
     
+    @objc func cancel() {
+        dismiss(animated: true)
+    }
+    
     @IBAction func confirm() {
         //取得該房號所屬的picker資料，提取出pickerID後索取此議題目前的參加者，進行Waiting room第一次的畫面渲染
+        UIView.animate(withDuration: 0.1) {
+            self.entryButton.transform = CGAffineTransform(translationX: 0, y: 5)
+        } completion: { _ in
+            self.entryButton.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
         var picker: LivePicker?
+        var userInfo: User?
         if let roomID = roomID {
             FirebaseManager.shared.fetchLivePicker(roomID: roomID) { result in
                 switch result {
@@ -89,29 +108,49 @@ class EntranceViewController: UIViewController {
                     self.entryButton.isEnabled = false
                 case .failure(let error):
                     if error as? UserError == .nodata {
-                        let alert = UIAlertController(title: "No this Room", message: "No room with this ID", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "No this Room",
+                                                      message: "No room with this ID",
+                                                      preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
                         self.present(alert, animated: true)
+                        return
                     } else {
                         print(error, "error of getting LivePicker")
                     }
                 }
-                if let picker = picker, let pickerID = picker.pickerID {
-                    FirebaseManager.shared.attendLivePick(livePickerID: pickerID) {
-                        result in
-                        switch result {
-                        case .success( _):
-                            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                            guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
-                                fatalError("error cannot instantiate WaitingRoomViewController")
+                guard let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
+                else {
+                    return print("user id is not in user default")
+                }
+                FirebaseManager.shared.searchUser(userID: userID) {
+                    result in
+                    switch result {
+                    case .success(let user):
+                        userInfo = user
+                    case .failure(let error):
+                        return print(error, "error of getting userdata from firebase")
+                    }
+                    if let picker = picker,
+                        let pickerID = picker.pickerID,
+                        let userInfo = userInfo {
+                        FirebaseManager.shared.attendLivePick(livePickerID: pickerID, user: userInfo) {
+                            result in
+                            switch result {
+                            case .success( _):
+                                let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                                guard let waitingVC = storyboard
+                                    .instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)")
+                                        as? WaitingRoomViewController else {
+                                    fatalError("error cannot instantiate WaitingRoomViewController")
+                                }
+                                waitingVC.livePicker = picker
+                                waitingVC.modalPresentationStyle = .fullScreen
+                                waitingVC.modalTransitionStyle = .crossDissolve
+                                self.present(waitingVC, animated: true)
+                                
+                            case .failure(let error):
+                                print(error, "error of attending a live pick")
                             }
-                            waitingVC.livePicker = picker
-                            waitingVC.modalPresentationStyle = .fullScreen
-                            waitingVC.modalTransitionStyle = .crossDissolve
-                            self.present(waitingVC, animated: true)
-                            
-                        case .failure(let error):
-                            print(error, "error of attending a live pick")
                         }
                     }
                 }
@@ -125,6 +164,5 @@ extension EntranceViewController: UITextFieldDelegate {
         if let content = textField.text {
             self.roomID = content
         }
-        
     }
 }
