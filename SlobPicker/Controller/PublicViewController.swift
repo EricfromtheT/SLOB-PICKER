@@ -49,23 +49,23 @@ class PublicViewController: UIViewController {
         super.viewWillAppear(animated)
         let appearance = UINavigationBarAppearance()
         //        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = UIColor.asset(.navigationbar2)
+        appearance.backgroundColor = UIColor.asset(.background)
         // cancel navigationbar seperator
         appearance.shadowColor = nil
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationItem.titleView?.tintColor = .white
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
+//        navigationItem.titleView?.tintColor = UIColor.asset(.background)
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     // MARK: PULL DOWN third party
     func setUpDGE() {
-        loadingView.tintColor = UIColor.white
+        loadingView.tintColor = UIColor.asset(.navigationbar2)
         hotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             guard let self = self else { return }
             self.fetchPublicData()
         }, loadingView: loadingView)
-        hotTableView.dg_setPullToRefreshFillColor(UIColor.asset(.navigationbar2) ?? .clear)
+        hotTableView.dg_setPullToRefreshFillColor(UIColor.asset(.background) ?? .clear)
         hotTableView.dg_setPullToRefreshBackgroundColor(hotTableView.backgroundColor!)
     }
     

@@ -26,6 +26,7 @@ enum assetColor: String {
     case result2
     case result3
     case result4
+    case background
 }
 
 extension UIColor {

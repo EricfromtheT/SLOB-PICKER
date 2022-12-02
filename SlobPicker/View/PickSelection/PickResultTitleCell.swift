@@ -15,7 +15,7 @@ class PickResultTitleCell: UITableViewCell {
     func configure(title: String, description: String) {
         titleLabel.text = title
         dpLabel.text = description
-        bgView.clipsToBounds = true
+        bgView.clipsToBounds = false
         bgView.layer.cornerRadius = 15
     }
 }

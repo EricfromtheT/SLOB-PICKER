@@ -10,6 +10,8 @@ import UIKit
 class LiveOptionsViewController: UIViewController {
     @IBOutlet weak var optionsView: UIView! {
         didSet {
+            optionsView.layer.cornerRadius = 15
+            optionsView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             if let livePicker = livePicker {
                 if livePicker.type == 0 {
                     layoutWithTextType(optionsString: livePicker.contents)
@@ -19,14 +21,7 @@ class LiveOptionsViewController: UIViewController {
             }
         }
     }
-    @IBOutlet weak var bgView: UIView!
     var livePicker: LivePicker?
-    var chosenImageView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFit
-        view.image = UIImage(named: "correct")
-        return view
-    }()
     var lastClickButton: UIButton?
     var chosenIndex: Int?
     
@@ -38,6 +33,7 @@ class LiveOptionsViewController: UIViewController {
         let stackView = UIStackView()
         self.optionsView.addSubview(stackView)
         stackView.axis = .vertical
+        stackView.backgroundColor = .clear
         stackView.translatesAutoresizingMaskIntoConstraints = false
         for unit in 0..<optionsString.count {
             let button = UIButton()
@@ -46,7 +42,7 @@ class LiveOptionsViewController: UIViewController {
             button.setTitle(optionsString[unit], for: .normal)
             button.backgroundColor = UIColor.asset(.choose)
             button.layer.cornerRadius = 25
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
             button.setTitleColor(.black, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.tag = unit
@@ -54,14 +50,14 @@ class LiveOptionsViewController: UIViewController {
             // Constraints
             button.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.7).isActive = true
             button.heightAnchor.constraint(equalToConstant:
-                                            (optionsView.frame.height - 250) / 4).isActive = true
+                                            (optionsView.frame.height - 250) / 5).isActive = true
         }
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
         stackView.addArrangedSubview(spacer)
-        stackView.spacing = 30
+        stackView.spacing = 25
         stackView.centerXAnchor.constraint(equalTo: self.optionsView.centerXAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: self.optionsView.topAnchor, constant: 50).isActive = true
+        stackView.topAnchor.constraint(equalTo: self.optionsView.topAnchor, constant: 60).isActive = true
         stackView.bottomAnchor.constraint(equalTo: self.optionsView.bottomAnchor, constant: 10).isActive = true
     }
     

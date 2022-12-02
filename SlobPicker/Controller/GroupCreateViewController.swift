@@ -15,6 +15,14 @@ class GroupCreateViewController: UIViewController {
             groupNameTextField.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
         }
     }
+    @IBOutlet weak var chooseButton: UIButton! {
+        didSet {
+            chooseButton.layer.cornerRadius = 10
+            chooseButton.layer.borderWidth = 1
+            chooseButton.layer.borderColor = UIColor.systemGray4.cgColor
+        }
+    }
+    
     let group = DispatchGroup()
     
     override func viewDidLoad() {
