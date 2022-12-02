@@ -12,23 +12,24 @@ class HotCell: UITableViewCell {
         didSet {
             hotPickerCollectionView.dataSource = self
             hotPickerCollectionView.delegate = self
-            hotPickerCollectionView.heightAnchor.constraint(equalToConstant: SPConstant.screenHeight * 0.2).isActive = true
+            hotPickerCollectionView.heightAnchor.constraint(equalToConstant: 180).isActive = true
         }
     }
     
     var firstLoad = true
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 1)
+    let uuid = FirebaseManager.auth.currentUser?.uid
     
     var hottestPickers: [Picker] = [] {
         didSet {
             if !hottestPickers.isEmpty {
                 data = hottestPickers
             }
-            let users = hottestPickers.map {
-                $0.authorID
+            let usersUUID = hottestPickers.map {
+                $0.authorUUID
             }
-            fetchUser(userID: users)
+            fetchUser(userUUID: usersUUID)
         }
     }
     var newestPickers: [Picker] = [] {
@@ -36,24 +37,35 @@ class HotCell: UITableViewCell {
             if !newestPickers.isEmpty {
                 data = newestPickers
             }
-            let users = newestPickers.map {
-                $0.authorID
+            let usersUUID = newestPickers.map {
+                $0.authorUUID
             }
-            fetchUser(userID: users)
+            fetchUser(userUUID: usersUUID)
         }
     }
     
-
+    var lovestPickers: [Picker] = [] {
+        didSet {
+            if !lovestPickers.isEmpty {
+                data = lovestPickers
+            }
+            let usersUUID = lovestPickers.map {
+                $0.authorUUID
+            }
+            fetchUser(userUUID: usersUUID)
+        }
+    }
+    
     var data: [Picker] = []
     var mode: PublicMode = .hottest
     var usersInfo: [User] = []
     var superVC: PublicViewController?
     
-    func fetchUser(userID: [String]) {
-        let userIDs = Set(userID)
-        userIDs.forEach {
+    func fetchUser(userUUID: [String]) {
+        let userUUIDs = Set(userUUID)
+        userUUIDs.forEach {
             group.enter()
-            FirebaseManager.shared.searchUserID(userID: $0, completion: { result in
+            FirebaseManager.shared.getUserInfo(userUUID: $0, completion: { result in
                 switch result {
                 case .success(let user):
                     self.usersInfo.append(user)
@@ -70,16 +82,25 @@ class HotCell: UITableViewCell {
     }
     
     func showPickPage(indexPath: IndexPath, cell: HotPickerCell) {
+        guard let uuid = uuid else { fatalError("uuid in keychain is nil") }
         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
         guard let pickVC = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
                 as? PickViewController else {
             print("PickViewController rendering error")
             return
         }
-        let data = mode == .hottest ? hottestPickers : newestPickers
+        var data: [Picker] = []
+        switch mode {
+        case .hottest:
+            data = hottestPickers
+        case .newest:
+             data = newestPickers
+        case .lovest:
+            data = lovestPickers
+        }
         pickVC.publicCompletion = {
             cell.picked()
-            self.data[indexPath.row].pickedIDs?.append(FakeUserInfo.shared.userID)
+            self.data[indexPath.row].pickedIDs?.append(uuid)
             self.data[indexPath.row].pickedCount? += 1
             cell.pickImageView.isUserInteractionEnabled = false
         }
@@ -99,16 +120,17 @@ extension HotCell: UICollectionViewDataSource {
         picker = data[indexPath.row]
         if let picker = picker, let likedIDs = picker.likedIDs, let pickedIDs = picker.pickedIDs {
             let user = usersInfo.filter { user in
-                user.userID == picker.authorID
+                user.userUUID == picker.authorUUID
             }
-            cell.configure(data: picker, imageURL: user[0].profileURL, hasLiked: likedIDs.contains(FakeUserInfo.shared.userID), hasPicked: pickedIDs.contains(FakeUserInfo.shared.userID), index: indexPath.row)
+            guard let uuid = uuid else { fatalError("uuid in keychain is nil") }
+            cell.configure(data: picker, imageURL: user[0].profileURL, hasLiked: likedIDs.contains(uuid), hasPicked: pickedIDs.contains(uuid), index: indexPath.row)
             
             cell.likedCompletion = {
-                self.data[indexPath.row].likedIDs?.append(FakeUserInfo.shared.userID)
+                self.data[indexPath.row].likedIDs?.append(uuid)
                 self.data[indexPath.row].likedCount? += 1
             }
             cell.dislikedCompletion = {
-                self.data[indexPath.row].likedIDs?.removeAll(where: { $0 == FakeUserInfo.shared.userID })
+                self.data[indexPath.row].likedIDs?.removeAll(where: { $0 == uuid })
                 self.data[indexPath.row].likedCount? -= 1
             }
         }
@@ -125,7 +147,7 @@ extension HotCell: UICollectionViewDataSource {
 
 extension HotCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: SPConstant.screenWidth * 0.55, height: SPConstant.screenHeight * 0.2)
+        CGSize(width: SPConstant.screenWidth * 0.65, height: 180)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -142,7 +164,15 @@ extension HotCell: UICollectionViewDelegate {
             print("PickResultViewController rendering error")
             return
         }
-        let data = mode == .hottest ? hottestPickers : newestPickers
+        var data: [Picker] = []
+        switch mode {
+        case .hottest:
+            data = hottestPickers
+        case .newest:
+             data = newestPickers
+        case .lovest:
+            data = lovestPickers
+        }
         resultVC.mode = .forPublic
         resultVC.pickInfo = data[indexPath.row]
         superVC?.show(resultVC, sender: self)

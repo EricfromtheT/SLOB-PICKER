@@ -12,10 +12,12 @@ class PickCommentsCell: UITableViewCell {
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     
-    func configure(data: Comment) {
-        nameLabel.text = data.userID
+    // TODO: 這裡的parameter還需要一個User, 透過PickResultViewController抓取丟過來
+    func configure(data: Comment, userInfo: User) {
+        nameLabel.text = userInfo.userID
         commentLabel.text = data.comment
         profileImage.layer.cornerRadius = profileImage.bounds.width / 2
         profileImage.clipsToBounds = true
+        profileImage.loadImage(userInfo.profileURL, placeHolder: UIImage.asset(.user))
     }
 }

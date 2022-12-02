@@ -21,11 +21,12 @@ class TitleInputCell: UITableViewCell {
     weak var delegate: TitleInputDelegate?
     
     func configure() {
+        modeSegment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .selected)
         titleTextField.delegate = self
         dpTextView.delegate = self
         dpTextView.layer.cornerRadius = 8
         dpTextView.layer.borderWidth = 1.2
-        dpTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        dpTextView.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
         dpTextView.text = "請輸入描述內容"
         dpTextView.textColor = UIColor.lightGray
     }
@@ -50,7 +51,7 @@ extension TitleInputCell: UITextFieldDelegate {
 
 extension TitleInputCell: UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
-        if let content = textView.text {
+        if let content = textView.text, content != "請輸入描述內容" {
             delegate?.dpHasChanged(description: content)
         }
     }
@@ -61,11 +62,10 @@ extension TitleInputCell: UITextViewDelegate {
             textView.textColor = UIColor.black
         }
     }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "請輸入描述內容"
-            textView.textColor = UIColor.lightGray
-        }
-    }
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        if textView.text.isEmpty {
+//            textView.text = "請輸入描述內容"
+//            textView.textColor = UIColor.lightGray
+//        }
+//    }
 }

@@ -11,11 +11,10 @@ class ChooseCell: UITableViewCell {
     var chosenImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.image = UIImage(named: "correct")
+        view.image = UIImage(named: "picking")
         return view
     }()
-    
-    var isFirstClick = true
+    var lastClickButton: UIButton?
     var completion: ((Int) -> ())?
     
     // MARK: Method
@@ -29,13 +28,16 @@ class ChooseCell: UITableViewCell {
             stackView.addArrangedSubview(button)
             // Attribute
             button.setTitle(optionsString[unit], for: .normal)
-            button.setTitleColor(.brown, for: .normal)
+            button.backgroundColor = UIColor.asset(.choose)
+            button.layer.cornerRadius = 25
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+            button.setTitleColor(.black, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.tag = unit
             button.addTarget(self, action: #selector(choose), for: .touchUpInside)
             // Constraints
             button.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.7).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 70).isActive = true
         }
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -55,26 +57,28 @@ class ChooseCell: UITableViewCell {
         for unit in 0..<optionsURLString.count {
             let imageView = UIImageView()
             let button = UIButton()
-            imageView.isUserInteractionEnabled = true
-            stackView.addArrangedSubview(imageView)
-            self.contentView.addSubview(button)
+            stackView.addArrangedSubview(button)
+//            self.contentView.addSubview(imageView)
+            button.addSubview(imageView)
             // Attribute
             imageView.layer.cornerRadius = 20
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.loadImage(optionsURLString[unit])
+            imageView.loadImage(optionsURLString[unit], placeHolder: UIImage.asset(.image))
             button.tag = unit
             button.translatesAutoresizingMaskIntoConstraints = false
             button.setTitle("", for: .normal)
+            button.backgroundColor = UIColor.asset(.choose)
+            button.layer.cornerRadius = 25
             button.addTarget(self, action: #selector(choose), for: .touchUpInside)
             // Constraints
-            imageView.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.3).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
-            button.widthAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
-            button.heightAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
-            button.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-            button.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
+            imageView.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
+            imageView.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: SPConstant.screenWidth * 0.7).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 100).isActive = true
         }
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -86,16 +90,33 @@ class ChooseCell: UITableViewCell {
     }
     
     @objc func choose(_ sender: UIButton) {
-        if !isFirstClick {
-            chosenImageView.removeFromSuperview()
+        if let lastButton = lastClickButton {
+            lastButton.layer.borderWidth = 0
         }
-        self.contentView.addSubview(chosenImageView)
-        chosenImageView.translatesAutoresizingMaskIntoConstraints = false
-        chosenImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        chosenImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        chosenImageView.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-        chosenImageView.centerYAnchor.constraint(equalTo: sender.centerYAnchor).isActive = true
-        isFirstClick = false
+        sender.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+        sender.layer.borderWidth = 2
+        lastClickButton = sender
+        bouncing(object: sender, distance: 20)
         completion?(sender.tag)
+    }
+    
+    func bouncing(object: UIButton, distance: CGFloat) {
+        var boucing = distance
+        if boucing < 0 {
+            return
+        }
+        UIView.animate(withDuration: 0.15) {
+            // right
+            object.transform = CGAffineTransform(translationX: distance, y: 0)
+        } completion: { _ in
+            // left
+            boucing -= 8
+            UIView.animate(withDuration: 0.15) {
+                object.transform = CGAffineTransform(translationX: 0, y: 0)
+            } completion: { _ in
+                self.bouncing(object: object, distance: boucing)
+            }
+            
+        }
     }
 }

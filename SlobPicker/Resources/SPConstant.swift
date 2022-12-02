@@ -13,8 +13,10 @@ struct SPConstant {
     static let screenHeight = UIScreen.main.bounds.height
 }
 
-struct FakeUserInfo {
-    static var shared = FakeUserInfo()
+struct UserInfo {
+    static var shared = UserInfo()
+    static let userIDKey = "userID"
+    static let userNameKey = "userName"
     var userID: String = UserDefaults.standard.string(forKey: "userID") ?? ""
     var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
 }

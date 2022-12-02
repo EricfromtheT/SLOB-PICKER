@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import DropDown
 import DGElasticPullToRefresh
 import ViewAnimator
 
@@ -22,7 +21,6 @@ class PickerSelectionViewController: UIViewController {
     
     var pickers: [Picker] = []
     var users: [User] = []
-    let dropDown = DropDown()
     let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 0)
@@ -38,19 +36,14 @@ class PickerSelectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.navigationbar2)
+        appearance.backgroundColor = UIColor.asset(.background)
         // cancel navigationbar seperator
         appearance.shadowColor = nil
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationItem.titleView?.tintColor = .white
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
+//        navigationItem.titleView?.tintColor = UIColor.asset(.navigationbar2)
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
-    
-    deinit {
-        pickersTableView.dg_removePullToRefresh()
-    }
-    
     
     // MARK: SetUp
     func loadData() {
@@ -65,10 +58,10 @@ class PickerSelectionViewController: UIViewController {
         }
         semaphore.wait()
         //
-        let authors = Set(pickers.map { $0.authorID })
+        let authors = Set(pickers.map { $0.authorUUID })
         authors.forEach {
             group.enter()
-            FirebaseManager.shared.searchUserID(userID: $0) { result in
+            FirebaseManager.shared.getUserInfo(userUUID: $0) { result in
                 switch result {
                 case .success(let user):
                     self.users.append(user)
@@ -86,7 +79,7 @@ class PickerSelectionViewController: UIViewController {
     }
     
     func setUpDGE() {
-        loadingView.tintColor = UIColor.white
+        loadingView.tintColor = UIColor.asset(.navigationbar2)
         pickersTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             guard let self = self else {
                 fatalError("no pickerselectionViewController")
@@ -96,37 +89,35 @@ class PickerSelectionViewController: UIViewController {
                 self.loadData()
             }
         }, loadingView: loadingView)
-        pickersTableView.dg_setPullToRefreshFillColor(UIColor.asset(.navigationbar2) ?? .clear)
+        pickersTableView.dg_setPullToRefreshFillColor(UIColor.asset(.background) ?? .clear)
         pickersTableView.dg_setPullToRefreshBackgroundColor(pickersTableView.backgroundColor!)
     }
     
+    // MARK: Navigationbar
     func setUpNavigation() {
         navigationItem.title = "群組Pick"
         // set up bar button
-        let relationship = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(createNewGroup))
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
-        navigationItem.rightBarButtonItems = [compose, relationship]
         let menu = UIMenu(children: [
+            UIAction(title: "個人頁面") { action in
+                let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
+                self.show(profileVC, sender: self)
+            },
             UIAction(title: "登出") { action in
                 FirebaseManager.shared.logOut()
             }
         ])
-        let profile = UIBarButtonItem(image: UIImage(systemName: "person"), menu: menu)
-        navigationItem.leftBarButtonItem = profile
-        dropDown.anchorView = navigationItem.rightBarButtonItem
-        dropDown.width = 200
-        dropDown.dataSource = ["創建群組", "添加好友"]
-        dropDown.direction = .bottom
-        dropDown.bottomOffset = CGPoint(x: 0, y: 40)
-        dropDown.selectionAction = { index, _ in
-            let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
-            if index == 1 {
+        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: menu)
+        let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
+        let relationshipMenu = UIMenu(children: [
+            UIAction(title: "添加好友") { action in
                 guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
                     print("ERROR: SearchIDViewController didn't instanciate")
                     return
                 }
                 self.show(friendVC, sender: self)
-            } else {
+            },
+            UIAction(title: "創建群組") { action in
                 guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupCreateViewController.self)")
                         as? GroupCreateViewController else {
                     print("ERROR: GroupCreateViewController didn't instanciate")
@@ -134,14 +125,17 @@ class PickerSelectionViewController: UIViewController {
                 }
                 self.show(groupVC, sender: self)
             }
-        }
+        ])
+        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"), menu: relationshipMenu)
+        navigationItem.rightBarButtonItems = [compose, relationship, profile]
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "logo2"), style: .plain, target: nil, action: nil),
+            UIBarButtonItem(title: "                    ", style: .done, target: nil, action: nil),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+        ]
     }
     
     // MARK: Action
-    @objc func createNewGroup() {
-        dropDown.show()
-    }
-    
     // call pickEditorViewController to edit a new picker
     @objc func compose() {
         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
@@ -185,7 +179,7 @@ extension PickerSelectionViewController: UITableViewDataSource {
                 as? PickSelectionCell else {
             fatalError("ERROR: pickSelectionCell broke")
         }
-        let user = users.filter { $0.userID == pickers[indexPath.row].authorID }[0]
+        let user = users.filter { $0.userUUID == pickers[indexPath.row].authorUUID }[0]
         cell.configure(data: pickers[indexPath.row], index: indexPath.row, url: user.profileURL)
         return cell
     }

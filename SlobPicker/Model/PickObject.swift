@@ -15,6 +15,7 @@ enum PickerType {
 enum PublicMode {
     case hottest
     case newest
+    case lovest
 }
 
 enum PrivacyMode: String {
@@ -32,6 +33,7 @@ struct Picker: Codable {
     var createdTime: Int?
     var authorID: String
     var authorName: String
+    var authorUUID: String
     // for private
     var groupID: String?
     var groupName: String?
@@ -55,25 +57,28 @@ struct Picker: Codable {
         case groupName = "group_name"
         case membersIDs = "members_ids"
         case pickedIDs = "picked_ids"
+        case authorUUID = "author_uuid"
     }
 }
 
 struct Comment: Codable {
+    var userUUID: String
     var userID: String
     var type: Int
     var comment: String
     var createdTime: Int
     
     enum CodingKeys: String, CodingKey {
-        case userID = "user_id"
+        case userUUID = "user_uuid"
         case type
         case comment
         case createdTime = "created_time"
+        case userID = "user_id"
     }
     
     func toDict() -> [String: Any] {
         let dict: [String: Any] = [
-            "user_id": userID,
+            "user_uuid": userUUID,
             "type": type,
             "comment": comment,
             "created_time": createdTime
