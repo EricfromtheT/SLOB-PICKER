@@ -95,7 +95,6 @@ class PickerSelectionViewController: UIViewController {
     
     // MARK: Navigationbar
     func setUpNavigation() {
-        navigationItem.title = "群組Pick"
         // set up bar button
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
         let menu = UIMenu(children: [
@@ -117,10 +116,10 @@ class PickerSelectionViewController: UIViewController {
                 }
                 self.show(friendVC, sender: self)
             },
-            UIAction(title: "創建群組") { action in
-                guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupCreateViewController.self)")
-                        as? GroupCreateViewController else {
-                    print("ERROR: GroupCreateViewController didn't instanciate")
+            UIAction(title: "管理群組") { action in
+                guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupManageViewController.self)")
+                        as? GroupManageViewController else {
+                    print("ERROR: GroupManageViewController didn't instanciate")
                     return
                 }
                 self.show(groupVC, sender: self)

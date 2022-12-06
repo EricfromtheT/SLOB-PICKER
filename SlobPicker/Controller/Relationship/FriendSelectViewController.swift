@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 struct FriendListObject {
     var info: User
@@ -19,24 +20,28 @@ class FriendSelectViewController: UIViewController {
             friendListTableView.delegate = self
         }
     }
+    let group = DispatchGroup()
     
+    // pre-provided data
     var friendsUUID: [String]? {
         didSet {
             // TODO: Use for loop to limit each request up to 10 friend ID
             if let friendsUUID = friendsUUID, !friendsUUID.isEmpty {
-                FirebaseManager.shared.fetchFriendsProfile(friendsUUID: friendsUUID) { result in
-                    switch result {
-                    case .success(let users):
-                        for user in users {
+                for uuid in friendsUUID {
+                    group.enter()
+                    FirebaseManager.shared.getUserInfo(userUUID: uuid) { result in
+                        switch result {
+                        case .success(let user):
                             let object = FriendListObject(info: user, hasSelected: false)
                             self.friendsProfile.append(object)
+                        case .failure(let error):
+                            print(error, "error of getting friend's profile")
                         }
-                    case .failure(let error):
-                        print(error, "error of getting friend's profile")
+                        self.group.leave()
                     }
-                    DispatchQueue.main.async {
-                        self.friendListTableView.reloadData()
-                    }
+                }
+                group.notify(queue: .main) {
+                    self.friendListTableView.reloadData()
                 }
             } else {
                 let label = UILabel()
@@ -51,11 +56,14 @@ class FriendSelectViewController: UIViewController {
         }
     }
     
+    var currentGroupID: String?
     var groupName: String?
-    var didSelectNum: [Int] = []
+    var completion: (([String]) -> Void)?
+    private var didSelectNum: [Int] = []
     private var friendsProfile: [FriendListObject] = []
     let uuid = FirebaseManager.auth.currentUser?.uid
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigation()
@@ -67,13 +75,60 @@ class FriendSelectViewController: UIViewController {
     }
     
     func setUpNavigation() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "創建社團", style: .done, target: self, action: #selector(createGroup))
+        if let vcCounts = navigationController?.viewControllers.count,
+           let navController = self.navigationController {
+            if navController.viewControllers[vcCounts-2] is GroupCreateViewController {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "創建社團",
+                                                                    style: .done,
+                                                                    target: self,
+                                                                    action: #selector(createGroup))
+            } else {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "添加",
+                                                                    style: .done,
+                                                                    target: self,
+                                                                    action: #selector(invite))
+            }
+        }
+    }
+    
+    @objc func invite() {
+        let invitedPeople = friendsProfile.filter { person in
+            person.hasSelected == true
+        }
+        let uuids = invitedPeople.map { member in
+            member.info.userUUID
+        }
+        guard let id = currentGroupID else { return print("no group id to invite new member") }
+        ProgressHUD.show()
+        group.enter()
+        FirebaseManager.shared.addGroupPeople(groupID: id,
+                                              newMembersUUID: uuids,
+                                              completion: {
+            result in
+            switch result {
+            case .success( _):
+                break
+            case .failure(let error):
+                return print(error, "error of adding group people")
+            }
+            self.group.leave()
+        })
+        for uuid in uuids {
+            group.enter()
+            FirebaseManager.shared.addUserGroupInfo(userUUID: uuid, groupID: id, groupName: "") {
+                self.group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            ProgressHUD.dismiss()
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func createGroup() {
         if let groupName = groupName {
-            let members = friendsProfile.filter { object in
-                object.hasSelected == true
+            let members = friendsProfile.filter { person in
+                person.hasSelected == true
             }
             var membersUUID = members.map { member in
                 member.info.userUUID
@@ -100,7 +155,8 @@ class FriendSelectViewController: UIViewController {
 // MARK: TableView datasource
 extension FriendSelectViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(FriendSelectCell.self)", for: indexPath) as? FriendSelectCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(FriendSelectCell.self)",
+                                                       for: indexPath) as? FriendSelectCell else {
             fatalError("ERROR: FriendSelectCell cannot be instantiated")
         }
         cell.configure(data: friendsProfile[indexPath.row])
@@ -116,7 +172,8 @@ extension FriendSelectViewController: UITableViewDataSource {
 // MARK: TableView Delegate
 extension FriendSelectViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: IndexPath(row: indexPath.row, section: 0)) as? FriendSelectCell else {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: indexPath.row,
+                                                            section: 0)) as? FriendSelectCell else {
             fatalError("ERROR: FriendSelectCell cannot be instantiated")
         }
         if friendsProfile[indexPath.row].hasSelected {

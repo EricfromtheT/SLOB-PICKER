@@ -21,6 +21,9 @@ class WaitingRoomViewController: UIViewController {
             guard let userId = userId else { fatalError("uuid in keychain is nil") }
             if livePicker?.authorID == userId {
                 startButton.isHidden = false
+                startButton.layer.cornerRadius = 15
+                startButton.layer.borderWidth = 2
+                startButton.layer.borderColor = UIColor.white.cgColor
             } else {
                 startButton.isHidden = true
             }
@@ -126,7 +129,7 @@ class WaitingRoomViewController: UIViewController {
                     print(attendeeData, "================")
                     self.attendees = attendeeData
                     NSObject.cancelPreviousPerformRequests(withTarget: self)
-                    self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 0.5)
+                    self.perform(#selector(self.attendeeHasChanged), with: nil, afterDelay: 0.8)
                 } catch {
                     print(error, "error of decoding LivePicker data")
                 }

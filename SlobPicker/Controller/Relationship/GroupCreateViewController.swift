@@ -18,8 +18,8 @@ class GroupCreateViewController: UIViewController {
     @IBOutlet weak var chooseButton: UIButton! {
         didSet {
             chooseButton.layer.cornerRadius = 10
-            chooseButton.layer.borderWidth = 1
-            chooseButton.layer.borderColor = UIColor.systemGray4.cgColor
+            chooseButton.layer.borderWidth = 2
+            chooseButton.layer.borderColor = UIColor.systemGray2.cgColor
         }
     }
     
