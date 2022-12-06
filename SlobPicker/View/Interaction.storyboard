@@ -135,7 +135,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="問題敘述" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hs6-Uc-wUN">
-                                                    <rect key="frame" x="38" y="81.666666666666671" width="332" height="18"/>
+                                                    <rect key="frame" x="38" y="81.666666666666671" width="61.333333333333343" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -150,8 +150,8 @@
                                                 <constraint firstItem="JOJ-Kc-RNh" firstAttribute="leading" secondItem="BW7-xq-CEy" secondAttribute="leading" constant="20" id="QbG-O5-ROF"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Hs6-Uc-wUN" secondAttribute="bottom" constant="30" id="Utd-eT-b1k"/>
                                                 <constraint firstItem="Hs6-Uc-wUN" firstAttribute="leading" secondItem="Th4-Lz-iTb" secondAttribute="leading" constant="8" id="Zga-OC-W5a"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Th4-Lz-iTb" secondAttribute="trailing" constant="20" id="hdz-ZZ-bxI"/>
-                                                <constraint firstAttribute="trailing" secondItem="Hs6-Uc-wUN" secondAttribute="trailing" constant="20" id="yx5-ow-2Bb"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Th4-Lz-iTb" secondAttribute="trailing" constant="30" id="hdz-ZZ-bxI"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Hs6-Uc-wUN" secondAttribute="trailing" constant="30" id="yx5-ow-2Bb"/>
                                                 <constraint firstItem="JOJ-Kc-RNh" firstAttribute="top" secondItem="BW7-xq-CEy" secondAttribute="top" constant="20" id="z8W-5R-QIL"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -868,10 +868,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYF-Yk-dFL">
-                                <rect key="frame" x="148" y="745" width="94" height="35"/>
+                                <rect key="frame" x="143.33333333333334" y="722.33333333333337" width="103.66666666666666" height="57.666666666666629"/>
                                 <color key="tintColor" systemColor="systemBackgroundColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="進行選擇"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="VOTE">
+                                            <attributes>
+                                                <font key="NSFont" size="40" name="MarkerFelt-Thin"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="choose" destination="wU3-BJ-jpS" eventType="touchUpInside" id="UgA-i3-WvI"/>
                                 </connections>
@@ -910,6 +918,7 @@
                         <outlet property="magicTimer" destination="20V-QT-rmp" id="emi-9s-cxL"/>
                         <outlet property="rankTableView" destination="bFO-3x-5G1" id="K1n-uh-xIw"/>
                         <outlet property="titleLabel" destination="ZAp-6v-qeU" id="Z8c-8A-djn"/>
+                        <outlet property="voteButton" destination="DYF-Yk-dFL" id="Dyu-kF-rn9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Quz-pO-HHA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -928,10 +937,13 @@
                                 <rect key="frame" x="0.0" y="244" width="390" height="600"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LWO-O6-c4v">
-                                        <rect key="frame" x="288" y="8" width="94" height="35"/>
+                                        <rect key="frame" x="316" y="8" width="59" height="35"/>
+                                        <color key="backgroundColor" red="0.88726383450000001" green="0.60865426060000005" blue="0.308955431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="確認投票"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="投票">
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="vote" destination="gC3-sf-Su0" eventType="touchUpInside" id="EQH-xA-MSv"/>
                                         </connections>
@@ -939,7 +951,7 @@
                                 </subviews>
                                 <color key="backgroundColor" name="background"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="LWO-O6-c4v" secondAttribute="trailing" constant="8" id="1p2-Hu-8Gg"/>
+                                    <constraint firstAttribute="trailing" secondItem="LWO-O6-c4v" secondAttribute="trailing" constant="15" id="1p2-Hu-8Gg"/>
                                     <constraint firstAttribute="height" constant="600" id="HqD-as-I5M"/>
                                     <constraint firstItem="LWO-O6-c4v" firstAttribute="top" secondItem="Xaf-wP-WAl" secondAttribute="top" constant="8" id="qfR-NJ-ceY"/>
                                 </constraints>
@@ -955,6 +967,7 @@
                     </view>
                     <connections>
                         <outlet property="optionsView" destination="Xaf-wP-WAl" id="dgp-xm-Ux9"/>
+                        <outlet property="voteButton" destination="LWO-O6-c4v" id="9vI-ok-JXN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QpQ-6Y-lJF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

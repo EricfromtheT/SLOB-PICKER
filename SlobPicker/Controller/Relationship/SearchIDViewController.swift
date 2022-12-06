@@ -32,22 +32,22 @@ class SearchIDViewController: UIViewController {
     @IBOutlet weak var searchButton: UIButton! {
         didSet {
             searchButton.layer.cornerRadius = 10
-            searchButton.layer.borderWidth = 1
-            searchButton.layer.borderColor = UIColor.systemGray4.cgColor
+            searchButton.layer.borderWidth = 2
+            searchButton.layer.borderColor = UIColor.systemGray2.cgColor
         }
     }
     @IBOutlet weak var cancelButton: UIButton! {
         didSet {
             cancelButton.layer.cornerRadius = 10
-            cancelButton.layer.borderWidth = 1
-            cancelButton.layer.borderColor = UIColor.systemGray4.cgColor
+            cancelButton.layer.borderWidth = 2
+            cancelButton.layer.borderColor = UIColor.systemGray2.cgColor
         }
     }
     @IBOutlet weak var sendButton: UIButton! {
         didSet {
             sendButton.layer.cornerRadius = 10
-            sendButton.layer.borderWidth = 1
-            sendButton.layer.borderColor = UIColor.systemGray4.cgColor
+            sendButton.layer.borderWidth = 2
+            sendButton.layer.borderColor = UIColor.systemGray2.cgColor
         }
     }
     

@@ -125,20 +125,27 @@ class PublicViewController: UIViewController {
     // MARK: Navigation
     func setUpNavigation() {
         // set up bar button
-        let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
+        let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(compose))
         // profile
         let profileMenu = UIMenu(children: [
             UIAction(title: "個人頁面") { action in
-                let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
+                let profileVC = UIStoryboard(name: "Profile",
+                                             bundle: nil).instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
                 self.show(profileVC, sender: self)
             },
             UIAction(title: "登出") { action in
                 FirebaseManager.shared.logOut()
-                UserDefaults.standard.set(nil, forKey: UserInfo.userNameKey)
-                UserDefaults.standard.set(nil, forKey: UserInfo.userIDKey)
+                UserDefaults.standard.set(nil,
+                                          forKey: UserInfo.userNameKey)
+                UserDefaults.standard.set(nil,
+                                          forKey: UserInfo.userIDKey)
             }
         ])
-        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: profileMenu)
+        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"),
+                                      menu: profileMenu)
         // relationship
         let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
         let relationshipMenu = UIMenu(children: [
@@ -149,22 +156,30 @@ class PublicViewController: UIViewController {
                 }
                 self.show(friendVC, sender: self)
             },
-            UIAction(title: "創建群組") { action in
-                
-                guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupCreateViewController.self)")
-                        as? GroupCreateViewController else {
-                    print("ERROR: GroupCreateViewController didn't instanciate")
+            UIAction(title: "管理群組") { action in
+                guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupManageViewController.self)")
+                        as? GroupManageViewController else {
+                    print("ERROR: GroupManageViewController didn't instanciate")
                     return
                 }
                 self.show(groupVC, sender: self)
             }
         ])
-        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"), menu: relationshipMenu)
+        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"),
+                                           menu: relationshipMenu)
         navigationItem.rightBarButtonItems = [compose, relationship, profile]
         navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "logo2"), style: .plain, target: nil, action: nil),
-            UIBarButtonItem(title: "                    ", style: .done, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            UIBarButtonItem(image: UIImage(named: "logo2"),
+                            style: .plain,
+                            target: nil,
+                            action: nil),
+            UIBarButtonItem(title: "                    ",
+                            style: .done,
+                            target: nil,
+                            action: nil),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                            target: self,
+                            action: nil)
         ]
     }
     

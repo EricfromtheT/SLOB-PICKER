@@ -44,6 +44,13 @@
 		37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C9582925183700604A4A /* UIImage+Extension.swift */; };
 		37B27DDF293749CB00C30D98 /* waiting.json in Resources */ = {isa = PBXBuildFile; fileRef = 37B27DDE293749CB00C30D98 /* waiting.json */; };
 		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
+		37C8FFE5293A0CDF00A84AB7 /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */; };
+		37C8FFE7293A0CF900A84AB7 /* MemberManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */; };
+		37C8FFE9293A0D1200A84AB7 /* LeaveGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */; };
+		37C8FFEF293B082500A84AB7 /* GroupNameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */; };
+		37C8FFF1293CCCF900A84AB7 /* CurrentMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF0293CCCF900A84AB7 /* CurrentMemberViewController.swift */; };
+		37C8FFF3293CD3EA00A84AB7 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */; };
+		37C8FFF5293CD42000A84AB7 /* InviteNewMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */; };
 		37D05E03292C7EDD00D8A2AA /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */; };
 		37D05E05292C7F3C00D8A2AA /* congrats.json in Resources */ = {isa = PBXBuildFile; fileRef = 37D05E04292C7F3B00D8A2AA /* congrats.json */; };
 		37D05E0C292CB9FE00D8A2AA /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E0B292CB9FE00D8A2AA /* FormView.swift */; };
@@ -79,6 +86,9 @@
 		37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */; };
 		37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFC2910B22F00F737A7 /* PickObject.swift */; };
 		37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFF2910C70E00F737A7 /* DateHelper.swift */; };
+		37DF709B2939EABC003A6713 /* GroupManageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709A2939EABC003A6713 /* GroupManageViewController.swift */; };
+		37DF709E2939F0D3003A6713 /* GroupManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709D2939F0D3003A6713 /* GroupManageCell.swift */; };
+		37DF70A02939FA4E003A6713 /* GroupEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709F2939FA4E003A6713 /* GroupEditorViewController.swift */; };
 		CDCCED94BD824C2880F3CCF9 /* Pods_SlobPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +132,13 @@
 		37A7C9642927350100604A4A /* SlobPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SlobPicker.entitlements; sourceTree = "<group>"; };
 		37B27DDE293749CB00C30D98 /* waiting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waiting.json; sourceTree = "<group>"; };
 		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
+		37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
+		37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberManageCell.swift; sourceTree = "<group>"; };
+		37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveGroupCell.swift; sourceTree = "<group>"; };
+		37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameEditViewController.swift; sourceTree = "<group>"; };
+		37C8FFF0293CCCF900A84AB7 /* CurrentMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMemberViewController.swift; sourceTree = "<group>"; };
+		37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
+		37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteNewMemberCell.swift; sourceTree = "<group>"; };
 		37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		37D05E04292C7F3B00D8A2AA /* congrats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congrats.json; sourceTree = "<group>"; };
 		37D05E0B292CB9FE00D8A2AA /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
@@ -159,6 +176,9 @@
 		37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		37DE8AFC2910B22F00F737A7 /* PickObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickObject.swift; sourceTree = "<group>"; };
 		37DE8AFF2910C70E00F737A7 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		37DF709A2939EABC003A6713 /* GroupManageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManageViewController.swift; sourceTree = "<group>"; };
+		37DF709D2939F0D3003A6713 /* GroupManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManageCell.swift; sourceTree = "<group>"; };
+		37DF709F2939FA4E003A6713 /* GroupEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupEditorViewController.swift; sourceTree = "<group>"; };
 		3A183DDFBE50ADA2DBC30D2B /* Pods-SlobPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlobPicker.debug.xcconfig"; path = "Target Support Files/Pods-SlobPicker/Pods-SlobPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		3B3A68163028A6C8CE69C6B6 /* Pods-SlobPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlobPicker.release.xcconfig"; path = "Target Support Files/Pods-SlobPicker/Pods-SlobPicker.release.xcconfig"; sourceTree = "<group>"; };
 		D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SlobPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,6 +227,49 @@
 				372AE30029127616007D677B /* TargetSettingCell.swift */,
 			);
 			path = PickEditorView;
+			sourceTree = "<group>";
+		};
+		37C8FFEA293B076A00A84AB7 /* Relationship */ = {
+			isa = PBXGroup;
+			children = (
+				37DF709F2939FA4E003A6713 /* GroupEditorViewController.swift */,
+				37C8FFF0293CCCF900A84AB7 /* CurrentMemberViewController.swift */,
+				37D5759329153F3F00DC344D /* GroupCreateViewController.swift */,
+				37DF709A2939EABC003A6713 /* GroupManageViewController.swift */,
+				37D5758F29153AAF00DC344D /* SearchIDViewController.swift */,
+				37D5759129153F0600DC344D /* FriendSelectViewController.swift */,
+			);
+			path = Relationship;
+			sourceTree = "<group>";
+		};
+		37C8FFEB293B078900A84AB7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3708B0302918157C00397035 /* LoginViewController.swift */,
+				37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		37C8FFEC293B07A200A84AB7 /* LivePick */ = {
+			isa = PBXGroup;
+			children = (
+				377852FD2920921600780E8D /* LiveOptionsViewController.swift */,
+				377852E8291CE85C00780E8D /* EntranceViewController.swift */,
+				377852F3291E29CC00780E8D /* WaitingRoomViewController.swift */,
+				377852FB291FCF6300780E8D /* LivePickingViewController.swift */,
+			);
+			path = LivePick;
+			sourceTree = "<group>";
+		};
+		37C8FFED293B07C600A84AB7 /* SocialPick */ = {
+			isa = PBXGroup;
+			children = (
+				37D575852913B02900DC344D /* PickerSelectionViewController.swift */,
+				3708B0342918FC6B00397035 /* PublicViewController.swift */,
+				37DE8AE2290EBC3300F737A7 /* PickViewController.swift */,
+			);
+			path = SocialPick;
 			sourceTree = "<group>";
 		};
 		37D05E08292CAAE700D8A2AA /* FirstLogin */ = {
@@ -275,22 +338,14 @@
 		37DE8ADA290EA55000F737A7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				37C8FFED293B07C600A84AB7 /* SocialPick */,
+				37C8FFEC293B07A200A84AB7 /* LivePick */,
+				37C8FFEB293B078900A84AB7 /* Login */,
+				37C8FFEA293B076A00A84AB7 /* Relationship */,
 				37DE8AA7290C15C900F737A7 /* ViewController.swift */,
 				377F0E16292F36E800A24BD5 /* ProfileViewController.swift */,
-				37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */,
-				377852FB291FCF6300780E8D /* LivePickingViewController.swift */,
-				377852F3291E29CC00780E8D /* WaitingRoomViewController.swift */,
-				377852E8291CE85C00780E8D /* EntranceViewController.swift */,
-				3708B0342918FC6B00397035 /* PublicViewController.swift */,
 				37D5758B2914DFF800DC344D /* PickResultViewController.swift */,
-				3708B0302918157C00397035 /* LoginViewController.swift */,
-				37D575852913B02900DC344D /* PickerSelectionViewController.swift */,
-				37DE8AE2290EBC3300F737A7 /* PickViewController.swift */,
 				37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */,
-				37D5758F29153AAF00DC344D /* SearchIDViewController.swift */,
-				37D5759129153F0600DC344D /* FriendSelectViewController.swift */,
-				37D5759329153F3F00DC344D /* GroupCreateViewController.swift */,
-				377852FD2920921600780E8D /* LiveOptionsViewController.swift */,
 				370050CF2923CA1400E1EA35 /* MainTabBarController.swift */,
 			);
 			path = Controller;
@@ -299,6 +354,7 @@
 		37DE8ADB290EA55800F737A7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				37DF709C2939F0C0003A6713 /* GroupManage */,
 				37D05E08292CAAE700D8A2AA /* FirstLogin */,
 				377852EC291D0AEB00780E8D /* LivePick */,
 				3708B036291901E700397035 /* Public */,
@@ -385,6 +441,20 @@
 				379277B329389413004C336B /* UIImageView+Extension.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		37DF709C2939F0C0003A6713 /* GroupManage */ = {
+			isa = PBXGroup;
+			children = (
+				37DF709D2939F0D3003A6713 /* GroupManageCell.swift */,
+				37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */,
+				37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */,
+				37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */,
+				37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */,
+				37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */,
+				37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */,
+			);
+			path = GroupManage;
 			sourceTree = "<group>";
 		};
 		91CC7ECF0DD89D90EBEB568E /* Pods */ = {
@@ -542,6 +612,7 @@
 				37D5759429153F3F00DC344D /* GroupCreateViewController.swift in Sources */,
 				37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */,
 				37DE8AF2290FCCAE00F737A7 /* AdditionCell.swift in Sources */,
+				37C8FFE9293A0D1200A84AB7 /* LeaveGroupCell.swift in Sources */,
 				37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */,
 				37D5759829154B3400DC344D /* User.swift in Sources */,
 				377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */,
@@ -554,7 +625,9 @@
 				377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */,
 				3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */,
 				372AE30129127616007D677B /* TargetSettingCell.swift in Sources */,
+				37C8FFF3293CD3EA00A84AB7 /* GroupMemberCell.swift in Sources */,
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
+				37DF709E2939F0D3003A6713 /* GroupManageCell.swift in Sources */,
 				370050CE29227F6400E1EA35 /* UIColor+Extension.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
 				37DE8AEC290FCC5000F737A7 /* TitleCell.swift in Sources */,
@@ -572,7 +645,10 @@
 				3708B0382919021B00397035 /* HotCell.swift in Sources */,
 				3708B0312918157C00397035 /* LoginViewController.swift in Sources */,
 				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
+				37C8FFF5293CD42000A84AB7 /* InviteNewMemberCell.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,
+				37DF709B2939EABC003A6713 /* GroupManageViewController.swift in Sources */,
+				37DF70A02939FA4E003A6713 /* GroupEditorViewController.swift in Sources */,
 				37D5758C2914DFF800DC344D /* PickResultViewController.swift in Sources */,
 				379277B429389413004C336B /* UIImageView+Extension.swift in Sources */,
 				37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */,
@@ -583,11 +659,15 @@
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
 				37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */,
 				377852F8291E6A6500780E8D /* LivePick.swift in Sources */,
+				37C8FFEF293B082500A84AB7 /* GroupNameEditViewController.swift in Sources */,
 				3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */,
+				37C8FFF1293CCCF900A84AB7 /* CurrentMemberViewController.swift in Sources */,
 				37D5759229153F0600DC344D /* FriendSelectViewController.swift in Sources */,
 				377852F4291E29CC00780E8D /* WaitingRoomViewController.swift in Sources */,
 				37DE8AF4290FD67600F737A7 /* SPConstant.swift in Sources */,
 				37D5759029153AAF00DC344D /* SearchIDViewController.swift in Sources */,
+				37C8FFE7293A0CF900A84AB7 /* MemberManageCell.swift in Sources */,
+				37C8FFE5293A0CDF00A84AB7 /* GroupNameCell.swift in Sources */,
 				372AE2FD2912606D007D677B /* TextOptionsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -736,9 +816,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FV92TC3KA2;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -754,10 +836,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -775,9 +858,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FV92TC3KA2;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SlobPicker/Info.plist;
@@ -792,10 +877,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
