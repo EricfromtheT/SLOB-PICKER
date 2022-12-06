@@ -21,6 +21,11 @@ class LiveOptionsViewController: UIViewController {
             }
         }
     }
+    @IBOutlet weak var voteButton: UIButton! {
+        didSet {
+            voteButton.layer.cornerRadius=15
+        }
+    }
     var livePicker: LivePicker?
     var lastClickButton: UIButton?
     var chosenIndex: Int?

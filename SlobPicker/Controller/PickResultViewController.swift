@@ -185,13 +185,11 @@ extension PickResultViewController: UITableViewDataSource {
         case .forLive:
             if let pickInfo = livePickInfo {
                 contents = pickInfo.contents
-                title = pickInfo.title
                 type = pickInfo.type
             }
         default:
             if let pickInfo = pickInfo {
                 contents = pickInfo.contents
-                title = pickInfo.title
                 type = pickInfo.type
             }
         }

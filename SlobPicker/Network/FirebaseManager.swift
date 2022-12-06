@@ -289,26 +289,55 @@ class FirebaseManager {
             }
     }
     
-    func fetchFriendsProfile(friendsUUID: [String], completion: @escaping (Result<[User], Error>) -> Void) {
-        // TODO: 一次最高可以填入10個friendsID
-        database.collection("users").whereField("user_uuid", in: friendsUUID).getDocuments { qrry, error in
+    
+    // MARK: Group
+    func addGroupPeople(groupID: String, newMembersUUID: [String], completion: @escaping (Result<String, Error>) -> Void) {
+        database.collection("groups").document(groupID).updateData([
+            "members": FieldValue.arrayUnion(newMembersUUID)
+        ]) { error in
             if let error = error {
                 completion(.failure(error))
-            } else if let documents = qrry?.documents {
-                do {
-                    let friends = try documents.map { document in
-                        try document.data(as: User.self)
-                    }
-                    completion(.success(friends))
-                } catch {
-                    completion(.failure(error))
-                }
+            } else {
+                completion(.success("Success"))
             }
         }
     }
     
+    func leaveGroup(groupID: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+        database.collection("users").document(uuid).collection("groups").document(groupID).delete() { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
     
-    // MARK: Group
+    func groupDeleteUser(groupID: String, userUUID: String, completion: @escaping (Result<String, Error>) -> Void) {
+        database.collection("groups").document(groupID).updateData([
+            "members": FieldValue.arrayRemove([userUUID])
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
+    func changeGroupName(name: String, groupID: String, completion: @escaping (Result<String, Error>) -> Void) {
+        database.collection("groups").document(groupID).updateData([
+            "title": name
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Success"))
+            }
+        }
+    }
+    
     func publishNewGroup(group: inout Group, completion: @escaping (Result<String, Error>) -> Void) {
         let document = groupRef.document()
         let id = document.documentID
@@ -317,7 +346,9 @@ class FirebaseManager {
             try document.setData(from: group)
             completion(.success("publish new group Successfully"))
             for member in group.members {
-                addUserGroupInfo(userID: member, groupID: id, groupName: group.title)
+                addUserGroupInfo(userUUID: member, groupID: id, groupName: group.title) {
+                    print("Success")
+                }
             }
             
         } catch {
@@ -341,13 +372,15 @@ class FirebaseManager {
         }
     }
     
-    func addUserGroupInfo(userID: String, groupID: String, groupName: String) {
-        database.collection("users").document(userID).collection("groups").document(groupID).setData([
+    func addUserGroupInfo(userUUID: String, groupID: String, groupName: String, completion: @escaping (() -> Void)) {
+        database.collection("users").document(userUUID).collection("groups").document(groupID).setData([
             "group_name": groupName,
             "group_id": groupID
         ]) { error in
             if let error = error {
                 print(error, "ERROR update group info")
+            } else {
+                completion()
             }
         }
     }

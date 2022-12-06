@@ -45,6 +45,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         super.viewDidLoad()
     }
     
+    // MARK: Delete account
     @IBAction func deleteAccount() {
         let alert = UIAlertController(title: "是否確定要刪除帳號",
                                       message:
@@ -60,9 +61,11 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         present(alert, animated: true)
     }
     
+    // MARK: Privacy policy
     @IBAction func openPrivacy(_ sender: UIButton) {
         if let url =
-            URL(string: "https://www.privacypolicies.com/live/4062ac64-f047-4818-bc02-22aea3d81b03") {
+            URL(string: "https://www.privacypolicies.com/" +
+                "live/4062ac64-f047-4818-bc02-22aea3d81b03") {
             let safari = SFSafariViewController(url: url)
             safari.delegate = self
             present(safari, animated: true)
@@ -103,7 +106,8 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
                 let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
                 if errorCode != errSecSuccess {
                     fatalError(
-                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                        "Unable to generate nonce." +
+                        "SecRandomCopyBytes failed with OSStatus \(errorCode)"
                     )
                 }
                 return random
@@ -169,10 +173,14 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
                          forHTTPHeaderField: "content-type")
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         components?.queryItems = [
-            URLQueryItem(name: "client_id", value: Secret.clientID.rawValue),
-            URLQueryItem(name: "client_secret", value: signedJWT),
-            URLQueryItem(name: "code", value: authCodeToString),
-            URLQueryItem(name: "grant_type", value: "authorization_code")
+            URLQueryItem(name: "client_id",
+                         value: Secret.clientID.rawValue),
+            URLQueryItem(name: "client_secret",
+                         value: signedJWT),
+            URLQueryItem(name: "code",
+                         value: authCodeToString),
+            URLQueryItem(name: "grant_type",
+                         value: "authorization_code")
         ]
         if let query = components?.url?.query {
             request.httpBody = Data(query.utf8)
@@ -209,10 +217,14 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
                          , forHTTPHeaderField: "content-type")
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         components?.queryItems = [
-            URLQueryItem(name: "client_id", value: Secret.clientID.rawValue),
-            URLQueryItem(name: "client_secret", value: jwt),
-            URLQueryItem(name: "token", value: refreshToken),
-            URLQueryItem(name: "token_type", value: "refresh_token")
+            URLQueryItem(name: "client_id",
+                         value: Secret.clientID.rawValue),
+            URLQueryItem(name: "client_secret",
+                         value: jwt),
+            URLQueryItem(name: "token",
+                         value: refreshToken),
+            URLQueryItem(name: "token_type",
+                         value: "refresh_token")
         ]
         if let query = components?.url?.query {
             request.httpBody = Data(query.utf8)

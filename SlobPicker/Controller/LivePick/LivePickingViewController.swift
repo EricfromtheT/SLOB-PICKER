@@ -16,6 +16,13 @@ class LivePickingViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var rankTableView: UITableView!
     @IBOutlet weak var magicTimer: MagicTimerView!
+    @IBOutlet weak var voteButton: UIButton! {
+        didSet {
+            voteButton.layer.cornerRadius = 15
+            voteButton.layer.borderWidth = 2
+            voteButton.layer.borderColor = UIColor.white.cgColor
+        }
+    }
     
     var livePicker: LivePicker?
     var voteResults: [VoteResult] = []
@@ -38,7 +45,7 @@ class LivePickingViewController: UIViewController {
     func setUpTimer() {
         var remainTime: Int = 0
         if let livePicker = livePicker, let startTime = livePicker.startTime {
-            let endTime = startTime + 15000
+            let endTime = startTime + 30000
             remainTime = endTime - Date().millisecondsSince1970
         }
         magicTimer.isActiveInBackground = true
@@ -128,7 +135,6 @@ class LivePickingViewController: UIViewController {
         animationView?.contentMode = .scaleAspectFill
         animationView?.animationSpeed = 1
         view.addSubview(animationView!)
-//        view.sendSubviewToBack(animationView!)
     }
     
     func updateUI() {
