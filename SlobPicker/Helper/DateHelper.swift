@@ -8,6 +8,8 @@
 import Foundation
 
 extension Date {
+    static let dateManager = Date()
+    
     var millisecondsSince1970: Int {
         return Int((self.timeIntervalSince1970 * 1000.0).rounded())
     }
