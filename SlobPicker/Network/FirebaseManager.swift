@@ -128,26 +128,6 @@ class FirebaseManager {
 
     
     // MARK: Private picker
-    func fetchAllPrivatePickers(completion: @escaping (Result<[Picker], Error>) -> Void) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        privatePickersRef.whereField("members_ids", arrayContains: uuid).order(by: "created_time", descending: true).getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                do {
-                    if let documents = querySnapshot?.documents {
-                        let pickers = try documents.map { document in
-                            try document.data(as: Picker.self)
-                        }
-                        completion(.success(pickers))
-                    }
-                } catch {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
     // publish a new picker
     func updatePrivateComment(comment: Comment, pickerID: String) {
         // TODO: change document path to real userID

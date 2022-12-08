@@ -47,13 +47,10 @@ class PickerSelectionViewController: UIViewController {
     
     // MARK: SetUp
     func loadData() {
-        FirebaseManager.shared.fetchAllPrivatePickers { result in
-            switch result {
-            case .success(let pickers):
-                self.pickers = pickers
-            case .failure(let error):
-                print(error)
-            }
+        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError() }
+        let query = FirebaseManager.shared.privatePickersRef.whereField("members_ids", arrayContains: uuid).order(by: "created_time", descending: true)
+        FirebaseManager.shared.getDocuments(query) { (pickers: [Picker]) in
+            self.pickers = pickers
             self.semaphore.signal()
         }
         semaphore.wait()
@@ -61,12 +58,10 @@ class PickerSelectionViewController: UIViewController {
         let authors = Set(pickers.map { $0.authorUUID })
         authors.forEach {
             group.enter()
-            FirebaseManager.shared.getUserInfo(userUUID: $0) { result in
-                switch result {
-                case .success(let user):
+            let ref = FirebaseManager.FirebaseCollectionRef.users.ref.document($0)
+            FirebaseManager.shared.getDocument(ref) { (user: User?) in
+                if let user = user {
                     self.users.append(user)
-                case .failure(let error):
-                    print(error, "error of getting user's info")
                 }
                 self.group.leave()
             }
