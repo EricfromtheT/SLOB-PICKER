@@ -44,7 +44,7 @@ class PickResultViewController: UIViewController {
             }
         }
     }
-    
+    //
     var livePickInfo: LivePicker? {
         didSet {
             if let livePickInfo = livePickInfo, let pickID = livePickInfo.pickerID {
