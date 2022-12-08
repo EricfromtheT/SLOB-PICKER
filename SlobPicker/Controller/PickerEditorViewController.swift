@@ -64,7 +64,7 @@ class PickerEditorViewController: UIViewController {
     }
     
     @objc func uploadContent() {
-        if inputTitle == nil {
+        if inputTitle == nil || inputTitle == "" {
             let alert = UIAlertController(title: "請填入主題",
                                           message: "picker必須包含主題",
                                           preferredStyle: .alert)
