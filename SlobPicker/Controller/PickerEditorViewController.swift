@@ -91,7 +91,7 @@ class PickerEditorViewController: UIViewController {
             present(alert, animated: true)
             return
         }
-
+        
         ProgressHUD.show()
         for index in 0...3 {
             if let image = imagesDict[index], let image = image {
@@ -157,7 +157,6 @@ class PickerEditorViewController: UIViewController {
         if let title = inputTitle, let urls = urlStrings, let strings = willBeUploadedStrings {
             var contents: [String] = []
             var type = 0
-            var membersID: [String] = []
             if mode == .textType {
                 contents = strings.filter { string in
                     !string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -170,35 +169,39 @@ class PickerEditorViewController: UIViewController {
             else { fatalError("user info is nil") }
             switch target {
             case .forPrivate:
+                let pickerRef = FirebaseManager.FirebaseCollectionRef.pickers(type: .forPrivate).ref.document()
                 guard let index = selectedGroupIndex else {
                     print("groupindex is nil")
                     return }
-                var privatePicker = Picker(title: title,
+                var privatePicker = Picker(id: pickerRef.documentID,
+                                           title: title,
                                            description: inputDp ?? "",
                                            type: type,
                                            contents: contents,
+                                           createdTime: Date.dateManager.millisecondsSince1970,
                                            authorID: userID,
                                            authorName: userName,
                                            authorUUID: uuid,
                                            groupID: groupInfos[index].groupID,
                                            groupName: groupInfos[index].groupName)
-                FirebaseManager.shared.fetchGroupInfo(
-                    groupID: groupInfos[index].groupID,
-                    completion: {
+                FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID) {
                     result in
-                    print("==========")
                     switch result {
                     case .success(let groupInfo):
-                        membersID = groupInfo.members
-                        privatePicker.membersIDs = membersID
-                        self.publish(picker: &privatePicker)
+                        privatePicker.membersIDs = groupInfo.members
+                        FirebaseManager.shared.setData(privatePicker, at: pickerRef) {
+                            DispatchQueue.main.async {
+                                ProgressHUD.dismiss()
+                                self.navigationController?.popToRootViewController(animated: true)
+                            }
+                        }
                     case .failure(let error):
-                        print(error, "拿單一群組資料有問題")
+                        print(error.localizedDescription, "error of gettign group info")
                     }
-                })
+                }
             case .forPublic:
                 let pickerRef = FirebaseManager.FirebaseCollectionRef.pickers(type: .forPublic).ref.document()
-                var publicPicker = Picker(id: pickerRef.documentID,
+                let publicPicker = Picker(id: pickerRef.documentID,
                                           title: title,
                                           description: inputDp ?? "",
                                           type: type,
@@ -213,10 +216,10 @@ class PickerEditorViewController: UIViewController {
                                           pickedIDs: [])
                 FirebaseManager.shared.setData(publicPicker, at: pickerRef) {
                     DispatchQueue.main.async {
+                        ProgressHUD.dismiss()
                         self.navigationController?.popToRootViewController(animated: true)
                     }
                 }
-//                self.publish(picker: &publicPicker)
             case .forLive:
                 let random = String(Int.random(in: 100000...999999))
                 var livePicker = LivePicker(accessCode: random,
@@ -295,38 +298,6 @@ class PickerEditorViewController: UIViewController {
                     }
                 }
             }
-        }
-        ProgressHUD.dismiss()
-    }
-    
-    func publish(picker: inout Picker) {
-        switch target {
-        case .forPublic:
-            FirebaseManager.shared.publishPublicPicker(pick: &picker) { result in
-                switch result {
-                case .success( _):
-                    break
-                case .failure(let error):
-                    print(error, "error of publishing public picker")
-                }
-                DispatchQueue.main.async {
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
-            }
-        case .forPrivate:
-            FirebaseManager.shared.publishPrivatePicker(pick: &picker) { result in
-                switch result {
-                case .success( _):
-                    break
-                case .failure(let error):
-                    print(error, "error of publishing private picker")
-                }
-                DispatchQueue.main.async {
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
-            }
-        default:
-            break
         }
         ProgressHUD.dismiss()
     }

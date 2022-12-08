@@ -20,8 +20,8 @@ class FirebaseManager {
     let database = Firestore.firestore()
     let storageRef = Storage.storage().reference().child("imagesForPickers")
     let profileImageRef = Storage.storage().reference().child("imagesForProfile")
-    let privatePickersRef = shared.database.collection("privatePickers")
-    let publicPickersRef = shared.database.collection("publicPickers")
+    lazy var privatePickersRef = database.collection("privatePickers")
+    lazy var publicPickersRef = database.collection("publicPickers")
     private let groupRef = Firestore.firestore().collection("groups")
     
     enum FirebaseCollectionRef {
@@ -61,7 +61,7 @@ class FirebaseManager {
         }
     }
     
-    // MARK: Generic function
+    // MARK: Refactor function
     func getDocument<T: Decodable>(_ docRef: DocumentReference, completion: @escaping (T?) -> Void) {
         docRef.getDocument { snapshot, error in
             completion(self.parseDocument(snapshot: snapshot, error: error))
@@ -149,23 +149,6 @@ class FirebaseManager {
     }
     
     // publish a new picker
-    func publishPrivatePicker(pick: inout Picker, completion: @escaping (Result<String, Error>) -> Void) {
-        let document = privatePickersRef.document()
-        pick.id = document.documentID
-        pick.createdTime = Date().millisecondsSince1970
-        if let groupID = pick.groupID {
-            updateGroupPickersID(groupID: groupID, pickersID: document.documentID)
-        } else {
-            completion(.success("Failed to update group picker id"))
-        }
-        do {
-            try document.setData(from: pick)
-            completion(.success("Success"))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    
     func updatePrivateComment(comment: Comment, pickerID: String) {
         // TODO: change document path to real userID
         privatePickersRef.document(pickerID).collection("all_comment").document(comment.userUUID).setData([
@@ -491,18 +474,6 @@ class FirebaseManager {
     }
     
     // MARK: Public
-    func publishPublicPicker(pick: inout Picker, completion: @escaping (Result<String, Error>) -> Void) {
-        let document = database.collection("publicPickers").document()
-        pick.id = document.documentID
-        pick.createdTime = Date().millisecondsSince1970
-        do {
-            try document.setData(from: pick)
-            completion(.success("Success"))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    
     func fetchNewestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
         // newest picker
         database.collection("publicPickers").order(by: "created_time", descending: true)
