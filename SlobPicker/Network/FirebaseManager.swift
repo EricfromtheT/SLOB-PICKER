@@ -20,64 +20,115 @@ class FirebaseManager {
     let database = Firestore.firestore()
     let storageRef = Storage.storage().reference().child("imagesForPickers")
     let profileImageRef = Storage.storage().reference().child("imagesForProfile")
-    private let privatePickersRef = Firestore.firestore().collection("privatePickers")
+    lazy var privatePickersRef = database.collection("privatePickers")
+    lazy var publicPickersRef = database.collection("publicPickers")
     private let groupRef = Firestore.firestore().collection("groups")
     
-    // MARK: Private picker
-    func fetchPrivatePickInfo(pickerID: String, completion: @escaping (Result<Picker, Error>) -> Void) {
-        privatePickersRef.document(pickerID).getDocument { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                do {
-                    if let pickInfo = try querySnapshot?.data(as: Picker.self) {
-                        completion(.success(pickInfo))
-                    }
-                } catch {
-                    completion(.failure(error))
-                }
+    enum FirebaseCollectionRef {
+        case groups
+        case pickers(type: PrivacyMode)
+        case reportedPost
+        case users
+        case usersFriends(userID: String)
+        case usersGroup(groupID: String)
+        case pickerComments(type: PrivacyMode, pickerID: String)
+        case pickerResults(type: PrivacyMode, pickerID: String)
+        case livePickAttendees(pickerID: String)
+        
+        var ref: CollectionReference {
+            let database = Firestore.firestore()
+            let users = database.collection("users")
+            switch self {
+            case .groups:
+                return database.collection("groups")
+            case .pickers(let type):
+                return database.collection(type.rawValue)
+            case .reportedPost:
+                return database.collection("reportedPost")
+            case .users:
+                return users
+            case .usersFriends(let userID):
+                return users.document(userID).collection("friends")
+            case .usersGroup(let userID):
+                return users.document(userID).collection("groups")
+            case .pickerComments(let type, let pickerID):
+                return database.collection(type.rawValue).document(pickerID).collection("all_comment")
+            case .pickerResults(let type, let pickerID):
+                return database.collection(type.rawValue).document(pickerID).collection("results")
+            case .livePickAttendees(let pickerID):
+                return database.collection("livePickers").document(pickerID).collection("attendees")
             }
         }
     }
     
-    func fetchAllPrivatePickers(completion: @escaping (Result<[Picker], Error>) -> Void) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        privatePickersRef.whereField("members_ids", arrayContains: uuid).order(by: "created_time", descending: true).getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                do {
-                    if let documents = querySnapshot?.documents {
-                        let pickers = try documents.map { document in
-                            try document.data(as: Picker.self)
-                        }
-                        completion(.success(pickers))
-                    }
-                } catch {
-                    completion(.failure(error))
-                }
-            }
+    // MARK: Refactor function
+    func getDocument<T: Decodable>(_ docRef: DocumentReference, completion: @escaping (T?) -> Void) {
+        docRef.getDocument { snapshot, error in
+            completion(self.parseDocument(snapshot: snapshot, error: error))
+        }
+    }
+
+    func getDocuments<T: Decodable>(_ query: Query, completion: @escaping ([T]) -> Void) {
+        query.getDocuments { snapshot, error in
+            completion(self.parseDocuments(snapshot: snapshot, error: error))
         }
     }
     
-    // publish a new picker
-    func publishPrivatePicker(pick: inout Picker, completion: @escaping (Result<String, Error>) -> Void) {
-        let document = privatePickersRef.document()
-        pick.id = document.documentID
-        pick.createdTime = Date().millisecondsSince1970
-        if let groupID = pick.groupID {
-            updateGroupPickersID(groupID: groupID, pickersID: document.documentID)
-        } else {
-            completion(.success("Failed to update group picker id"))
-        }
+    func delete(_ docRef: DocumentReference) {
+        docRef.delete()
+    }
+
+    func setData(_ documentData: [String : Any], at docRef: DocumentReference) {
+        docRef.setData(documentData)
+    }
+
+    func setData<T: Encodable>(_ data: T, at docRef: DocumentReference, completion: () -> Void) {
         do {
-            try document.setData(from: pick)
-            completion(.success("Success"))
+            try docRef.setData(from: data)
+            completion()
         } catch {
-            completion(.failure(error))
+            print("DEBUG: Error encoding \(data.self) data -", error.localizedDescription)
         }
     }
     
+    private func parseDocument<T: Decodable>(snapshot: DocumentSnapshot?, error: Error?) -> T? {
+        guard let snapshot = snapshot, snapshot.exists else {
+            let errorMessage = error?.localizedDescription ?? ""
+            print("DEBUG: Nil document", errorMessage)
+            return nil
+        }
+
+        var model: T?
+        do {
+            model = try snapshot.data(as: T.self)
+        } catch {
+            print("DEBUG: Error decoding \(T.self) data -", error.localizedDescription)
+        }
+        return model
+    }
+
+    private func parseDocuments<T: Decodable>(snapshot: QuerySnapshot?, error: Error?) -> [T] {
+        guard let snapshot = snapshot else {
+            let errorMessage = error?.localizedDescription ?? ""
+            print("DEBUG: Error fetching snapshot -", errorMessage)
+            return []
+        }
+
+        var models: [T] = []
+        snapshot.documents.forEach { document in
+            do {
+                let item = try document.data(as: T.self)
+                models.append(item)
+            } catch {
+                print("DEBUG: Error decoding \(T.self) data -", error.localizedDescription)
+            }
+        }
+        return models
+    }
+
+    
+    // MARK: Private picker
+    // publish a new picker
     func updatePrivateComment(comment: Comment, pickerID: String) {
         // TODO: change document path to real userID
         privatePickersRef.document(pickerID).collection("all_comment").document(comment.userUUID).setData([
@@ -403,18 +454,6 @@ class FirebaseManager {
     }
     
     // MARK: Public
-    func publishPublicPicker(pick: inout Picker, completion: @escaping (Result<String, Error>) -> Void) {
-        let document = database.collection("publicPickers").document()
-        pick.id = document.documentID
-        pick.createdTime = Date().millisecondsSince1970
-        do {
-            try document.setData(from: pick)
-            completion(.success("Success"))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    
     func fetchNewestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
         // newest picker
         database.collection("publicPickers").order(by: "created_time", descending: true)
