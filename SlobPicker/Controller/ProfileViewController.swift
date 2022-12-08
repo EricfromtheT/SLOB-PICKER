@@ -11,6 +11,7 @@ import CryptoKit
 import SwiftJWT
 import FirebaseAuth
 import SafariServices
+import PhotosUI
 
 private struct MyClaims: Claims {
     let iss: String
@@ -38,8 +39,16 @@ private struct RefreshResponse: Codable {
 }
 
 class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
-    
+    @IBOutlet weak var menuTableView: UITableView! {
+        didSet {
+            menuTableView.delegate = self
+            menuTableView.dataSource = self
+            
+        }
+    }
     fileprivate var currentNonce: String?
+    var profilePhotoCompletion: ((UIImage) -> Void)?
+    var userInfo: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,28 +81,64 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     
-    // MARK: Deal with reauthentication
-    func deleteFirebaseAppleAccount() {
-        self.reAppleLogin()
+    func fetchProfile() {
+        guard let userUUID = FirebaseManager.auth.currentUser?.uid else { fatalError("no user uuid") }
+        FirebaseManager.shared.getUserInfo(userUUID: userUUID) { result in
+            switch result {
+            case .success(let user):
+                
+            case .failure(let error):
+                
+            }
+        }
     }
     
-    func reAppleLogin() {
-        let nonce = randomNonceString()
-        currentNonce = nonce
-        // generate request by crypto string
-        let authorizationAppleIDRequest: ASAuthorizationAppleIDRequest
-        = ASAuthorizationAppleIDProvider().createRequest()
-        authorizationAppleIDRequest.requestedScopes = [.fullName, .email]
-        authorizationAppleIDRequest.nonce = sha256(nonce)
+    
+}
+
+// MARK: TableView DataSource
+extension ProfileViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let controller: ASAuthorizationController
-        = ASAuthorizationController(authorizationRequests: [authorizationAppleIDRequest])
-        
-        controller.delegate = self
-        controller.presentationContextProvider = self
-        controller.performRequests()
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+}
+
+// MARK: TableView Delegate
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
+    }
+}
+
+// MARK: PHPickerViewControllerDelegate
+extension ProfileViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        let result = results.first
+        let itemProvider = result?.itemProvider
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
+                DispatchQueue.main.async {
+                    guard let image = image as? UIImage, let self = self else {
+                        if let error = error {
+                            print(error.localizedDescription)
+                        }
+                        return
+                    }
+                    // UI updates, upload new image to firebase
+                    self.profilePhotoCompletion?(image)
+                }
+            }
+        }
+    }
+}
+
+// MARK: Gen Token
+extension ProfileViewController {
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         let charset: [Character] =
@@ -241,7 +286,30 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         }
         task.resume()
     }
+    
+    // MARK: Deal with reauthentication
+    func deleteFirebaseAppleAccount() {
+        self.reAppleLogin()
+    }
+    
+    func reAppleLogin() {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        // generate request by crypto string
+        let authorizationAppleIDRequest: ASAuthorizationAppleIDRequest
+        = ASAuthorizationAppleIDProvider().createRequest()
+        authorizationAppleIDRequest.requestedScopes = [.fullName, .email]
+        authorizationAppleIDRequest.nonce = sha256(nonce)
+        
+        let controller: ASAuthorizationController
+        = ASAuthorizationController(authorizationRequests: [authorizationAppleIDRequest])
+        
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
 }
+
 
 // MARK: ASAuthorizationControllerDelegate
 extension ProfileViewController: ASAuthorizationControllerDelegate {
