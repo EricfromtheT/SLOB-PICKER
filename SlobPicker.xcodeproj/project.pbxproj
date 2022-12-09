@@ -24,6 +24,7 @@
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
 		3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738C0222931E45900DF82CA /* PickResultTitleCell.swift */; };
 		3759D313294211EC00AAAD54 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */; };
+		3759D3152942D9EE00AAAD54 /* SPStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */; };
 		377323A52934B05A007D0B64 /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A42934B05A007D0B64 /* gameRoom.json */; };
 		377323A729352C0B007D0B64 /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A629352C0B007D0B64 /* choose.json */; };
 		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
@@ -50,7 +51,7 @@
 		37C8FFE5293A0CDF00A84AB7 /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */; };
 		37C8FFE7293A0CF900A84AB7 /* MemberManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */; };
 		37C8FFE9293A0D1200A84AB7 /* LeaveGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */; };
-		37C8FFEF293B082500A84AB7 /* GroupNameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */; };
+		37C8FFEF293B082500A84AB7 /* NameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFEE293B082500A84AB7 /* NameEditViewController.swift */; };
 		37C8FFF1293CCCF900A84AB7 /* CurrentMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF0293CCCF900A84AB7 /* CurrentMemberViewController.swift */; };
 		37C8FFF3293CD3EA00A84AB7 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */; };
 		37C8FFF5293CD42000A84AB7 /* InviteNewMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */; };
@@ -118,6 +119,7 @@
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3738C0222931E45900DF82CA /* PickResultTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultTitleCell.swift; sourceTree = "<group>"; };
 		3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
+		3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPStoryboard.swift; sourceTree = "<group>"; };
 		377323A42934B05A007D0B64 /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
 		377323A629352C0B007D0B64 /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
@@ -145,7 +147,7 @@
 		37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
 		37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberManageCell.swift; sourceTree = "<group>"; };
 		37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveGroupCell.swift; sourceTree = "<group>"; };
-		37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameEditViewController.swift; sourceTree = "<group>"; };
+		37C8FFEE293B082500A84AB7 /* NameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameEditViewController.swift; sourceTree = "<group>"; };
 		37C8FFF0293CCCF900A84AB7 /* CurrentMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMemberViewController.swift; sourceTree = "<group>"; };
 		37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteNewMemberCell.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				377852F7291E6A6500780E8D /* LivePick.swift */,
 				377F0E182930568600A24BD5 /* topSecret.swift */,
 				37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */,
+				3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -488,7 +491,7 @@
 				37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */,
 				37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */,
 				37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */,
-				37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */,
+				37C8FFEE293B082500A84AB7 /* NameEditViewController.swift */,
 				37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */,
 			);
 			path = GroupManage;
@@ -702,7 +705,8 @@
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
 				37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */,
 				377852F8291E6A6500780E8D /* LivePick.swift in Sources */,
-				37C8FFEF293B082500A84AB7 /* GroupNameEditViewController.swift in Sources */,
+				37C8FFEF293B082500A84AB7 /* NameEditViewController.swift in Sources */,
+				3759D3152942D9EE00AAAD54 /* SPStoryboard.swift in Sources */,
 				37C8FFFD29417F0E00A84AB7 /* UserNickNameCell.swift in Sources */,
 				3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */,
 				37C8FFF1293CCCF900A84AB7 /* CurrentMemberViewController.swift in Sources */,
@@ -860,11 +864,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -884,7 +886,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -902,11 +903,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SlobPicker/Info.plist;
@@ -925,7 +924,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

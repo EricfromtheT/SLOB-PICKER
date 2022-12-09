@@ -84,6 +84,7 @@ extension CurrentMemberViewController: UITableViewDelegate {
                         $0.userUUID
                     }
                     friendSelectVC.friendsUUID = friendsUUID
+                    friendSelectVC.mode = .fromManaging
                     if let groupData = self.groupData,
                         let id = groupData.id {
                         friendSelectVC.currentGroupID = id

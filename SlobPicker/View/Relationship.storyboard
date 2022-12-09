@@ -332,10 +332,10 @@
             </objects>
             <point key="canvasLocation" x="1960" y="783"/>
         </scene>
-        <!--Group Name Edit View Controller-->
+        <!--Name Edit View Controller-->
         <scene sceneID="JQR-yr-jgk">
             <objects>
-                <viewController storyboardIdentifier="GroupNameEditViewController" id="WBW-Ax-6fa" customClass="GroupNameEditViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NameEditViewController" id="WBW-Ax-6fa" customClass="NameEditViewController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JWS-Q6-2Gg">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

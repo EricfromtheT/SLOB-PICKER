@@ -11,7 +11,7 @@ protocol ProfileCell: UITableViewCell {
     func configure(data: User)
 }
 
-enum MyCell: CaseIterable {
+enum MyCell: Int ,CaseIterable {
     case photoCell
     case idCell
     case nameCell
@@ -33,5 +33,4 @@ enum MyCell: CaseIterable {
         }
     }
 }
-
 

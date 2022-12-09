@@ -47,6 +47,7 @@ class GroupCreateViewController: UIViewController {
                         friend.userUUID
                     }
                     friendsVC.friendsUUID = friendsUUID
+                    friendsVC.mode = .fromCreating
                 case .failure(let error):
                     print(error, "ERROR of getting your friends' info")
                 }

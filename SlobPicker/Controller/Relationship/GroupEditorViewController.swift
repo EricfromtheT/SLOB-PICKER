@@ -31,12 +31,12 @@ extension GroupEditorViewController: UITableViewDelegate {
                                       bundle: nil)
         if let cell = tableView.cellForRow(at: indexPath) {
             if let nameCell = cell as? GroupNameCell {
-                guard let groupNameVC = storyboard.instantiateViewController(withIdentifier: "\(GroupNameEditViewController.self)") as?
-                        GroupNameEditViewController else {
+                guard let groupNameVC = storyboard.instantiateViewController(withIdentifier: "\(NameEditViewController.self)") as?
+                        NameEditViewController else {
                     fatalError("error of instantiating GroupNameEditViewController")
                 }
                 if let groupInfo = groupInfo {
-                    groupNameVC.groupName = groupInfo.groupName
+                    groupNameVC.originalName = groupInfo.groupName
                     groupNameVC.groupID = groupInfo.groupID
                 }
                 groupNameVC.completion = { name in

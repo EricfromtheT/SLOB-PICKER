@@ -12,6 +12,7 @@ import SwiftJWT
 import FirebaseAuth
 import SafariServices
 import PhotosUI
+import ProgressHUD
 
 private struct MyClaims: Claims {
     let iss: String
@@ -43,7 +44,6 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         didSet {
             menuTableView.delegate = self
             menuTableView.dataSource = self
-            fetchProfile()
         }
     }
     fileprivate var currentNonce: String?
@@ -53,6 +53,11 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "個人頁面設定"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchProfile()
     }
     
     func fetchProfile() {
@@ -83,7 +88,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     // MARK: Privacy policy
-    func openPrivacy(_ sender: UIButton) {
+    func openPrivacy() {
         if let url =
             URL(string: "https://www.privacypolicies.com/" +
                 "live/4062ac64-f047-4818-bc02-22aea3d81b03") {
@@ -116,7 +121,24 @@ extension ProfileViewController: UITableViewDataSource {
 // MARK: TableView Delegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let rowType = MyCell(rawValue: indexPath.row)
+        switch rowType {
+        case .nameCell:
+            let storyboard = SBStoryboard.relationship.storyboard
+            guard let editVC = storyboard.instantiateViewController(withIdentifier: "\(NameEditViewController.self)") as?
+                    NameEditViewController else {
+                fatalError("NameEditViewController cannot be instatiated")
+            }
+            editVC.mode = .fromProfile
+            editVC.originalName = data?.userName
+            show(editVC, sender: nil)
+        case .privacyCell:
+            openPrivacy()
+        case .deleteAccountCell:
+            deleteAccount()
+        default:
+            break
+        }
     }
 }
 
@@ -135,8 +157,38 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
                         }
                         return
                     }
-                    // UI updates, upload new image to firebase
-                    self.profilePhotoCompletion?(image)
+                    // upload to firebase and refetch the data for profile page
+                    ProgressHUD.show()
+                    if let uploadData = image.jpegData(compressionQuality: 0) {
+                        let uniqueString = UUID().uuidString
+                        let dataRef = FirebaseManager.shared.profileImageRef.child("\(uniqueString).jpeg")
+                        dataRef.putData(uploadData) { data, error in
+                            if let error = error {
+                                print(error, "ERROR for uploading data to firebase storage")
+                            } else {
+                                dataRef.downloadURL { url, error in
+                                    if let error = error {
+                                        ProgressHUD.dismiss()
+                                        return print(error.localizedDescription)
+                                    }
+                                    guard let downloadURL = url else {
+                                        ProgressHUD.dismiss()
+                                        return print("url is nil")
+                                    }
+                                    guard let userUUID = FirebaseManager.auth.currentUser?.uid else {
+                                        fatalError("userUUID is nil")
+                                    }
+                                    let data = ["profile_url": downloadURL.absoluteString]
+                                    let ref = FirebaseManager.FirebaseCollectionRef.users.ref.document(userUUID)
+                                    FirebaseManager.shared.updateFieldValue(data,
+                                                                            at: ref) {
+                                        self.fetchProfile()
+                                        ProgressHUD.dismiss()
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
