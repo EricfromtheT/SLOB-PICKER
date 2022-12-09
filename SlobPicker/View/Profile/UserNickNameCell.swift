@@ -8,7 +8,9 @@
 import UIKit
 
 class UserNickNameCell: UITableViewCell, ProfileCell {
-    func configure(data: CellModel) {
-        <#code#>
+    @IBOutlet weak var nickNameLabel: UILabel!
+    
+    func configure(data: User) {
+        nickNameLabel.text = data.userName
     }
 }

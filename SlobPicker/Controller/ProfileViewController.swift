@@ -43,19 +43,31 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         didSet {
             menuTableView.delegate = self
             menuTableView.dataSource = self
-            
+            fetchProfile()
         }
     }
     fileprivate var currentNonce: String?
     var profilePhotoCompletion: ((UIImage) -> Void)?
-    var userInfo: User?
+    var data: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "個人頁面設定"
+    }
+    
+    func fetchProfile() {
+        guard let userUUID = FirebaseManager.auth.currentUser?.uid else { fatalError("no user uuid") }
+        let docuRef = FirebaseManager.FirebaseCollectionRef.users.ref.document(userUUID)
+        FirebaseManager.shared.getDocument(docuRef) { (user: User?) in
+            if let user = user {
+                self.data = user
+            }
+            self.menuTableView.reloadData()
+        }
     }
     
     // MARK: Delete account
-    @IBAction func deleteAccount() {
+    func deleteAccount() {
         let alert = UIAlertController(title: "是否確定要刪除帳號",
                                       message:
                                         "確認刪除後需進行重新登入以驗證您的身份，" +
@@ -71,7 +83,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     // MARK: Privacy policy
-    @IBAction func openPrivacy(_ sender: UIButton) {
+    func openPrivacy(_ sender: UIButton) {
         if let url =
             URL(string: "https://www.privacypolicies.com/" +
                 "live/4062ac64-f047-4818-bc02-22aea3d81b03") {
@@ -80,37 +92,31 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
             present(safari, animated: true)
         }
     }
-    
-    func fetchProfile() {
-        guard let userUUID = FirebaseManager.auth.currentUser?.uid else { fatalError("no user uuid") }
-        FirebaseManager.shared.getUserInfo(userUUID: userUUID) { result in
-            switch result {
-            case .success(let user):
-                
-            case .failure(let error):
-                
-            }
-        }
-    }
-    
-    
 }
 
 // MARK: TableView DataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        let actor = MyCell.allCases[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: actor.cellIdentifier,
+                                                       for: indexPath) as? ProfileCell,
+              let data = data
+        else {
+            fatalError("error of dequeuing ProfileCell")
+        }
+        cell.configure(data: data)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        data == nil ? 0 : 5
     }
 }
 
 // MARK: TableView Delegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        
     }
 }
 

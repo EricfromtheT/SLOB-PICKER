@@ -8,9 +8,6 @@
 import UIKit
 
 class PrivacyCell: UITableViewCell, ProfileCell {
-    func configure(data: CellModel) {
-        <#code#>
+    func configure(data: User) {
     }
-    
-    
 }

@@ -8,7 +8,9 @@
 import UIKit
 
 class UserIDCell: UITableViewCell, ProfileCell {
-    func configure(data: CellModel) {
-        <#code#>
+    @IBOutlet weak var idLabel: UILabel!
+    
+    func configure(data: User) {
+        idLabel.text = data.userID
     }
 }

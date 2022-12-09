@@ -5,25 +5,33 @@
 //  Created by 孔令傑 on 2022/12/8.
 //
 
-import Foundation
+import UIKit
 
-protocol ProfileCell {
-    func configure(data: CellModel)
+protocol ProfileCell: UITableViewCell {
+    func configure(data: User)
 }
 
-protocol CellModel {
+enum MyCell: CaseIterable {
+    case photoCell
+    case idCell
+    case nameCell
+    case privacyCell
+    case deleteAccountCell
     
+    var cellIdentifier: String {
+        switch self {
+        case .photoCell:
+            return ProfileImageCell.identifier
+        case .idCell:
+            return UserIDCell.identifier
+        case .nameCell:
+            return UserNickNameCell.identifier
+        case .privacyCell:
+            return PrivacyCell.identifier
+        case .deleteAccountCell:
+            return DeleteAccountCell.identifier
+        }
+    }
 }
 
-struct ProfileImage: CellModel {
-    var imageURL: String
-    var superVC: ProfileViewController
-}
 
-struct UserID: CellModel {
-    var userID: String
-}
-
-struct UserNickName: CellModel {
-    var userNickName: String
-}

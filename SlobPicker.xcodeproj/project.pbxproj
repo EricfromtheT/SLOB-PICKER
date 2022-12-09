@@ -23,6 +23,7 @@
 		372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FE29126088007D677B /* ImageOptionsCell.swift */; };
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
 		3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738C0222931E45900DF82CA /* PickResultTitleCell.swift */; };
+		3759D313294211EC00AAAD54 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */; };
 		377323A52934B05A007D0B64 /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A42934B05A007D0B64 /* gameRoom.json */; };
 		377323A729352C0B007D0B64 /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A629352C0B007D0B64 /* choose.json */; };
 		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
@@ -116,6 +117,7 @@
 		372AE30029127616007D677B /* TargetSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetSettingCell.swift; sourceTree = "<group>"; };
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3738C0222931E45900DF82CA /* PickResultTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultTitleCell.swift; sourceTree = "<group>"; };
+		3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
 		377323A42934B05A007D0B64 /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
 		377323A629352C0B007D0B64 /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				37A7C9582925183700604A4A /* UIImage+Extension.swift */,
 				37D05E0D292DCA3700D8A2AA /* String+Extension.swift */,
 				379277B329389413004C336B /* UIImageView+Extension.swift */,
+				3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				37C8FFE9293A0D1200A84AB7 /* LeaveGroupCell.swift in Sources */,
 				37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */,
 				37D5759829154B3400DC344D /* User.swift in Sources */,
+				3759D313294211EC00AAAD54 /* UITableViewCell+Extension.swift in Sources */,
 				377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */,
 				372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */,
 				37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */,

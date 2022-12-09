@@ -8,7 +8,6 @@
 import UIKit
 
 class DeleteAccountCell: UITableViewCell, ProfileCell {
-    func configure(data: CellModel) {
-        <#code#>
+    func configure(data: User) {
     }
 }

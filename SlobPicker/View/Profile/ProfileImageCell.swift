@@ -11,7 +11,6 @@ import PhotosUI
 class ProfileImageCell: UITableViewCell, ProfileCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var changeButton: UIButton!
-    var bundleData: ProfileImage?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,10 +18,8 @@ class ProfileImageCell: UITableViewCell, ProfileCell {
         = profileImageView.bounds.width / 2
     }
     
-    func configure(data: CellModel) {
-        guard let data = data as? ProfileImage else { return print("error: getting wrong data from PofileViewController to ProfileImageCell") }
-        bundleData = data
-        profileImageView.loadImage(data.imageURL, placeHolder: UIImage.asset(.user))
+    func configure(data: User) {
+        profileImageView.loadImage(data.profileURL, placeHolder: UIImage.asset(.user))
         changeButton.addTarget(self, action: #selector(choosePhoto), for: .touchUpInside)
     }
     
@@ -30,8 +27,9 @@ class ProfileImageCell: UITableViewCell, ProfileCell {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
         let picker = PHPickerViewController(configuration: configuration)
-        guard let data = bundleData else { return print("") }
-        picker.delegate = data.superVC
-        data.superVC.present(picker, animated: true)
+        guard let superVC = self.parentContainerViewController() as? ProfileViewController
+        else { fatalError("error of getting parent view controller from ProfileImageCell") }
+        picker.delegate = superVC
+        superVC.present(picker, animated: true)
     }
 }
