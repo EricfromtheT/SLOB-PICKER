@@ -25,6 +25,7 @@
 		3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738C0222931E45900DF82CA /* PickResultTitleCell.swift */; };
 		3759D313294211EC00AAAD54 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */; };
 		3759D3152942D9EE00AAAD54 /* SPStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */; };
+		3759D30C2941DCE700AAAD54 /* SlobPickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D30B2941DCE700AAAD54 /* SlobPickerTests.swift */; };
 		377323A52934B05A007D0B64 /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A42934B05A007D0B64 /* gameRoom.json */; };
 		377323A729352C0B007D0B64 /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A629352C0B007D0B64 /* choose.json */; };
 		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
@@ -100,6 +101,16 @@
 		CDCCED94BD824C2880F3CCF9 /* Pods_SlobPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3759D30D2941DCE700AAAD54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37DE8A98290C15C900F737A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 37DE8A9F290C15C900F737A7;
+			remoteInfo = SlobPicker;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		370050CD29227F6400E1EA35 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		370050CF2923CA1400E1EA35 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -120,6 +131,8 @@
 		3738C0222931E45900DF82CA /* PickResultTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultTitleCell.swift; sourceTree = "<group>"; };
 		3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
 		3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPStoryboard.swift; sourceTree = "<group>"; };
+		3759D3092941DCE700AAAD54 /* SlobPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlobPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3759D30B2941DCE700AAAD54 /* SlobPickerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlobPickerTests.swift; sourceTree = "<group>"; };
 		377323A42934B05A007D0B64 /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
 		377323A629352C0B007D0B64 /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +214,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3759D3062941DCE700AAAD54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		37DE8A9D290C15C900F737A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,6 +239,14 @@
 				3708B03929192C4E00397035 /* HotPickersCell.swift */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		3759D30A2941DCE700AAAD54 /* SlobPickerTests */ = {
+			isa = PBXGroup;
+			children = (
+				3759D30B2941DCE700AAAD54 /* SlobPickerTests.swift */,
+			);
+			path = SlobPickerTests;
 			sourceTree = "<group>";
 		};
 		377852EC291D0AEB00780E8D /* LivePick */ = {
@@ -339,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AA2290C15C900F737A7 /* SlobPicker */,
+				3759D30A2941DCE700AAAD54 /* SlobPickerTests */,
 				37DE8AA1290C15C900F737A7 /* Products */,
 				91CC7ECF0DD89D90EBEB568E /* Pods */,
 				BDEE79A50642C134294C9D25 /* Frameworks */,
@@ -349,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				37DE8AA0290C15C900F737A7 /* SlobPicker.app */,
+				3759D3092941DCE700AAAD54 /* SlobPickerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -518,6 +548,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3759D3082941DCE700AAAD54 /* SlobPickerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3759D3112941DCE700AAAD54 /* Build configuration list for PBXNativeTarget "SlobPickerTests" */;
+			buildPhases = (
+				3759D3052941DCE700AAAD54 /* Sources */,
+				3759D3062941DCE700AAAD54 /* Frameworks */,
+				3759D3072941DCE700AAAD54 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3759D30E2941DCE700AAAD54 /* PBXTargetDependency */,
+			);
+			name = SlobPickerTests;
+			productName = SlobPickerTests;
+			productReference = 3759D3092941DCE700AAAD54 /* SlobPickerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		37DE8A9F290C15C900F737A7 /* SlobPicker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 37DE8AB4290C15CA00F737A7 /* Build configuration list for PBXNativeTarget "SlobPicker" */;
@@ -547,6 +595,10 @@
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
+					3759D3082941DCE700AAAD54 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = 37DE8A9F290C15C900F737A7;
+					};
 					37DE8A9F290C15C900F737A7 = {
 						CreatedOnToolsVersion = 14.0.1;
 					};
@@ -566,11 +618,19 @@
 			projectRoot = "";
 			targets = (
 				37DE8A9F290C15C900F737A7 /* SlobPicker */,
+				3759D3082941DCE700AAAD54 /* SlobPickerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3759D3072941DCE700AAAD54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		37DE8A9E290C15C900F737A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -640,6 +700,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3759D3052941DCE700AAAD54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3759D30C2941DCE700AAAD54 /* SlobPickerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		37DE8A9C290C15C900F737A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -722,6 +790,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3759D30E2941DCE700AAAD54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 37DE8A9F290C15C900F737A7 /* SlobPicker */;
+			targetProxy = 3759D30D2941DCE700AAAD54 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		37DE8AA9290C15C900F737A7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -742,6 +818,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3759D30F2941DCE700AAAD54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPickerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SlobPicker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SlobPicker";
+			};
+			name = Debug;
+		};
+		3759D3102941DCE700AAAD54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPickerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SlobPicker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SlobPicker";
+			};
+			name = Release;
+		};
 		37DE8AB2290C15CA00F737A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -936,6 +1056,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3759D3112941DCE700AAAD54 /* Build configuration list for PBXNativeTarget "SlobPickerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3759D30F2941DCE700AAAD54 /* Debug */,
+				3759D3102941DCE700AAAD54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		37DE8A9B290C15C900F737A7 /* Build configuration list for PBXProject "SlobPicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
