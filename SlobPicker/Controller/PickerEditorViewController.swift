@@ -111,7 +111,7 @@ class PickerEditorViewController: UIViewController {
         guard let data = willBeUploadedImages else { fatalError("UIImages have not been found") }
         for image in data {
             // transform image file type
-            if let uploadData = image.jpegData(compressionQuality: 0.001) {
+            if let uploadData = image.jpegData(compressionQuality: 0) {
                 // Deal with png file uploading
                 let uniqueString = UUID().uuidString
                 group.enter()

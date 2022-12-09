@@ -23,6 +23,8 @@
 		372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FE29126088007D677B /* ImageOptionsCell.swift */; };
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
 		3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738C0222931E45900DF82CA /* PickResultTitleCell.swift */; };
+		3759D313294211EC00AAAD54 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */; };
+		3759D3152942D9EE00AAAD54 /* SPStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */; };
 		377323A52934B05A007D0B64 /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A42934B05A007D0B64 /* gameRoom.json */; };
 		377323A729352C0B007D0B64 /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A629352C0B007D0B64 /* choose.json */; };
 		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
@@ -44,13 +46,19 @@
 		37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C9582925183700604A4A /* UIImage+Extension.swift */; };
 		37B27DDF293749CB00C30D98 /* waiting.json in Resources */ = {isa = PBXBuildFile; fileRef = 37B27DDE293749CB00C30D98 /* waiting.json */; };
 		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
+		37C8000129417F4E00A84AB7 /* DeleteAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8000029417F4E00A84AB7 /* DeleteAccountCell.swift */; };
+		37C800042941818B00A84AB7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C800032941818B00A84AB7 /* Profile.swift */; };
 		37C8FFE5293A0CDF00A84AB7 /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */; };
 		37C8FFE7293A0CF900A84AB7 /* MemberManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */; };
 		37C8FFE9293A0D1200A84AB7 /* LeaveGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */; };
-		37C8FFEF293B082500A84AB7 /* GroupNameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */; };
+		37C8FFEF293B082500A84AB7 /* NameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFEE293B082500A84AB7 /* NameEditViewController.swift */; };
 		37C8FFF1293CCCF900A84AB7 /* CurrentMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF0293CCCF900A84AB7 /* CurrentMemberViewController.swift */; };
 		37C8FFF3293CD3EA00A84AB7 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */; };
 		37C8FFF5293CD42000A84AB7 /* InviteNewMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */; };
+		37C8FFF929417ED500A84AB7 /* ProfileImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFF829417ED500A84AB7 /* ProfileImageCell.swift */; };
+		37C8FFFB29417EF700A84AB7 /* UserIDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFFA29417EF700A84AB7 /* UserIDCell.swift */; };
+		37C8FFFD29417F0E00A84AB7 /* UserNickNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFFC29417F0E00A84AB7 /* UserNickNameCell.swift */; };
+		37C8FFFF29417F2A00A84AB7 /* PrivacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFFE29417F2A00A84AB7 /* PrivacyCell.swift */; };
 		37D05E03292C7EDD00D8A2AA /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */; };
 		37D05E05292C7F3C00D8A2AA /* congrats.json in Resources */ = {isa = PBXBuildFile; fileRef = 37D05E04292C7F3B00D8A2AA /* congrats.json */; };
 		37D05E0C292CB9FE00D8A2AA /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E0B292CB9FE00D8A2AA /* FormView.swift */; };
@@ -110,6 +118,8 @@
 		372AE30029127616007D677B /* TargetSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetSettingCell.swift; sourceTree = "<group>"; };
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3738C0222931E45900DF82CA /* PickResultTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultTitleCell.swift; sourceTree = "<group>"; };
+		3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
+		3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPStoryboard.swift; sourceTree = "<group>"; };
 		377323A42934B05A007D0B64 /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
 		377323A629352C0B007D0B64 /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
@@ -132,13 +142,19 @@
 		37A7C9642927350100604A4A /* SlobPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SlobPicker.entitlements; sourceTree = "<group>"; };
 		37B27DDE293749CB00C30D98 /* waiting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waiting.json; sourceTree = "<group>"; };
 		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
+		37C8000029417F4E00A84AB7 /* DeleteAccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountCell.swift; sourceTree = "<group>"; };
+		37C800032941818B00A84AB7 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
 		37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberManageCell.swift; sourceTree = "<group>"; };
 		37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveGroupCell.swift; sourceTree = "<group>"; };
-		37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameEditViewController.swift; sourceTree = "<group>"; };
+		37C8FFEE293B082500A84AB7 /* NameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameEditViewController.swift; sourceTree = "<group>"; };
 		37C8FFF0293CCCF900A84AB7 /* CurrentMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMemberViewController.swift; sourceTree = "<group>"; };
 		37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteNewMemberCell.swift; sourceTree = "<group>"; };
+		37C8FFF829417ED500A84AB7 /* ProfileImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageCell.swift; sourceTree = "<group>"; };
+		37C8FFFA29417EF700A84AB7 /* UserIDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDCell.swift; sourceTree = "<group>"; };
+		37C8FFFC29417F0E00A84AB7 /* UserNickNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNickNameCell.swift; sourceTree = "<group>"; };
+		37C8FFFE29417F2A00A84AB7 /* PrivacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCell.swift; sourceTree = "<group>"; };
 		37D05E02292C7EDD00D8A2AA /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		37D05E04292C7F3B00D8A2AA /* congrats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congrats.json; sourceTree = "<group>"; };
 		37D05E0B292CB9FE00D8A2AA /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
@@ -229,6 +245,14 @@
 			path = PickEditorView;
 			sourceTree = "<group>";
 		};
+		37C800022941817100A84AB7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				37C800032941818B00A84AB7 /* Profile.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		37C8FFEA293B076A00A84AB7 /* Relationship */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +294,18 @@
 				37DE8AE2290EBC3300F737A7 /* PickViewController.swift */,
 			);
 			path = SocialPick;
+			sourceTree = "<group>";
+		};
+		37C8FFF72941798C00A84AB7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				37C8FFF829417ED500A84AB7 /* ProfileImageCell.swift */,
+				37C8FFFA29417EF700A84AB7 /* UserIDCell.swift */,
+				37C8FFFC29417F0E00A84AB7 /* UserNickNameCell.swift */,
+				37C8FFFE29417F2A00A84AB7 /* PrivacyCell.swift */,
+				37C8000029417F4E00A84AB7 /* DeleteAccountCell.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		37D05E08292CAAE700D8A2AA /* FirstLogin */ = {
@@ -354,6 +390,7 @@
 		37DE8ADB290EA55800F737A7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				37C8FFF72941798C00A84AB7 /* Profile */,
 				37DF709C2939F0C0003A6713 /* GroupManage */,
 				37D05E08292CAAE700D8A2AA /* FirstLogin */,
 				377852EC291D0AEB00780E8D /* LivePick */,
@@ -376,6 +413,7 @@
 		37DE8ADC290EA55D00F737A7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				37C800022941817100A84AB7 /* Profile */,
 				37DE8AFC2910B22F00F737A7 /* PickObject.swift */,
 				37D5759529154B1E00DC344D /* Result.swift */,
 				37D5759729154B3400DC344D /* User.swift */,
@@ -383,6 +421,7 @@
 				377852F7291E6A6500780E8D /* LivePick.swift */,
 				377F0E182930568600A24BD5 /* topSecret.swift */,
 				37A4A0AF2930B84E00FDCC70 /* KeyChainService.swift */,
+				3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -439,6 +478,7 @@
 				37A7C9582925183700604A4A /* UIImage+Extension.swift */,
 				37D05E0D292DCA3700D8A2AA /* String+Extension.swift */,
 				379277B329389413004C336B /* UIImageView+Extension.swift */,
+				3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -451,7 +491,7 @@
 				37C8FFE6293A0CF900A84AB7 /* MemberManageCell.swift */,
 				37C8FFE8293A0D1200A84AB7 /* LeaveGroupCell.swift */,
 				37C8FFF4293CD42000A84AB7 /* InviteNewMemberCell.swift */,
-				37C8FFEE293B082500A84AB7 /* GroupNameEditViewController.swift */,
+				37C8FFEE293B082500A84AB7 /* NameEditViewController.swift */,
 				37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */,
 			);
 			path = GroupManage;
@@ -615,6 +655,7 @@
 				37C8FFE9293A0D1200A84AB7 /* LeaveGroupCell.swift in Sources */,
 				37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */,
 				37D5759829154B3400DC344D /* User.swift in Sources */,
+				3759D313294211EC00AAAD54 /* UITableViewCell+Extension.swift in Sources */,
 				377852F0291D0BEA00780E8D /* RoomIDInputView.swift in Sources */,
 				372AE2FB29126055007D677B /* TitleInputCell.swift in Sources */,
 				37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */,
@@ -623,6 +664,7 @@
 				377F0E192930568600A24BD5 /* topSecret.swift in Sources */,
 				37D05E0C292CB9FE00D8A2AA /* FormView.swift in Sources */,
 				377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */,
+				37C800042941818B00A84AB7 /* Profile.swift in Sources */,
 				3708B03A29192C4E00397035 /* HotPickersCell.swift in Sources */,
 				372AE30129127616007D677B /* TargetSettingCell.swift in Sources */,
 				37C8FFF3293CD3EA00A84AB7 /* GroupMemberCell.swift in Sources */,
@@ -630,11 +672,13 @@
 				37DF709E2939F0D3003A6713 /* GroupManageCell.swift in Sources */,
 				370050CE29227F6400E1EA35 /* UIColor+Extension.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
+				37C8000129417F4E00A84AB7 /* DeleteAccountCell.swift in Sources */,
 				37DE8AEC290FCC5000F737A7 /* TitleCell.swift in Sources */,
 				37DE8AEE290FCC7200F737A7 /* ChooseCell.swift in Sources */,
 				377F0E17292F36E800A24BD5 /* ProfileViewController.swift in Sources */,
 				37DE8AF6290FF02700F737A7 /* KingFisherWrapper.swift in Sources */,
 				37D05E0E292DCA3700D8A2AA /* String+Extension.swift in Sources */,
+				37C8FFFB29417EF700A84AB7 /* UserIDCell.swift in Sources */,
 				37D5758E2914EA8200DC344D /* PickCommentsCell.swift in Sources */,
 				37D5759629154B1E00DC344D /* Result.swift in Sources */,
 				377852F2291D380A00780E8D /* ContainerView.swift in Sources */,
@@ -646,11 +690,13 @@
 				3708B0312918157C00397035 /* LoginViewController.swift in Sources */,
 				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
 				37C8FFF5293CD42000A84AB7 /* InviteNewMemberCell.swift in Sources */,
+				37C8FFFF29417F2A00A84AB7 /* PrivacyCell.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,
 				37DF709B2939EABC003A6713 /* GroupManageViewController.swift in Sources */,
 				37DF70A02939FA4E003A6713 /* GroupEditorViewController.swift in Sources */,
 				37D5758C2914DFF800DC344D /* PickResultViewController.swift in Sources */,
 				379277B429389413004C336B /* UIImageView+Extension.swift in Sources */,
+				37C8FFF929417ED500A84AB7 /* ProfileImageCell.swift in Sources */,
 				37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */,
 				3711415029169CFB00C567EF /* Group.swift in Sources */,
 				37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */,
@@ -659,7 +705,9 @@
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
 				37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */,
 				377852F8291E6A6500780E8D /* LivePick.swift in Sources */,
-				37C8FFEF293B082500A84AB7 /* GroupNameEditViewController.swift in Sources */,
+				37C8FFEF293B082500A84AB7 /* NameEditViewController.swift in Sources */,
+				3759D3152942D9EE00AAAD54 /* SPStoryboard.swift in Sources */,
+				37C8FFFD29417F0E00A84AB7 /* UserNickNameCell.swift in Sources */,
 				3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */,
 				37C8FFF1293CCCF900A84AB7 /* CurrentMemberViewController.swift in Sources */,
 				37D5759229153F0600DC344D /* FriendSelectViewController.swift in Sources */,
@@ -816,11 +864,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -840,7 +886,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -858,11 +903,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SlobPicker/Info.plist;
@@ -881,7 +924,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -81,6 +81,16 @@ class FirebaseManager {
     func setData(_ documentData: [String : Any], at docRef: DocumentReference) {
         docRef.setData(documentData)
     }
+    
+    func updateFieldValue(_ documentData: [String: Any], at docRef: DocumentReference, completion: @escaping (() -> Void)) {
+        docRef.updateData(documentData) { error in
+            if let error = error {
+                print(error.localizedDescription, "error of updating document fields")
+            } else {
+                completion()
+            }
+        }
+    }
 
     func setData<T: Encodable>(_ data: T, at docRef: DocumentReference, completion: () -> Void) {
         do {

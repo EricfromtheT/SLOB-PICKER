@@ -13,6 +13,11 @@ struct FriendListObject {
     var hasSelected: Bool
 }
 
+enum FriendSelectMode {
+    case fromCreating
+    case fromManaging
+}
+
 class FriendSelectViewController: UIViewController {
     @IBOutlet weak var friendListTableView: UITableView! {
         didSet {
@@ -59,6 +64,7 @@ class FriendSelectViewController: UIViewController {
     var currentGroupID: String?
     var groupName: String?
     var completion: (([String]) -> Void)?
+    var mode: FriendSelectMode = .fromCreating
     private var didSelectNum: [Int] = []
     private var friendsProfile: [FriendListObject] = []
     let uuid = FirebaseManager.auth.currentUser?.uid
@@ -75,19 +81,16 @@ class FriendSelectViewController: UIViewController {
     }
     
     func setUpNavigation() {
-        if let vcCounts = navigationController?.viewControllers.count,
-           let navController = self.navigationController {
-            if navController.viewControllers[vcCounts-2] is GroupCreateViewController {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "創建社團",
-                                                                    style: .done,
-                                                                    target: self,
-                                                                    action: #selector(createGroup))
-            } else {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "添加",
-                                                                    style: .done,
-                                                                    target: self,
-                                                                    action: #selector(invite))
-            }
+        if mode == .fromCreating {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "創建社團",
+                                                                style: .done,
+                                                                target: self,
+                                                                action: #selector(createGroup))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "添加",
+                                                                style: .done,
+                                                                target: self,
+                                                                action: #selector(invite))
         }
     }
     

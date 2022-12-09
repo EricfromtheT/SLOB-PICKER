@@ -11,6 +11,8 @@ import CryptoKit
 import SwiftJWT
 import FirebaseAuth
 import SafariServices
+import PhotosUI
+import ProgressHUD
 
 private struct MyClaims: Claims {
     let iss: String
@@ -38,15 +40,39 @@ private struct RefreshResponse: Codable {
 }
 
 class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
-    
+    @IBOutlet weak var menuTableView: UITableView! {
+        didSet {
+            menuTableView.delegate = self
+            menuTableView.dataSource = self
+        }
+    }
     fileprivate var currentNonce: String?
+    var profilePhotoCompletion: ((UIImage) -> Void)?
+    var data: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "個人頁面設定"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchProfile()
+    }
+    
+    func fetchProfile() {
+        guard let userUUID = FirebaseManager.auth.currentUser?.uid else { fatalError("no user uuid") }
+        let docuRef = FirebaseManager.FirebaseCollectionRef.users.ref.document(userUUID)
+        FirebaseManager.shared.getDocument(docuRef) { (user: User?) in
+            if let user = user {
+                self.data = user
+            }
+            self.menuTableView.reloadData()
+        }
     }
     
     // MARK: Delete account
-    @IBAction func deleteAccount() {
+    func deleteAccount() {
         let alert = UIAlertController(title: "是否確定要刪除帳號",
                                       message:
                                         "確認刪除後需進行重新登入以驗證您的身份，" +
@@ -62,7 +88,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     // MARK: Privacy policy
-    @IBAction func openPrivacy(_ sender: UIButton) {
+    func openPrivacy() {
         if let url =
             URL(string: "https://www.privacypolicies.com/" +
                 "live/4062ac64-f047-4818-bc02-22aea3d81b03") {
@@ -71,29 +97,106 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
             present(safari, animated: true)
         }
     }
-    
-    // MARK: Deal with reauthentication
-    func deleteFirebaseAppleAccount() {
-        self.reAppleLogin()
+}
+
+// MARK: TableView DataSource
+extension ProfileViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let actor = MyCell.allCases[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: actor.cellIdentifier,
+                                                       for: indexPath) as? ProfileCell,
+              let data = data
+        else {
+            fatalError("error of dequeuing ProfileCell")
+        }
+        cell.configure(data: data)
+        return cell
     }
     
-    func reAppleLogin() {
-        let nonce = randomNonceString()
-        currentNonce = nonce
-        // generate request by crypto string
-        let authorizationAppleIDRequest: ASAuthorizationAppleIDRequest
-        = ASAuthorizationAppleIDProvider().createRequest()
-        authorizationAppleIDRequest.requestedScopes = [.fullName, .email]
-        authorizationAppleIDRequest.nonce = sha256(nonce)
-        
-        let controller: ASAuthorizationController
-        = ASAuthorizationController(authorizationRequests: [authorizationAppleIDRequest])
-        
-        controller.delegate = self
-        controller.presentationContextProvider = self
-        controller.performRequests()
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        data == nil ? 0 : 5
     }
-    
+}
+
+// MARK: TableView Delegate
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let rowType = MyCell(rawValue: indexPath.row)
+        switch rowType {
+        case .nameCell:
+            let storyboard = SBStoryboard.relationship.storyboard
+            guard let editVC = storyboard.instantiateViewController(withIdentifier: "\(NameEditViewController.self)") as?
+                    NameEditViewController else {
+                fatalError("NameEditViewController cannot be instatiated")
+            }
+            editVC.mode = .fromProfile
+            editVC.originalName = data?.userName
+            show(editVC, sender: nil)
+        case .privacyCell:
+            openPrivacy()
+        case .deleteAccountCell:
+            deleteAccount()
+        default:
+            break
+        }
+    }
+}
+
+// MARK: PHPickerViewControllerDelegate
+extension ProfileViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        let result = results.first
+        let itemProvider = result?.itemProvider
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
+                DispatchQueue.main.async {
+                    guard let image = image as? UIImage, let self = self else {
+                        if let error = error {
+                            print(error.localizedDescription)
+                        }
+                        return
+                    }
+                    // upload to firebase and refetch the data for profile page
+                    ProgressHUD.show()
+                    if let uploadData = image.jpegData(compressionQuality: 0) {
+                        let uniqueString = UUID().uuidString
+                        let dataRef = FirebaseManager.shared.profileImageRef.child("\(uniqueString).jpeg")
+                        dataRef.putData(uploadData) { data, error in
+                            if let error = error {
+                                print(error, "ERROR for uploading data to firebase storage")
+                            } else {
+                                dataRef.downloadURL { url, error in
+                                    if let error = error {
+                                        ProgressHUD.dismiss()
+                                        return print(error.localizedDescription)
+                                    }
+                                    guard let downloadURL = url else {
+                                        ProgressHUD.dismiss()
+                                        return print("url is nil")
+                                    }
+                                    guard let userUUID = FirebaseManager.auth.currentUser?.uid else {
+                                        fatalError("userUUID is nil")
+                                    }
+                                    let data = ["profile_url": downloadURL.absoluteString]
+                                    let ref = FirebaseManager.FirebaseCollectionRef.users.ref.document(userUUID)
+                                    FirebaseManager.shared.updateFieldValue(data,
+                                                                            at: ref) {
+                                        self.fetchProfile()
+                                        ProgressHUD.dismiss()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: Gen Token
+extension ProfileViewController {
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         let charset: [Character] =
@@ -241,7 +344,30 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         }
         task.resume()
     }
+    
+    // MARK: Deal with reauthentication
+    func deleteFirebaseAppleAccount() {
+        self.reAppleLogin()
+    }
+    
+    func reAppleLogin() {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        // generate request by crypto string
+        let authorizationAppleIDRequest: ASAuthorizationAppleIDRequest
+        = ASAuthorizationAppleIDProvider().createRequest()
+        authorizationAppleIDRequest.requestedScopes = [.fullName, .email]
+        authorizationAppleIDRequest.nonce = sha256(nonce)
+        
+        let controller: ASAuthorizationController
+        = ASAuthorizationController(authorizationRequests: [authorizationAppleIDRequest])
+        
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
 }
+
 
 // MARK: ASAuthorizationControllerDelegate
 extension ProfileViewController: ASAuthorizationControllerDelegate {
