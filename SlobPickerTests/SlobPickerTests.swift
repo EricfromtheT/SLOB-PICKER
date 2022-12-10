@@ -23,17 +23,24 @@ final class SlobPickerTests: XCTestCase {
     
     func testPickerResult() throws {
         sut.mode = .forPublic
+        let uselessString = ""
+        sut.pickInfo = Picker(title: uselessString, description: uselessString, type: 0, contents: ["", "", "", ""], authorID: uselessString, authorName: uselessString, authorUUID: uselessString)
+        let pickResults = [PickResult(choice: 0, createdTime: 43143, userUUID: "fjiejaf;aef"),
+                           PickResult(choice: 3, createdTime: 89431, userUUID: "fealhgjra"),
+                           PickResult(choice: 2, createdTime: 54351, userUUID: "fdagerag"),
+                           PickResult(choice: 1, createdTime: 45151, userUUID: "fjrkljagra"),
+                           PickResult(choice: 1, createdTime: 415541, userUUID: "fekajgkr;ag"),
+                           PickResult(choice: 2, createdTime: 451541, userUUID: "lhgrhalgrol")
+        ]
+        sut.organizeResult(data: pickResults)
+        XCTAssertEqual(sut.voteResults[0].votes, 2, "count is not good")
+    }
+    
+    func testPickerEmptyResult() throws {
+        sut.mode = .forPublic
         sut.pickInfo = Picker(title: "fdsafea", description: "feaf", type: 0, contents: ["", "", "", ""], authorID: "feafe", authorName: "fragr", authorUUID: "feagrar")
-//        let pickResults = [PickResult(choice: 0, createdTime: 43143, userUUID: "fjiejaf;aef"),
-//                           PickResult(choice: 3, createdTime: 89431, userUUID: "fealhgjra"),
-//                           PickResult(choice: 2, createdTime: 54351, userUUID: "fdagerag"),
-//                           PickResult(choice: 1, createdTime: 45151, userUUID: "fjrkljagra"),
-//                           PickResult(choice: 1, createdTime: 415541, userUUID: "fekajgkr;ag"),
-//                           PickResult(choice: 2, createdTime: 451541, userUUID: "lhgrhalgrol")
-//        ]
         let pickResults:[PickResult] = []
         sut.organizeResult(data: pickResults)
         XCTAssertEqual(sut.voteResults[0].votes, 0, "count is not good")
-//        XCTAssertEqual(sut.voteResults[0].votes, 2, "count is not good")
     }
 }

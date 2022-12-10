@@ -122,7 +122,6 @@ class LoginViewController: UIViewController {
         let hashString = hashedData.compactMap {
             String(format: "%02x", $0)
         }.joined()
-        
         return hashString
     }
 }
