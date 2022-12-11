@@ -29,19 +29,7 @@ class PickerSelectionViewController: UIViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavigation()
         setUpDGE()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.background)
-        // cancel navigationbar seperator
-        appearance.shadowColor = nil
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     // MARK: SetUp
@@ -85,48 +73,6 @@ class PickerSelectionViewController: UIViewController {
         }, loadingView: loadingView)
         pickersTableView.dg_setPullToRefreshFillColor(UIColor.asset(.background) ?? .clear)
         pickersTableView.dg_setPullToRefreshBackgroundColor(pickersTableView.backgroundColor!)
-    }
-    
-    // MARK: Navigationbar
-    func setUpNavigation() {
-        // set up bar button
-        let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
-        let menu = UIMenu(children: [
-            UIAction(title: "個人頁面") { action in
-                let storyboard = SBStoryboard.profile.storyboard
-                let profileVC = storyboard.instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
-                self.show(profileVC, sender: self)
-            },
-            UIAction(title: "登出") { action in
-                FirebaseManager.shared.logOut()
-            }
-        ])
-        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: menu)
-        let storyboard = SBStoryboard.relationship.storyboard
-        let relationshipMenu = UIMenu(children: [
-            UIAction(title: "添加好友") { action in
-                guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
-                    print("ERROR: SearchIDViewController didn't instanciate")
-                    return
-                }
-                self.show(friendVC, sender: self)
-            },
-            UIAction(title: "管理群組") { action in
-                guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupManageViewController.self)")
-                        as? GroupManageViewController else {
-                    print("ERROR: GroupManageViewController didn't instanciate")
-                    return
-                }
-                self.show(groupVC, sender: self)
-            }
-        ])
-        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"), menu: relationshipMenu)
-        navigationItem.rightBarButtonItems = [compose, relationship, profile]
-        navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "logo2"), style: .plain, target: nil, action: nil),
-            UIBarButtonItem(title: "                    ", style: .done, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-        ]
     }
     
     // MARK: Action

@@ -14,7 +14,7 @@
         <!--公開-->
         <scene sceneID="LxX-ui-JIa">
             <objects>
-                <navigationController id="ffE-nC-RS0" sceneMemberID="viewController">
+                <navigationController id="ffE-nC-RS0" customClass="CustomNavigationController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="公開" image="public-relation" id="j1E-xs-8HT"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KZ7-ia-pOW">

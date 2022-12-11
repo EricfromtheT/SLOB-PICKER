@@ -29,7 +29,6 @@ class PublicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDGE()
-        setUpNavigation()
         FirebaseManager.auth.addStateDidChangeListener { auth, user in
             if user != nil {
                 print("user has logged in")
@@ -45,7 +44,6 @@ class PublicViewController: UIViewController {
         }
     }
     
-    // MARK: PULL DOWN third party
     func setUpDGE() {
         loadingView.tintColor = UIColor.asset(.navigationbar2)
         hotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
@@ -107,85 +105,6 @@ class PublicViewController: UIViewController {
             self.hotTableView.dg_stopLoading()
             UIView.animate(views: self.hotTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.4)
         }
-    }
-    
-    // MARK: Navigation
-    func setUpNavigation() {
-        // Appearance
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.asset(.background)
-        // cancel navigationbar seperator
-        appearance.shadowColor = nil
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        // set up bar button
-        let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"),
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(compose))
-        // profile
-        let profileMenu = UIMenu(children: [
-            UIAction(title: "個人頁面") { action in
-                let storyboard = SBStoryboard.profile.storyboard
-                let profileVC = storyboard.instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
-                self.show(profileVC, sender: self)
-            },
-            UIAction(title: "登出") { action in
-                FirebaseManager.shared.logOut()
-                UserDefaults.standard.set(nil,
-                                          forKey: UserInfo.userNameKey)
-                UserDefaults.standard.set(nil,
-                                          forKey: UserInfo.userIDKey)
-            }
-        ])
-        let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"),
-                                      menu: profileMenu)
-        // relationship
-        let storyboard = SBStoryboard.relationship.storyboard
-        let relationshipMenu = UIMenu(children: [
-            UIAction(title: "添加好友") { action in
-                guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
-                    print("ERROR: SearchIDViewController didn't instanciate")
-                    return
-                }
-                self.show(friendVC, sender: self)
-            },
-            UIAction(title: "管理群組") { action in
-                guard let groupVC = storyboard.instantiateViewController(withIdentifier: "\(GroupManageViewController.self)")
-                        as? GroupManageViewController else {
-                    print("ERROR: GroupManageViewController didn't instanciate")
-                    return
-                }
-                self.show(groupVC, sender: self)
-            }
-        ])
-        let relationship = UIBarButtonItem(image: UIImage(systemName: "person.2"),
-                                           menu: relationshipMenu)
-        navigationItem.rightBarButtonItems = [compose, relationship, profile]
-        navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "logo2"),
-                            style: .plain,
-                            target: nil,
-                            action: nil),
-            UIBarButtonItem(title: "                    ",
-                            style: .done,
-                            target: nil,
-                            action: nil),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                            target: self,
-                            action: nil)
-        ]
-    }
-    
-    // call pickEditorViewController to edit a new picker
-    @objc func compose() {
-        let storyboard = SBStoryboard.interaction.storyboard
-        guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)")
-                as? PickerEditorViewController else {
-            fatalError("ERROR: cannot instantiate PickEditorViewController")
-        }
-        show(editorVC, sender: self)
     }
 }
 
