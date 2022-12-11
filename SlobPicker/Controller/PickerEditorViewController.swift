@@ -284,7 +284,7 @@ class PickerEditorViewController: UIViewController {
                         result in
                         switch result {
                         case .success( _):
-                            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                            let storyboard = SBStoryboard.interaction.storyboard
                             guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
                                 fatalError("error cannot instantiate WaitingRoomViewController")
                             }

@@ -162,7 +162,8 @@ class NewUserViewController: UIViewController {
                     UserDefaults.standard.set(willBeUploadedId, forKey: UserInfo.userIDKey)
                     UserDefaults.standard.set(willBeUploadedName, forKey: UserInfo.userNameKey)
                     // go into app page
-                    let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+                    let storyboard = SBStoryboard.main.storyboard
+                    let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                     self.view.window?.rootViewController = viewController
                     self.view.window?.makeKeyAndVisible()
                 case .failure(let error):

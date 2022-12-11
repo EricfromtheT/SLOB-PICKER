@@ -19,7 +19,7 @@ class CurrentMemberViewController: UIViewController {
     var groupMemberInfo: [User] = []
     var membersUUID: Set<String> = []
     let group = DispatchGroup()
-    let relationshipSB = UIStoryboard(name: "Relationship", bundle: nil)
+    let relationshipSB = SBStoryboard.relationship.storyboard
     
     override func viewDidLoad() {
         super.viewDidLoad()

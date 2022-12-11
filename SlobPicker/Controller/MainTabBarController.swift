@@ -53,7 +53,7 @@ extension MainTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController)
     -> Bool {
         if viewController == viewControllers?[1] {
-            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+            let storyboard = SBStoryboard.interaction.storyboard
             let entranceVC = storyboard.instantiateViewController(withIdentifier: "\(EntranceViewController.self)")
             self.present(entranceVC, animated: true)
             return false

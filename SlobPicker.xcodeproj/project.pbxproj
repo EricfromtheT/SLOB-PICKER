@@ -23,9 +23,9 @@
 		372AE2FF29126088007D677B /* ImageOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE2FE29126088007D677B /* ImageOptionsCell.swift */; };
 		372AE30129127616007D677B /* TargetSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372AE30029127616007D677B /* TargetSettingCell.swift */; };
 		3738C0232931E45900DF82CA /* PickResultTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738C0222931E45900DF82CA /* PickResultTitleCell.swift */; };
+		3759D30C2941DCE700AAAD54 /* SlobPickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D30B2941DCE700AAAD54 /* SlobPickerTests.swift */; };
 		3759D313294211EC00AAAD54 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */; };
 		3759D3152942D9EE00AAAD54 /* SPStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */; };
-		3759D30C2941DCE700AAAD54 /* SlobPickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759D30B2941DCE700AAAD54 /* SlobPickerTests.swift */; };
 		377323A52934B05A007D0B64 /* gameRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A42934B05A007D0B64 /* gameRoom.json */; };
 		377323A729352C0B007D0B64 /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 377323A629352C0B007D0B64 /* choose.json */; };
 		377852E9291CE85C00780E8D /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377852E8291CE85C00780E8D /* EntranceViewController.swift */; };
@@ -80,7 +80,6 @@
 		37DD018A2929C9840078352F /* ChoiceImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD01892929C9840078352F /* ChoiceImageCell.swift */; };
 		37DE8AA4290C15C900F737A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA3290C15C900F737A7 /* AppDelegate.swift */; };
 		37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */; };
-		37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AA7290C15C900F737A7 /* ViewController.swift */; };
 		37DE8AAB290C15C900F737A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37DE8AA9290C15C900F737A7 /* Main.storyboard */; };
 		37DE8AAD290C15CA00F737A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37DE8AAC290C15CA00F737A7 /* Assets.xcassets */; };
 		37DE8AB0290C15CA00F737A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37DE8AAE290C15CA00F737A7 /* LaunchScreen.storyboard */; };
@@ -129,10 +128,10 @@
 		372AE30029127616007D677B /* TargetSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetSettingCell.swift; sourceTree = "<group>"; };
 		372AE302291290CE007D677B /* iOSDropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3738C0222931E45900DF82CA /* PickResultTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultTitleCell.swift; sourceTree = "<group>"; };
-		3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
-		3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPStoryboard.swift; sourceTree = "<group>"; };
 		3759D3092941DCE700AAAD54 /* SlobPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlobPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3759D30B2941DCE700AAAD54 /* SlobPickerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlobPickerTests.swift; sourceTree = "<group>"; };
+		3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
+		3759D3142942D9EE00AAAD54 /* SPStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPStoryboard.swift; sourceTree = "<group>"; };
 		377323A42934B05A007D0B64 /* gameRoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameRoom.json; sourceTree = "<group>"; };
 		377323A629352C0B007D0B64 /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		377852E8291CE85C00780E8D /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
@@ -189,7 +188,6 @@
 		37DE8AA0290C15C900F737A7 /* SlobPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlobPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37DE8AA3290C15C900F737A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37DE8AA5290C15C900F737A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		37DE8AA7290C15C900F737A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		37DE8AAA290C15C900F737A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37DE8AAC290C15CA00F737A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37DE8AAF290C15CA00F737A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -408,7 +406,6 @@
 				37C8FFEC293B07A200A84AB7 /* LivePick */,
 				37C8FFEB293B078900A84AB7 /* Login */,
 				37C8FFEA293B076A00A84AB7 /* Relationship */,
-				37DE8AA7290C15C900F737A7 /* ViewController.swift */,
 				377F0E16292F36E800A24BD5 /* ProfileViewController.swift */,
 				37D5758B2914DFF800DC344D /* PickResultViewController.swift */,
 				37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */,
@@ -718,7 +715,6 @@
 				371C17582916572E00B3B115 /* FriendSelectCell.swift in Sources */,
 				377852FE2920921600780E8D /* LiveOptionsViewController.swift in Sources */,
 				37D5759429153F3F00DC344D /* GroupCreateViewController.swift in Sources */,
-				37DE8AA8290C15C900F737A7 /* ViewController.swift in Sources */,
 				37DE8AF2290FCCAE00F737A7 /* AdditionCell.swift in Sources */,
 				37C8FFE9293A0D1200A84AB7 /* LeaveGroupCell.swift in Sources */,
 				37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */,

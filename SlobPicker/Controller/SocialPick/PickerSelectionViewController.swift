@@ -40,7 +40,6 @@ class PickerSelectionViewController: UIViewController {
         // cancel navigationbar seperator
         appearance.shadowColor = nil
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
-//        navigationItem.titleView?.tintColor = UIColor.asset(.navigationbar2)
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -94,7 +93,8 @@ class PickerSelectionViewController: UIViewController {
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(compose))
         let menu = UIMenu(children: [
             UIAction(title: "個人頁面") { action in
-                let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
+                let storyboard = SBStoryboard.profile.storyboard
+                let profileVC = storyboard.instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
                 self.show(profileVC, sender: self)
             },
             UIAction(title: "登出") { action in
@@ -102,7 +102,7 @@ class PickerSelectionViewController: UIViewController {
             }
         ])
         let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: menu)
-        let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
+        let storyboard = SBStoryboard.relationship.storyboard
         let relationshipMenu = UIMenu(children: [
             UIAction(title: "添加好友") { action in
                 guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
@@ -132,7 +132,7 @@ class PickerSelectionViewController: UIViewController {
     // MARK: Action
     // call pickEditorViewController to edit a new picker
     @objc func compose() {
-        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        let storyboard = SBStoryboard.interaction.storyboard
         guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)")
                 as? PickerEditorViewController else {
             fatalError("ERROR: cannot instantiate PickEditorViewController")
@@ -142,7 +142,7 @@ class PickerSelectionViewController: UIViewController {
     
     // see picker's voting result
     @IBAction func goToResult(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "PickerSelection", bundle: nil)
+        let storyboard = SBStoryboard.pickerSelection.storyboard
         guard let resultVC = storyboard.instantiateViewController(withIdentifier: "\(PickResultViewController.self)")
                 as? PickResultViewController else {
             print("PickResultViewController rendering error")
@@ -154,7 +154,7 @@ class PickerSelectionViewController: UIViewController {
     
     // go to pick
     @IBAction func goToPick(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        let storyboard = SBStoryboard.interaction.storyboard
         guard let pickVC = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
                 as? PickViewController else {
             print("PickViewController rendering error")

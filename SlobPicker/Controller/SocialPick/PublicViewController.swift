@@ -34,7 +34,7 @@ class PublicViewController: UIViewController {
             if user != nil {
                 print("user has logged in")
             } else {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let storyboard = SBStoryboard.main.storyboard
                 let loginVC = storyboard
                     .instantiateViewController(withIdentifier: "\(LoginViewController.self)")
                 as! LoginViewController
@@ -43,19 +43,6 @@ class PublicViewController: UIViewController {
                 self.present(loginVC, animated: false)
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let appearance = UINavigationBarAppearance()
-        //        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = UIColor.asset(.background)
-        // cancel navigationbar seperator
-        appearance.shadowColor = nil
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
-//        navigationItem.titleView?.tintColor = UIColor.asset(.background)
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     // MARK: PULL DOWN third party
@@ -124,6 +111,14 @@ class PublicViewController: UIViewController {
     
     // MARK: Navigation
     func setUpNavigation() {
+        // Appearance
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.asset(.background)
+        // cancel navigationbar seperator
+        appearance.shadowColor = nil
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         // set up bar button
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"),
                                       style: .plain,
@@ -132,8 +127,8 @@ class PublicViewController: UIViewController {
         // profile
         let profileMenu = UIMenu(children: [
             UIAction(title: "個人頁面") { action in
-                let profileVC = UIStoryboard(name: "Profile",
-                                             bundle: nil).instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
+                let storyboard = SBStoryboard.profile.storyboard
+                let profileVC = storyboard.instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
                 self.show(profileVC, sender: self)
             },
             UIAction(title: "登出") { action in
@@ -147,7 +142,7 @@ class PublicViewController: UIViewController {
         let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"),
                                       menu: profileMenu)
         // relationship
-        let storyboard = UIStoryboard(name: "Relationship", bundle: nil)
+        let storyboard = SBStoryboard.relationship.storyboard
         let relationshipMenu = UIMenu(children: [
             UIAction(title: "添加好友") { action in
                 guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
@@ -185,7 +180,7 @@ class PublicViewController: UIViewController {
     
     // call pickEditorViewController to edit a new picker
     @objc func compose() {
-        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        let storyboard = SBStoryboard.interaction.storyboard
         guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)")
                 as? PickerEditorViewController else {
             fatalError("ERROR: cannot instantiate PickEditorViewController")
