@@ -27,8 +27,7 @@ class GroupEditorViewController: UIViewController {
 
 extension GroupEditorViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Relationship",
-                                      bundle: nil)
+        let storyboard = SBStoryboard.relationship.storyboard
         if let cell = tableView.cellForRow(at: indexPath) {
             if let nameCell = cell as? GroupNameCell {
                 guard let groupNameVC = storyboard.instantiateViewController(withIdentifier: "\(NameEditViewController.self)") as?

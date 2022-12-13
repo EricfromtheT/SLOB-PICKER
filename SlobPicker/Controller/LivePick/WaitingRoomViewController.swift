@@ -149,7 +149,7 @@ class WaitingRoomViewController: UIViewController {
                     let picker = try qrry?.data(as: LivePicker.self)
                     if picker?.status == "voting" {
                         // enter gaming room
-                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                        let storyboard = SBStoryboard.interaction.storyboard
                         guard let liveVC = storyboard.instantiateViewController(withIdentifier: "\(LivePickingViewController.self)") as? LivePickingViewController else {
                             fatalError("ERROR: LivePickingViewController cannot be instantiated")
                         }

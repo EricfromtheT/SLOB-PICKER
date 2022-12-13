@@ -125,7 +125,6 @@ class PickerEditorViewController: UIViewController {
                                 print(error, "ERROR: URL uploading issue")
                                 return
                             }
-                            // TODO: showing progressing indicator to users til uploading ends
                             self.urlStrings?.append(downloadURL.absoluteString)
                             self.group.leave()
                         }
@@ -284,7 +283,7 @@ class PickerEditorViewController: UIViewController {
                         result in
                         switch result {
                         case .success( _):
-                            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                            let storyboard = SBStoryboard.interaction.storyboard
                             guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
                                 fatalError("error cannot instantiate WaitingRoomViewController")
                             }
@@ -348,7 +347,6 @@ extension PickerEditorViewController: UITableViewDataSource {
             }
             
         } else {
-            //TODO: choose group or friends
             guard let cell = tableView.dequeueReusableCell(withIdentifier:
                                                             "\(TargetSettingCell.self)",
                                                            for: indexPath)
@@ -414,8 +412,6 @@ extension PickerEditorViewController: PHPickerViewControllerDelegate {
                         print("=========")
                         print(error ?? "no error")
                         return }
-                    // UI updates, images name
-                    // TODO: 需要限制圖片上傳順序，按鈕依序開放 or else error
                     if let filename = itemProvider.suggestedName, let index = self.clickIndex {
                         self.imagesDict.updateValue(image, forKey: index)
                         self.imageUploadCompletely?(filename, image, index)

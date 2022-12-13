@@ -83,7 +83,7 @@ class HotCell: UITableViewCell {
     
     func showPickPage(indexPath: IndexPath, cell: HotPickerCell) {
         guard let uuid = uuid else { fatalError("uuid in keychain is nil") }
-        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        let storyboard = SBStoryboard.interaction.storyboard
         guard let pickVC = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
                 as? PickViewController else {
             print("PickViewController rendering error")
@@ -158,7 +158,7 @@ extension HotCell: UICollectionViewDelegateFlowLayout {
 extension HotCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // show result page
-        let storyboard = UIStoryboard(name: "PickerSelection", bundle: nil)
+        let storyboard = SBStoryboard.pickerSelection.storyboard
         guard let resultVC = storyboard.instantiateViewController(withIdentifier: "\(PickResultViewController.self)")
                 as? PickResultViewController else {
             print("PickResultViewController rendering error")

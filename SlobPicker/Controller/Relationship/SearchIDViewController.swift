@@ -99,7 +99,6 @@ class SearchIDViewController: UIViewController {
     }
     
     @IBAction func sendInvitation() {
-        // TODO: 邀請需要改為對方須接受邀約
         if isRealUser {
             if let userInfo = self.userInfo {
                 FirebaseManager.shared.addFriend(userUUID: userInfo.userUUID)

@@ -31,7 +31,7 @@ class PickResultViewController: UIViewController {
     let group = DispatchGroup()
     let semaphore = DispatchSemaphore(value: 0)
     private let animations = [AnimationType.from(direction: .top, offset: 30)]
-    // data should be pre supplied
+    
     var mode: PrivacyMode = .forPrivate
     var pickInfo: Picker? {
         didSet {
@@ -44,7 +44,7 @@ class PickResultViewController: UIViewController {
             }
         }
     }
-    
+    //
     var livePickInfo: LivePicker? {
         didSet {
             if let livePickInfo = livePickInfo, let pickID = livePickInfo.pickerID {
@@ -132,7 +132,6 @@ class PickResultViewController: UIViewController {
         }
     }
     
-    // TODO: 現在有user的uuid，要再擷取each user資料來顯示留言以及最終投票結果
     func organizeResult(data: [PickResult]) {
         switch mode {
         case .forLive:
