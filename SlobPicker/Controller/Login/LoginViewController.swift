@@ -151,9 +151,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             // Sign in with Firebase.
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if let error = error {
-                    // Error. If error.code == .MissingOrInvalidNonce, make sure
-                    // you're sending the SHA256-hashed nonce as a hex string with
-                    // your request to Apple.
                     print(error.localizedDescription)
                     return
                 } else {
@@ -169,14 +166,12 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                                       forKey: UserInfo.userIDKey)
                             UserDefaults.standard.set(user.userName,
                                                       forKey: UserInfo.userNameKey)
-                            // rootViewController change to tabbarviewcontroller
                             let storyboard = SBStoryboard.main.storyboard
                             let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                             self.view.window?.rootViewController = viewController
                             self.view.window?.makeKeyAndVisible()
                         case .failure(let error):
                             if error as? UserError == .nodata {
-                                // new user register and log in
                                 let storyboard = SBStoryboard.main.storyboard
                                 guard let NewUserVC = storyboard.instantiateViewController(
                                     withIdentifier: "\(NewUserViewController.self)")

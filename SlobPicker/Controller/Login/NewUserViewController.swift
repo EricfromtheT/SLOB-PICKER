@@ -19,7 +19,6 @@ class NewUserViewController: UIViewController {
     var searchID: String = ""
     var searchCompletion: ((String) -> Void)?
     let group = DispatchGroup()
-    // to be uploaded info
     var willBeUploadedImage: UIImage?
     var willBeUploadedURLString: String?
     var willBeUploadedId: String?
@@ -85,12 +84,10 @@ class NewUserViewController: UIViewController {
         FirebaseManager.shared.searchUser(userID: searchID) { result in
             switch result {
             case .success( _):
-                // ID is not available
                 self.searchCompletion?("cannot")
                 self.willBeUploadedId = ""
             case .failure(let error):
                 if error as? UserError == .nodata {
-                    // ID is available
                     self.searchCompletion?("can")
                     self.willBeUploadedId = self.searchID
                 } else {
@@ -127,10 +124,8 @@ class NewUserViewController: UIViewController {
         }
         ProgressHUD.show()
         sender.isEnabled = false
-        // 先整理初步data
         guard let uuid = self.uuid else { fatalError("uuid in keychain is nil") }
         var user = User(userName: willBeUploadedName, userID: willBeUploadedId, userUUID: uuid, profileURL: "", block: [])
-        // 確認有沒有照片要做處理
         if let uploadData = willBeUploadedImage?.jpegData(compressionQuality: 0) {
             group.enter()
             let uniqueString = UUID().uuidString
@@ -153,15 +148,12 @@ class NewUserViewController: UIViewController {
             }
         }
         group.notify(queue: .main) {
-            //上傳user data
             FirebaseManager.shared.createNewUser(user: &user) { result in
                 switch result {
                 case .success( _):
                     ProgressHUD.dismiss()
-                    // UserDefault setting
                     UserDefaults.standard.set(willBeUploadedId, forKey: UserInfo.userIDKey)
                     UserDefaults.standard.set(willBeUploadedName, forKey: UserInfo.userNameKey)
-                    // go into app page
                     let storyboard = SBStoryboard.main.storyboard
                     let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                     self.view.window?.rootViewController = viewController

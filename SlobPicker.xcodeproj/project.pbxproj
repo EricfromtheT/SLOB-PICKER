@@ -98,6 +98,7 @@
 		37DF709E2939F0D3003A6713 /* GroupManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709D2939F0D3003A6713 /* GroupManageCell.swift */; };
 		37DF70A02939FA4E003A6713 /* GroupEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709F2939FA4E003A6713 /* GroupEditorViewController.swift */; };
 		37F644D42945E77F001A5774 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F644D32945E77F001A5774 /* CustomNavigationController.swift */; };
+		37F644D729462718001A5774 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F644D629462718001A5774 /* AccountManager.swift */; };
 		CDCCED94BD824C2880F3CCF9 /* Pods_SlobPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */; };
 /* End PBXBuildFile section */
 
@@ -208,6 +209,7 @@
 		37DF709D2939F0D3003A6713 /* GroupManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManageCell.swift; sourceTree = "<group>"; };
 		37DF709F2939FA4E003A6713 /* GroupEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupEditorViewController.swift; sourceTree = "<group>"; };
 		37F644D32945E77F001A5774 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		37F644D629462718001A5774 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		3A183DDFBE50ADA2DBC30D2B /* Pods-SlobPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlobPicker.debug.xcconfig"; path = "Target Support Files/Pods-SlobPicker/Pods-SlobPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		3B3A68163028A6C8CE69C6B6 /* Pods-SlobPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlobPicker.release.xcconfig"; path = "Target Support Files/Pods-SlobPicker/Pods-SlobPicker.release.xcconfig"; sourceTree = "<group>"; };
 		D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SlobPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -389,7 +391,7 @@
 				37A7C9642927350100604A4A /* SlobPicker.entitlements */,
 				37DE8AFE2910C6FE00F737A7 /* Helper */,
 				37DE8ADD290EA5C900F737A7 /* Third Party Wrapper */,
-				37DE8AF929100D5B00F737A7 /* Network */,
+				37DE8AF929100D5B00F737A7 /* Manager */,
 				37DE8ADE290EA5DA00F737A7 /* Resources */,
 				37DE8ADC290EA55D00F737A7 /* Model */,
 				37DE8ADB290EA55800F737A7 /* View */,
@@ -492,12 +494,13 @@
 			path = PickView;
 			sourceTree = "<group>";
 		};
-		37DE8AF929100D5B00F737A7 /* Network */ = {
+		37DE8AF929100D5B00F737A7 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */,
+				37F644D629462718001A5774 /* AccountManager.swift */,
 			);
-			path = Network;
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		37DE8AFE2910C6FE00F737A7 /* Helper */ = {
@@ -773,6 +776,7 @@
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
 				37A4A0B02930B84E00FDCC70 /* KeyChainService.swift in Sources */,
 				377852F8291E6A6500780E8D /* LivePick.swift in Sources */,
+				37F644D729462718001A5774 /* AccountManager.swift in Sources */,
 				37C8FFEF293B082500A84AB7 /* NameEditViewController.swift in Sources */,
 				3759D3152942D9EE00AAAD54 /* SPStoryboard.swift in Sources */,
 				37C8FFFD29417F0E00A84AB7 /* UserNickNameCell.swift in Sources */,

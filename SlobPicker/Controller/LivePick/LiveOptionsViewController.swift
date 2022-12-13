@@ -75,7 +75,6 @@ class LiveOptionsViewController: UIViewController {
             let imageView = UIImageView()
             let button = UIButton()
             stackView.addArrangedSubview(button)
-//            self.contentView.addSubview(imageView)
             button.addSubview(imageView)
             // Attribute
             imageView.layer.cornerRadius = 20
@@ -123,10 +122,8 @@ class LiveOptionsViewController: UIViewController {
             return
         }
         UIView.animate(withDuration: 0.15) {
-            // right
             object.transform = CGAffineTransform(translationX: distance, y: 0)
         } completion: { _ in
-            // left
             boucing -= 8
             UIView.animate(withDuration: 0.15) {
                 object.transform = CGAffineTransform(translationX: 0, y: 0)

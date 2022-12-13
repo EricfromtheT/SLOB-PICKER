@@ -76,7 +76,6 @@ class PickerSelectionViewController: UIViewController {
     }
     
     // MARK: Action
-    // call pickEditorViewController to edit a new picker
     @objc func compose() {
         let storyboard = SBStoryboard.interaction.storyboard
         guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)")

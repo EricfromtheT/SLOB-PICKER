@@ -14,16 +14,17 @@ class CustomNavigationController: UINavigationController {
         setUpBarItem()
     }
     
+    // MARK: Appearance
     func customAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor.asset(.background)
-        // cancel navigationbar seperator
         appearance.shadowColor = nil
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.asset(.navigationbar2) as Any]
         self.navigationBar.standardAppearance = appearance
         self.navigationBar.scrollEdgeAppearance = appearance
     }
     
+    // MARK: BarItem
     func setUpBarItem() {
         let compose = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"),
                                       style: .plain,
