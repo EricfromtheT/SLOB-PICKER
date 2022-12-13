@@ -93,10 +93,11 @@
 		37DE8AF82910047100F737A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37DE8AF72910047100F737A7 /* GoogleService-Info.plist */; };
 		37DE8AFB29100D6D00F737A7 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */; };
 		37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFC2910B22F00F737A7 /* PickObject.swift */; };
-		37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFF2910C70E00F737A7 /* DateHelper.swift */; };
+		37DE8B002910C70E00F737A7 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DE8AFF2910C70E00F737A7 /* Date+Extension.swift */; };
 		37DF709B2939EABC003A6713 /* GroupManageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709A2939EABC003A6713 /* GroupManageViewController.swift */; };
 		37DF709E2939F0D3003A6713 /* GroupManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709D2939F0D3003A6713 /* GroupManageCell.swift */; };
 		37DF70A02939FA4E003A6713 /* GroupEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF709F2939FA4E003A6713 /* GroupEditorViewController.swift */; };
+		37E9AFA429485B4C00DB78C0 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9AFA329485B4C00DB78C0 /* UIStoryboard+Extension.swift */; };
 		37F644D42945E77F001A5774 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F644D32945E77F001A5774 /* CustomNavigationController.swift */; };
 		37F644D729462718001A5774 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F644D629462718001A5774 /* AccountManager.swift */; };
 		CDCCED94BD824C2880F3CCF9 /* Pods_SlobPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D74FDCDA9473C3D8A598ED09 /* Pods_SlobPicker.framework */; };
@@ -204,10 +205,11 @@
 		37DE8AF72910047100F737A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		37DE8AFA29100D6D00F737A7 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		37DE8AFC2910B22F00F737A7 /* PickObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickObject.swift; sourceTree = "<group>"; };
-		37DE8AFF2910C70E00F737A7 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		37DE8AFF2910C70E00F737A7 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		37DF709A2939EABC003A6713 /* GroupManageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManageViewController.swift; sourceTree = "<group>"; };
 		37DF709D2939F0D3003A6713 /* GroupManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManageCell.swift; sourceTree = "<group>"; };
 		37DF709F2939FA4E003A6713 /* GroupEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupEditorViewController.swift; sourceTree = "<group>"; };
+		37E9AFA329485B4C00DB78C0 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
 		37F644D32945E77F001A5774 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		37F644D629462718001A5774 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		3A183DDFBE50ADA2DBC30D2B /* Pods-SlobPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlobPicker.debug.xcconfig"; path = "Target Support Files/Pods-SlobPicker/Pods-SlobPicker.debug.xcconfig"; sourceTree = "<group>"; };
@@ -389,7 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				37A7C9642927350100604A4A /* SlobPicker.entitlements */,
-				37DE8AFE2910C6FE00F737A7 /* Helper */,
+				37E9AFA229485B1E00DB78C0 /* Extension */,
 				37DE8ADD290EA5C900F737A7 /* Third Party Wrapper */,
 				37DE8AF929100D5B00F737A7 /* Manager */,
 				37DE8ADE290EA5DA00F737A7 /* Resources */,
@@ -503,19 +505,6 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		37DE8AFE2910C6FE00F737A7 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				37DE8AFF2910C70E00F737A7 /* DateHelper.swift */,
-				370050CD29227F6400E1EA35 /* UIColor+Extension.swift */,
-				37A7C9582925183700604A4A /* UIImage+Extension.swift */,
-				37D05E0D292DCA3700D8A2AA /* String+Extension.swift */,
-				379277B329389413004C336B /* UIImageView+Extension.swift */,
-				3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */,
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
 		37DF709C2939F0C0003A6713 /* GroupManage */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,6 +517,20 @@
 				37C8FFF2293CD3EA00A84AB7 /* GroupMemberCell.swift */,
 			);
 			path = GroupManage;
+			sourceTree = "<group>";
+		};
+		37E9AFA229485B1E00DB78C0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				370050CD29227F6400E1EA35 /* UIColor+Extension.swift */,
+				37A7C9582925183700604A4A /* UIImage+Extension.swift */,
+				379277B329389413004C336B /* UIImageView+Extension.swift */,
+				37D05E0D292DCA3700D8A2AA /* String+Extension.swift */,
+				3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */,
+				37DE8AFF2910C70E00F737A7 /* Date+Extension.swift */,
+				37E9AFA329485B4C00DB78C0 /* UIStoryboard+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		91CC7ECF0DD89D90EBEB568E /* Pods */ = {
@@ -758,7 +761,8 @@
 				377853002920A41100780E8D /* ChoiceCell.swift in Sources */,
 				3708B0382919021B00397035 /* HotCell.swift in Sources */,
 				3708B0312918157C00397035 /* LoginViewController.swift in Sources */,
-				37DE8B002910C70E00F737A7 /* DateHelper.swift in Sources */,
+				37DE8B002910C70E00F737A7 /* Date+Extension.swift in Sources */,
+				37E9AFA429485B4C00DB78C0 /* UIStoryboard+Extension.swift in Sources */,
 				37C8FFF5293CD42000A84AB7 /* InviteNewMemberCell.swift in Sources */,
 				37C8FFFF29417F2A00A84AB7 /* PrivacyCell.swift in Sources */,
 				37DE8AA6290C15C900F737A7 /* SceneDelegate.swift in Sources */,

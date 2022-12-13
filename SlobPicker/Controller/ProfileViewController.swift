@@ -102,7 +102,7 @@ extension ProfileViewController: UITableViewDelegate {
         let rowType = MyCell(rawValue: indexPath.row)
         switch rowType {
         case .nameCell:
-            let storyboard = SBStoryboard.relationship.storyboard
+            let storyboard = UIStoryboard.relationship
             guard let editVC = storyboard.instantiateViewController(withIdentifier: "\(NameEditViewController.self)") as?
                     NameEditViewController else {
                 fatalError("NameEditViewController cannot be instatiated")

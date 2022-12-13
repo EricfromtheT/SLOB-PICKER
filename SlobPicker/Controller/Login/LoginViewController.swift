@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
         setUpAppleButton()
         // 如果是一直有在使用未刪app的用戶
         if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
-            let storyboard = SBStoryboard.main.storyboard
+            let storyboard = UIStoryboard.main
             let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
             UIApplication.shared.windows.first?.rootViewController = viewController
             UIApplication.shared.windows.first?.makeKeyAndVisible()
@@ -166,13 +166,13 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                                       forKey: UserInfo.userIDKey)
                             UserDefaults.standard.set(user.userName,
                                                       forKey: UserInfo.userNameKey)
-                            let storyboard = SBStoryboard.main.storyboard
+                            let storyboard = UIStoryboard.main
                             let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                             self.view.window?.rootViewController = viewController
                             self.view.window?.makeKeyAndVisible()
                         case .failure(let error):
                             if error as? UserError == .nodata {
-                                let storyboard = SBStoryboard.main.storyboard
+                                let storyboard = UIStoryboard.main
                                 guard let NewUserVC = storyboard.instantiateViewController(
                                     withIdentifier: "\(NewUserViewController.self)")
                                         as? NewUserViewController else {

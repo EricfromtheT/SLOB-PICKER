@@ -33,7 +33,7 @@ class PublicViewController: UIViewController {
             if user != nil {
                 print("user has logged in")
             } else {
-                let storyboard = SBStoryboard.main.storyboard
+                let storyboard = UIStoryboard.main
                 let loginVC = storyboard
                     .instantiateViewController(withIdentifier: "\(LoginViewController.self)")
                 as! LoginViewController

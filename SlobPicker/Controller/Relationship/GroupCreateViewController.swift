@@ -32,7 +32,7 @@ class GroupCreateViewController: UIViewController {
     
     @IBAction func selectFriends() {
         if let groupName = groupNameTextField.text, !groupName.isEmpty {
-            let storyboard = SBStoryboard.relationship.storyboard
+            let storyboard = UIStoryboard.relationship
             guard let friendsVC = storyboard.instantiateViewController(withIdentifier: "\(FriendSelectViewController.self)") as? FriendSelectViewController else {
                 print("ERROR: FriendSelectViewController cannot be instantiated")
                 return
