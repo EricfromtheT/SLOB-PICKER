@@ -23,7 +23,8 @@ class LoginViewController: UIViewController {
         setUpAppleButton()
         // 如果是一直有在使用未刪app的用戶
         if FirebaseManager.auth.currentUser != nil && UserDefaults.standard.string(forKey: UserInfo.userIDKey) != nil {
-            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+            let storyboard = UIStoryboard.main
+            let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
             UIApplication.shared.windows.first?.rootViewController = viewController
             UIApplication.shared.windows.first?.makeKeyAndVisible()
         }
@@ -150,9 +151,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             // Sign in with Firebase.
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if let error = error {
-                    // Error. If error.code == .MissingOrInvalidNonce, make sure
-                    // you're sending the SHA256-hashed nonce as a hex string with
-                    // your request to Apple.
                     print(error.localizedDescription)
                     return
                 } else {
@@ -168,14 +166,13 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                                       forKey: UserInfo.userIDKey)
                             UserDefaults.standard.set(user.userName,
                                                       forKey: UserInfo.userNameKey)
-                            // rootViewController change to tabbarviewcontroller
-                            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
+                            let storyboard = UIStoryboard.main
+                            let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                             self.view.window?.rootViewController = viewController
                             self.view.window?.makeKeyAndVisible()
                         case .failure(let error):
                             if error as? UserError == .nodata {
-                                // new user register and log in
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let storyboard = UIStoryboard.main
                                 guard let NewUserVC = storyboard.instantiateViewController(
                                     withIdentifier: "\(NewUserViewController.self)")
                                         as? NewUserViewController else {

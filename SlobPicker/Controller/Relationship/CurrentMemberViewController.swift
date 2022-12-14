@@ -15,11 +15,11 @@ class CurrentMemberViewController: UIViewController {
         }
     }
     
-    var groupData: Group? // 這邊需要抓最新資料
+    var groupData: Group?
     var groupMemberInfo: [User] = []
     var membersUUID: Set<String> = []
     let group = DispatchGroup()
-    let relationshipSB = UIStoryboard(name: "Relationship", bundle: nil)
+    let relationshipSB = UIStoryboard.relationship
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,6 @@ class CurrentMemberViewController: UIViewController {
     func fetchUserInfo() {
         var _membersUUID: [String] = []
         if let groupData = groupData, let id = groupData.id {
-            // fetch group info
             FirebaseManager.shared.fetchGroupInfo(groupID: id) {
                 result in
                 switch result {
@@ -43,7 +42,6 @@ class CurrentMemberViewController: UIViewController {
                 case.failure(let error):
                     print(error, "error of getting groupData")
                 }
-                // fetch user info
                 for userUUID in _membersUUID {
                     self.group.enter()
                     self.membersUUID.update(with: userUUID)
@@ -74,7 +72,6 @@ extension CurrentMemberViewController: UITableViewDelegate {
                     as? FriendSelectViewController else {
                 fatalError("error of instantiating FriendSelectViewController")
             }
-            // search friend list, filter who is in the group already.
             FirebaseManager.shared.fetchAllFriendsID() { result in
                 switch result {
                 case .success(let friends):

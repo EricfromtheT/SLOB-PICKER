@@ -171,7 +171,7 @@
         <!--群組-->
         <scene sceneID="yNb-IC-fj7">
             <objects>
-                <navigationController id="ot2-IU-sAd" sceneMemberID="viewController">
+                <navigationController id="ot2-IU-sAd" customClass="CustomNavigationController" customModule="SlobPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="群組" image="opinions" id="Bvt-Ja-YTN"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B9o-DH-FgP">

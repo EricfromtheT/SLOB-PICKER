@@ -14,8 +14,4 @@ enum SBStoryboard: String {
     case interaction = "Interaction"
     case relationship = "Relationship"
     case _public = "Public"
-    
-    var storyboard: UIStoryboard {
-        return UIStoryboard(name: self.rawValue, bundle: nil)
-    }
 }
