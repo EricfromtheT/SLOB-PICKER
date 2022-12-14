@@ -154,7 +154,7 @@ class NewUserViewController: UIViewController {
                     ProgressHUD.dismiss()
                     UserDefaults.standard.set(willBeUploadedId, forKey: UserInfo.userIDKey)
                     UserDefaults.standard.set(willBeUploadedName, forKey: UserInfo.userNameKey)
-                    let storyboard = SBStoryboard.main.storyboard
+                    let storyboard = UIStoryboard.main
                     let viewController = storyboard.instantiateViewController(withIdentifier: "\(MainTabBarController.self)")
                     self.view.window?.rootViewController = viewController
                     self.view.window?.makeKeyAndVisible()

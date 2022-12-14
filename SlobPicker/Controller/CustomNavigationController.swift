@@ -33,7 +33,7 @@ class CustomNavigationController: UINavigationController {
         // profile
         let profileMenu = UIMenu(children: [
             UIAction(title: "個人頁面") { action in
-                let storyboard = SBStoryboard.profile.storyboard
+                let storyboard = UIStoryboard.profile
                 let profileVC = storyboard.instantiateViewController(withIdentifier: "\(ProfileViewController.self)")
                 self.show(profileVC, sender: self)
             },
@@ -48,7 +48,7 @@ class CustomNavigationController: UINavigationController {
         let profile = UIBarButtonItem(image: UIImage(systemName: "gearshape"),
                                       menu: profileMenu)
         // relationship
-        let storyboard = SBStoryboard.relationship.storyboard
+        let storyboard = UIStoryboard.relationship
         let relationshipMenu = UIMenu(children: [
             UIAction(title: "添加好友") { action in
                 guard let friendVC = storyboard.instantiateViewController(withIdentifier: "\(SearchIDViewController.self)") as? SearchIDViewController else {
@@ -85,7 +85,7 @@ class CustomNavigationController: UINavigationController {
     }
     
     @objc func compose() {
-        let storyboard = SBStoryboard.interaction.storyboard
+        let storyboard = UIStoryboard.interaction
         guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)")
                 as? PickerEditorViewController else {
             fatalError("ERROR: cannot instantiate PickEditorViewController")

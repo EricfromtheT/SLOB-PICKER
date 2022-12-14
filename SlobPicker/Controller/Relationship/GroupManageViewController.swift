@@ -87,7 +87,7 @@ class GroupManageViewController: UIViewController {
     }
     
     @objc func createNewGroup() {
-        let storyboard = SBStoryboard.relationship.storyboard
+        let storyboard = UIStoryboard.relationship
         guard let newGroupVC = storyboard.instantiateViewController(withIdentifier:
                                                                         "\(GroupCreateViewController.self)") as?
                 GroupCreateViewController else {
@@ -117,7 +117,7 @@ extension GroupManageViewController: UITableViewDataSource {
 // MARK: TableView Delegate
 extension GroupManageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = SBStoryboard.relationship.storyboard
+        let storyboard = UIStoryboard.relationship
         guard let groupEditVC = storyboard
             .instantiateViewController(withIdentifier: "\(GroupEditorViewController.self)")
                 as? GroupEditorViewController else {

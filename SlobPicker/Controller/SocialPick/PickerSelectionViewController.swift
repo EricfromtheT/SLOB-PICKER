@@ -77,7 +77,7 @@ class PickerSelectionViewController: UIViewController {
     
     // MARK: Action
     @objc func compose() {
-        let storyboard = SBStoryboard.interaction.storyboard
+        let storyboard = UIStoryboard.interaction
         guard let editorVC = storyboard.instantiateViewController(withIdentifier: "\(PickerEditorViewController.self)")
                 as? PickerEditorViewController else {
             fatalError("ERROR: cannot instantiate PickEditorViewController")
@@ -87,7 +87,7 @@ class PickerSelectionViewController: UIViewController {
     
     // see picker's voting result
     @IBAction func goToResult(_ sender: UIButton) {
-        let storyboard = SBStoryboard.pickerSelection.storyboard
+        let storyboard = UIStoryboard.pickerSelection
         guard let resultVC = storyboard.instantiateViewController(withIdentifier: "\(PickResultViewController.self)")
                 as? PickResultViewController else {
             print("PickResultViewController rendering error")
@@ -96,10 +96,9 @@ class PickerSelectionViewController: UIViewController {
         resultVC.pickInfo = pickers[sender.tag]
         show(resultVC, sender: self)
     }
-    
     // go to pick
     @IBAction func goToPick(_ sender: UIButton) {
-        let storyboard = SBStoryboard.interaction.storyboard
+        let storyboard = UIStoryboard.interaction
         guard let pickVC = storyboard.instantiateViewController(withIdentifier: "\(PickViewController.self)")
                 as? PickViewController else {
             print("PickViewController rendering error")

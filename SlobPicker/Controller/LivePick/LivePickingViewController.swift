@@ -157,7 +157,7 @@ class LivePickingViewController: UIViewController {
     }
     
     @IBAction func choose() {
-        let storyboard = SBStoryboard.interaction.storyboard
+        let storyboard = UIStoryboard.interaction
         guard let optionsVC = storyboard.instantiateViewController(withIdentifier: "\(LiveOptionsViewController.self)") as? LiveOptionsViewController else {
             fatalError("error of instantiating LiveOptionsViewController")
         }
@@ -176,7 +176,7 @@ extension LivePickingViewController: MagicTimerViewDelegate {
             self.presentedViewController?.dismiss(animated: false)
             timer.stopCounting()
             timer.isActiveInBackground = false
-            let storyboard = SBStoryboard.pickerSelection.storyboard
+            let storyboard = UIStoryboard.pickerSelection
             guard let resultVC = storyboard.instantiateViewController(withIdentifier: "\(PickResultViewController.self)") as? PickResultViewController else {
                 fatalError("errro of instantiating pickresultViewController in live picking")
             }
