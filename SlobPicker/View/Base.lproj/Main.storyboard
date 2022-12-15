@@ -114,17 +114,17 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="設定ID(必填)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uxk-is-23U">
-                                        <rect key="frame" x="45" y="317" width="114" height="24.666666666666686"/>
+                                        <rect key="frame" x="68.333333333333314" y="317" width="114" height="24.666666666666686"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="設定暱稱(必填)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mxP-4e-A29">
-                                        <rect key="frame" x="45" y="380.66666666666663" width="136.33333333333334" height="24.666666666666686"/>
+                                        <rect key="frame" x="68.333333333333329" y="380.66666666666663" width="136.33333333333337" height="24.666666666666686"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9w-IT-D0O">
-                                        <rect key="frame" x="45" y="349.66666666666663" width="0.0" height="0.0"/>
+                                        <rect key="frame" x="68.333333333333314" y="349.66666666666663" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -138,24 +138,45 @@
                                             <action selector="finishSetting:" destination="aQY-BW-s41" eventType="touchUpInside" id="mkg-qQ-ART"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JO2-Z9-VOq" userLabel="seperator">
+                                        <rect key="frame" x="68.333333333333329" y="343.66666666666663" width="253.33333333333337" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="NVA-hz-Civ"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pCd-Nv-XcZ" userLabel="seperator">
+                                        <rect key="frame" x="68.3333333333333" y="407.33333333333331" width="253.66666666666663" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="qiI-38-EkK"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="mxP-4e-A29" firstAttribute="leading" secondItem="o9w-IT-D0O" secondAttribute="leading" id="0Sk-MU-sCa"/>
                                     <constraint firstItem="yWu-B7-q8n" firstAttribute="top" secondItem="Hwf-hY-78m" secondAttribute="top" constant="100" id="1IY-aH-2xe"/>
                                     <constraint firstItem="Wda-50-pOw" firstAttribute="top" secondItem="5Fy-0N-pov" secondAttribute="bottom" constant="300" id="AaY-36-jVb"/>
+                                    <constraint firstItem="pCd-Nv-XcZ" firstAttribute="width" secondItem="Hwf-hY-78m" secondAttribute="width" multiplier="0.650427" id="C7t-KU-5G0"/>
+                                    <constraint firstItem="pCd-Nv-XcZ" firstAttribute="centerX" secondItem="Hwf-hY-78m" secondAttribute="centerX" id="Fp2-Tt-Idd"/>
                                     <constraint firstItem="o9w-IT-D0O" firstAttribute="leading" secondItem="uxk-is-23U" secondAttribute="leading" id="SHF-ok-tVh"/>
-                                    <constraint firstItem="uxk-is-23U" firstAttribute="leading" secondItem="Hwf-hY-78m" secondAttribute="leading" constant="45" id="YmR-VR-X9w"/>
+                                    <constraint firstItem="JO2-Z9-VOq" firstAttribute="width" secondItem="Hwf-hY-78m" secondAttribute="width" multiplier="0.65" id="TxQ-Nz-uzj"/>
+                                    <constraint firstItem="JO2-Z9-VOq" firstAttribute="centerX" secondItem="Hwf-hY-78m" secondAttribute="centerX" id="a7N-JE-fcy"/>
+                                    <constraint firstItem="uxk-is-23U" firstAttribute="leading" secondItem="JO2-Z9-VOq" secondAttribute="leading" id="alJ-PN-eaQ"/>
                                     <constraint firstItem="o9w-IT-D0O" firstAttribute="top" secondItem="uxk-is-23U" secondAttribute="bottom" constant="8" symbolic="YES" id="dfb-yy-omc"/>
+                                    <constraint firstItem="JO2-Z9-VOq" firstAttribute="top" secondItem="uxk-is-23U" secondAttribute="bottom" constant="2" id="hjx-zB-I6b"/>
                                     <constraint firstItem="Wda-50-pOw" firstAttribute="centerX" secondItem="Hwf-hY-78m" secondAttribute="centerX" id="mHj-5H-6hZ"/>
                                     <constraint firstItem="5Fy-0N-pov" firstAttribute="top" secondItem="yWu-B7-q8n" secondAttribute="bottom" constant="18" id="mII-nS-EKW"/>
                                     <constraint firstItem="uxk-is-23U" firstAttribute="top" secondItem="5Fy-0N-pov" secondAttribute="bottom" constant="64" id="pBA-dt-TIM"/>
                                     <constraint firstItem="mxP-4e-A29" firstAttribute="top" secondItem="o9w-IT-D0O" secondAttribute="bottom" constant="31" id="u6n-OV-nWc"/>
+                                    <constraint firstItem="pCd-Nv-XcZ" firstAttribute="top" secondItem="mxP-4e-A29" secondAttribute="bottom" constant="2" id="usf-Vd-RTE"/>
                                     <constraint firstItem="5Fy-0N-pov" firstAttribute="centerX" secondItem="yWu-B7-q8n" secondAttribute="centerX" id="v4I-6x-bzR"/>
                                     <constraint firstItem="yWu-B7-q8n" firstAttribute="centerX" secondItem="Hwf-hY-78m" secondAttribute="centerX" id="xyj-ws-52G"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="alertLabel" destination="o9w-IT-D0O" id="DEe-wb-gjC"/>
+                                    <outlet property="confirmButton" destination="Wda-50-pOw" id="aAI-yf-Ltv"/>
                                     <outlet property="idTextField" destination="uxk-is-23U" id="RE7-sJ-xg7"/>
                                     <outlet property="imageSettingButton" destination="5Fy-0N-pov" id="s85-HE-nG3"/>
                                     <outlet property="nickNameTextField" destination="mxP-4e-A29" id="Van-H8-GFy"/>
