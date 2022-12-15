@@ -157,7 +157,7 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
                                     }
                                     let data = ["profile_url": downloadURL.absoluteString]
                                     let ref = FirebaseManager.FirebaseCollectionRef.users.ref.document(userUUID)
-                                    FirebaseManager.shared.updateFieldValue(data, at: ref) {
+                                    FirebaseManager.shared.update(data, at: ref) {
                                         self.fetchProfile()
                                         ProgressHUD.dismiss()
                                     }

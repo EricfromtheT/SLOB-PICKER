@@ -26,7 +26,7 @@ class PickViewController: UIViewController {
     private var type: PickerType?
     private var chosenIndex: Int?
     private var additionalComment: String?
-    var mode: PrivacyMode?
+    var mode: PrivacyMode = .forPublic
     var publicCompletion: (() -> Void)?
     let uuid = FirebaseManager.auth.currentUser?.uid
     let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
@@ -43,28 +43,38 @@ class PickViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .done, target: self, action: #selector(donePick))
     }
     
+    
     // confirm your selecting result
     @objc func donePick() {
         ProgressHUD.show()
         guard let uuid = uuid, let userID = userID else { fatalError("uuid in keychain is nil") }
+        var resultRef: FirebaseManager.DocumentRef?
         if let chosenIndex = chosenIndex, let pickerID = pickerID {
+            let result = PickResult(choice: chosenIndex, createdTime: Date.dateManager.millisecondsSince1970, userUUID: uuid)
             switch mode {
             case .forPrivate:
-                FirebaseManager.shared.updatePrivateResult(index: chosenIndex, pickerID: pickerID)
-                if let comment = additionalComment, !comment.isEmpty {
-                    let commentInfo = Comment(userUUID: uuid, userID: userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
-                    FirebaseManager.shared.updatePrivateComment(comment: commentInfo, pickerID: pickerID)
-                }
+                resultRef = FirebaseManager.FirebaseCollectionRef
+                    .pickerResults(type: mode, pickerID: pickerID).ref.document(uuid)
             case .forPublic:
                 publicCompletion?()
-                FirebaseManager.shared.updatePublicResult(index: chosenIndex, pickerID: pickerID)
-                if let comment = additionalComment, !comment.isEmpty {
-                    let commentInfo = Comment(userUUID: uuid, userID: userID, type: 0, comment: comment, createdTime: Date().millisecondsSince1970)
-                    FirebaseManager.shared.updatePublicComment(comment: commentInfo, pickerID: pickerID)
-                }
+                resultRef = FirebaseManager.FirebaseCollectionRef
+                    .pickerResults(type: mode, pickerID: pickerID).ref.document(uuid)
                 FirebaseManager.shared.pickPicker(pickerID: pickerID)
             default:
-                print("something wrong with pick result uploading")
+                return print("something wrong with pick result uploading")
+            }
+            if let resultRef = resultRef {
+                FirebaseManager.shared.setData(result, at: resultRef) {}
+                if let comment = additionalComment, !comment.isEmpty {
+                    let commentInfo = Comment(userUUID: uuid,
+                                              userID: userID,
+                                              type: 0,
+                                              comment: comment,
+                                              createdTime: Date.dateManager.millisecondsSince1970)
+                    let commentRef = FirebaseManager.FirebaseCollectionRef
+                        .pickerComments(type: mode, pickerID: pickerID).ref.document(uuid)
+                    FirebaseManager.shared.setData(commentInfo, at: commentRef) {}
+                }
             }
         } else {
             let alert = UIAlertController(title: "vote", message: "you haven't vote", preferredStyle: .alert)
@@ -116,7 +126,6 @@ extension PickViewController: UITableViewDataSource {
                 fatalError("ERROR: AdditionCell cannot be dequeued")
             }
             cell.configure()
-            cell.additionTextField.delegate = cell
             cell.completion = { [weak self] text in
                 self?.additionalComment = text
             }

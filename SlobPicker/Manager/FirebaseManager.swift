@@ -23,6 +23,8 @@ class FirebaseManager {
     lazy var privatePickersRef = database.collection("privatePickers")
     lazy var publicPickersRef = database.collection("publicPickers")
     private let groupRef = Firestore.firestore().collection("groups")
+    typealias CollectionRef = CollectionReference
+    typealias DocumentRef = DocumentReference
     
     enum FirebaseCollectionRef {
         case groups
@@ -82,7 +84,7 @@ class FirebaseManager {
         docRef.setData(documentData)
     }
     
-    func updateFieldValue(_ documentData: [String: Any], at docRef: DocumentReference, completion: @escaping (() -> Void)) {
+    func update(_ documentData: [String: Any], at docRef: DocumentReference, completion: @escaping (() -> Void)) {
         docRef.updateData(documentData) { error in
             if let error = error {
                 print(error.localizedDescription, "error of updating document fields")
@@ -138,36 +140,6 @@ class FirebaseManager {
 
     
     // MARK: Private picker
-    // publish a new picker
-    func updatePrivateComment(comment: Comment, pickerID: String) {
-        // TODO: change document path to real userID
-        privatePickersRef.document(pickerID).collection("all_comment").document(comment.userUUID).setData([
-            "comment": comment.comment,
-            "created_time": Date().millisecondsSince1970,
-            "type": comment.type,
-            "user_uuid": comment.userUUID,
-            "user_id": comment.userID
-        ]) { error in
-            if let error = error {
-                print(error, "ERROR: updataPrivateComment method")
-            }
-        }
-    }
-    
-    func updatePrivateResult(index: Int, pickerID: String) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        privatePickersRef.document(pickerID).collection("results").document(uuid).setData([
-            "choice": index,
-            "created_time": Date().millisecondsSince1970,
-            // change to new user
-            "user_uuid": uuid
-        ]) { error in
-            if let error = error {
-                print(error, "ERROR: updataPrivateResult method")
-            }
-        }
-    }
-    
     func fetchResults(collection: String, pickerID: String, completion: @escaping (Result<[PickResult], Error>) -> Void) {
         database.collection(collection).document(pickerID).collection("results").getDocuments { querySnapshot, error in
             if let error = error {
@@ -548,35 +520,6 @@ class FirebaseManager {
             "picked_ids": FieldValue.arrayUnion([uuid])
         ])
     }
-    
-    func updatePublicComment(comment: Comment, pickerID: String) {
-        database.collection("publicPickers").document(pickerID).collection("all_comment").document(comment.userUUID).setData([
-            "comment": comment.comment,
-            "created_time": Date().millisecondsSince1970,
-            "type": comment.type,
-            "user_uuid": comment.userUUID,
-            "user_id": comment.userID
-        ]) { error in
-            if let error = error {
-                print(error, "ERROR: updatePublicComment method")
-            }
-        }
-    }
-    
-    func updatePublicResult(index: Int, pickerID: String) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        database.collection("publicPickers").document(pickerID).collection("results").document(uuid).setData([
-            "choice": index,
-            "created_time": Date().millisecondsSince1970,
-            // change to new user
-            "user_uuid": uuid
-        ]) { error in
-            if let error = error {
-                print(error, "ERROR: updataPublicResult method")
-            }
-        }
-    }
-    
     // MARK: Live Picker
     func publishLivePicker(picker: inout LivePicker, completion: (Result<String, Error>) -> Void) {
         let document = database.collection("livePickers").document()
