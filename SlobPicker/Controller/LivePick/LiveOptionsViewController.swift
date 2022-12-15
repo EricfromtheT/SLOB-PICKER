@@ -140,4 +140,8 @@ class LiveOptionsViewController: UIViewController {
         }
         dismiss(animated: true)
     }
+    
+    @IBAction func cancel() {
+        dismiss(animated: true)
+    }
 }
