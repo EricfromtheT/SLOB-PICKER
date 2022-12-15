@@ -291,6 +291,7 @@ class PickerEditorViewController: UIViewController {
                             waitingVC.modalTransitionStyle = .crossDissolve
                             waitingVC.modalPresentationStyle = .fullScreen
                             self.present(waitingVC, animated: true)
+                            self.navigationController?.popViewController(animated: true)
                         case .failure(let error):
                             print(error, "error of attending a live pick")
                         }
