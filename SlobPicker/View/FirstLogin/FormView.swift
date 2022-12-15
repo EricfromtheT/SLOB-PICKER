@@ -12,6 +12,7 @@ import ProgressHUD
 class FormView: UIView {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var imageSettingButton: UIButton!
+    @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var idTextField: UITextField! {
         didSet {
             idTextField.delegate = self
@@ -23,15 +24,25 @@ class FormView: UIView {
         }
     }
     @IBOutlet weak var alertLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        imageSettingButton.layer.cornerRadius = 15
+        imageSettingButton.layer.borderWidth = 1
+        imageSettingButton.layer.borderColor = UIColor.white.cgColor
+        confirmButton.layer.cornerRadius = 15
+        confirmButton.layer.borderWidth = 1
+        confirmButton.layer.borderColor = UIColor.white.cgColor
+        profileImage.layer.cornerRadius = profileImage.bounds.width / 2
+        idTextField.attributedPlaceholder = NSAttributedString(string: "設定ID(必填)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        nickNameTextField.attributedPlaceholder = NSAttributedString(string: "設定暱稱(必填)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+    }
     weak var superVC: NewUserViewController?
     var idCompletion: ((String) -> Void)?
     var nickNameCompletion: ((String) -> Void)?
     
     func configure(superVC: NewUserViewController) {
         self.superVC = superVC
-        profileImage.layer.cornerRadius = profileImage.bounds.width / 2
-        idTextField.attributedPlaceholder = NSAttributedString(string: "設定ID(必填)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        nickNameTextField.attributedPlaceholder = NSAttributedString(string: "設定暱稱(必填)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         superVC.pickImageCompletion = { image in
             self.profileImage.image = image
         }

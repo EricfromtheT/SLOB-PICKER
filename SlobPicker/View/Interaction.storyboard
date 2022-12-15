@@ -523,10 +523,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="313-8R-cWK">
-                                                    <rect key="frame" x="40" y="8" width="120" height="40"/>
+                                                    <rect key="frame" x="40" y="8" width="120" height="28"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8q-Ea-Rf6">
-                                                            <rect key="frame" x="24" y="6" width="72" height="28"/>
+                                                            <rect key="frame" x="24" y="0.0" width="72" height="28"/>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="選擇對象">
@@ -948,11 +948,27 @@
                                             <action selector="vote" destination="gC3-sf-Su0" eventType="touchUpInside" id="EQH-xA-MSv"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCA-rW-jyG">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="NaG-Y9-zbd"/>
+                                            <constraint firstAttribute="width" secondItem="FCA-rW-jyG" secondAttribute="height" multiplier="1:1" id="u4m-N7-ujb"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="Icons_24px_CleanAll" title=""/>
+                                        <connections>
+                                            <action selector="cancel" destination="gC3-sf-Su0" eventType="touchUpInside" id="dcE-KJ-Leb"/>
+                                            <action selector="leave" destination="pO1-jx-aay" eventType="touchUpInside" id="wKR-8i-AJ3"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" name="background"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="LWO-O6-c4v" secondAttribute="trailing" constant="15" id="1p2-Hu-8Gg"/>
+                                    <constraint firstItem="FCA-rW-jyG" firstAttribute="width" secondItem="FCA-rW-jyG" secondAttribute="height" multiplier="1:1" id="8Ln-A4-HcA"/>
                                     <constraint firstAttribute="height" constant="600" id="HqD-as-I5M"/>
+                                    <constraint firstItem="FCA-rW-jyG" firstAttribute="leading" secondItem="Xaf-wP-WAl" secondAttribute="leading" id="Wis-Bh-pQs"/>
+                                    <constraint firstItem="FCA-rW-jyG" firstAttribute="top" secondItem="Xaf-wP-WAl" secondAttribute="top" id="jNN-zh-JmG"/>
                                     <constraint firstItem="LWO-O6-c4v" firstAttribute="top" secondItem="Xaf-wP-WAl" secondAttribute="top" constant="8" id="qfR-NJ-ceY"/>
                                 </constraints>
                             </view>
