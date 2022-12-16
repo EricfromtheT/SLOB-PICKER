@@ -8,7 +8,11 @@
 import UIKit
 
 class AdditionCell: UITableViewCell {
-    @IBOutlet weak var additionTextField: UITextField!
+    @IBOutlet weak var additionTextField: UITextField! {
+        didSet {
+            additionTextField.delegate = self
+        }
+    }
     var completion: ((String) -> ())?
     
     func configure() {

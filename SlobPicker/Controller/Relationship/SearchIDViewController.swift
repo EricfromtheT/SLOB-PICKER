@@ -13,12 +13,11 @@ class SearchIDViewController: UIViewController {
             idTextField.layer.cornerRadius = 5
             idTextField.layer.borderWidth = 2
             idTextField.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
+            idTextField.delegate = self
         }
     }
     @IBOutlet weak var profileImageView: UIImageView! {
         didSet {
-            profileImageView.layer.cornerRadius
-            = profileImageView.bounds.width / 2
             profileImageView.layer.borderColor = UIColor.black.cgColor
             profileImageView.layer.borderWidth = 1
         }
@@ -27,13 +26,6 @@ class SearchIDViewController: UIViewController {
     @IBOutlet weak var sendInvitationButton: UIButton! {
         didSet {
             sendInvitationButton.isEnabled = false
-        }
-    }
-    @IBOutlet weak var searchButton: UIButton! {
-        didSet {
-            searchButton.layer.cornerRadius = 10
-            searchButton.layer.borderWidth = 2
-            searchButton.layer.borderColor = UIColor.systemGray2.cgColor
         }
     }
     @IBOutlet weak var cancelButton: UIButton! {
@@ -50,6 +42,7 @@ class SearchIDViewController: UIViewController {
             sendButton.layer.borderColor = UIColor.systemGray2.cgColor
         }
     }
+    @IBOutlet weak var textStack: UIStackView!
     
     var userInfo: User?
     var isRealUser = false
@@ -57,9 +50,39 @@ class SearchIDViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "添加好友"
+        setUpLayout()
     }
     
-    @IBAction func searchUser() {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
+    }
+    
+    func setUpLayout() {
+        textStack.translatesAutoresizingMaskIntoConstraints = false
+        idTextField.translatesAutoresizingMaskIntoConstraints = false
+        textStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        textStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
+        idTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
+        idTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.045).isActive = true
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: textStack.bottomAnchor, constant: 30).isActive = true
+
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4).isActive = true
+        profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor).isActive = true
+        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20).isActive = true
+
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 30).isActive = true
+        sendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    func searchUser() {
         if let content = idTextField.text, !content.isEmpty {
             self.userInfo = nil
             self.isRealUser = false
@@ -111,5 +134,14 @@ class SearchIDViewController: UIViewController {
     
     @IBAction func cancel() {
         idTextField.text = ""
+    }
+}
+
+// MARK: UITextFieldDelegate
+extension SearchIDViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        searchUser()
+        return true
     }
 }
