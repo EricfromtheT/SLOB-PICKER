@@ -172,6 +172,7 @@ class LivePickingViewController: UIViewController {
 extension LivePickingViewController: MagicTimerViewDelegate {
     func timerElapsedTimeDidChange(timer: MagicTimerView, elapsedTime: TimeInterval) {
         if elapsedTime == TimeInterval(floatLiteral: 0) {
+            resultListener?.remove()
             if let optionsVC = self.presentedViewController as? LiveOptionsViewController {
                 optionsVC.view.isUserInteractionEnabled = false
             }
