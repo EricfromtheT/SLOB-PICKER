@@ -32,6 +32,7 @@ class HotCell: UITableViewCell {
             fetchUser(userUUID: usersUUID)
         }
     }
+    
     var newestPickers: [Picker] = [] {
         didSet {
             if !newestPickers.isEmpty {

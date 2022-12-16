@@ -83,7 +83,7 @@ class NameEditViewController: UIViewController {
             }
             let data = ["user_name": newName]
             let ref = FirebaseManager.FirebaseCollectionRef.users.ref.document(userUUID)
-            FirebaseManager.shared.updateFieldValue(data, at: ref) {
+            FirebaseManager.shared.update(data, at: ref) {
                 completion()
             }
         }

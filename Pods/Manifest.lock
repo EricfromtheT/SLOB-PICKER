@@ -660,15 +660,6 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (9.6.0):
-    - FirebaseCore (~> 9.0)
-    - FirebaseInstallations (~> 9.0)
-    - GoogleDataTransport (< 10.0.0, >= 9.1.4)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/Reachability (~> 7.7)
-    - GoogleUtilities/UserDefaults (~> 7.7)
-    - nanopb (< 2.30910.0, >= 2.30908.0)
   - FirebaseStorage (9.6.0):
     - FirebaseAppCheckInterop (~> 9.0)
     - FirebaseAuthInterop (~> 9.0)
@@ -790,7 +781,6 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseFirestore
   - FirebaseFirestoreSwift
-  - FirebaseMessaging
   - FirebaseStorage
   - IQKeyboardManagerSwift
   - Kingfisher
@@ -822,7 +812,6 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseInstallations
-    - FirebaseMessaging
     - FirebaseStorage
     - FirebaseStorageInternal
     - GoogleDataTransport
@@ -866,7 +855,6 @@ SPEC CHECKSUMS:
   FirebaseFirestore: c09ce6d050745a45fb75ebd901005ed3279c3caf
   FirebaseFirestoreSwift: d86a0fef1225c6c1ddfae15b3250700867d63013
   FirebaseInstallations: 0a115432c4e223c5ab20b0dbbe4cbefa793a0e8e
-  FirebaseMessaging: a4d7910e4af663c9cbfc1071c5bef34651690949
   FirebaseStorage: 1fead543a1f441c3b434c1c9f12560dd82f8b568
   FirebaseStorageInternal: 81d8a597324ccd06c41a43c5700bc1185a2fc328
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
@@ -890,6 +878,6 @@ SPEC CHECKSUMS:
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
 
-PODFILE CHECKSUM: 9dd1658b616c8827feb37c547290755fd30914cc
+PODFILE CHECKSUM: 41d67d0a9972c5cf31ea283fe56f4b48b2d412b4
 
 COCOAPODS: 1.11.3

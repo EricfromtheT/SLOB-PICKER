@@ -18,30 +18,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入好友ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e9v-Xd-I0s">
-                                <rect key="frame" x="40" y="150" width="250" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="iaQ-Hu-Gjy"/>
-                                    <constraint firstAttribute="height" constant="50" id="irH-zz-d49"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eP7-y9-mkm">
-                                <rect key="frame" x="207" y="300" width="0.0" height="0.0"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ih8-cS-32T">
+                                <rect key="frame" x="90.333333333333343" y="150" width="209.66666666666666" height="34.333333333333336"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入好友ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e9v-Xd-I0s">
+                                        <rect key="frame" x="0.0" y="0.0" width="131" height="34.333333333333336"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53T-zk-hAb">
+                                        <rect key="frame" x="151" y="0.0" width="58.666666666666657" height="34.333333333333336"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="取消"/>
+                                        <connections>
+                                            <action selector="cancel" destination="Lrk-Ci-LJo" eventType="touchUpInside" id="36q-vW-CrD"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eP7-y9-mkm">
+                                <rect key="frame" x="195" y="284" width="0.0" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="dxM-kV-y21">
-                                <rect key="frame" x="95" y="344.66666666666669" width="200" height="200.00000000000006"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="dxM-kV-y21" secondAttribute="height" multiplier="1:1" id="Cp4-9e-lfv"/>
-                                    <constraint firstAttribute="width" constant="200" id="x0f-z2-gHA"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="dxM-kV-y21">
+                                <rect key="frame" x="-61" y="328.66666666666674" width="512" height="512"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fg-Ob-Ueq">
-                                <rect key="frame" x="148" y="574.66666666666663" width="94" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fg-Ob-Ueq">
+                                <rect key="frame" x="148" y="870.66666666666663" width="94" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="發送邀請"/>
@@ -49,58 +58,18 @@
                                     <action selector="sendInvitation" destination="Lrk-Ci-LJo" eventType="touchUpInside" id="fn7-GY-VaH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4W1-cX-1cT">
-                                <rect key="frame" x="165.66666666666666" y="212" width="58.666666666666657" height="35"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="查詢"/>
-                                <connections>
-                                    <action selector="searchUser" destination="Lrk-Ci-LJo" eventType="touchUpInside" id="M2t-9e-UN8"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="好友資訊:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMW-IY-Vnn">
-                                <rect key="frame" x="115" y="300" width="74" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53T-zk-hAb">
-                                <rect key="frame" x="298" y="157.66666666666666" width="59" height="35"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="取消"/>
-                                <connections>
-                                    <action selector="cancel" destination="Lrk-Ci-LJo" eventType="touchUpInside" id="36q-vW-CrD"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="m15-Qr-CBv"/>
                         <color key="backgroundColor" name="background"/>
-                        <constraints>
-                            <constraint firstItem="e9v-Xd-I0s" firstAttribute="top" secondItem="m15-Qr-CBv" secondAttribute="top" constant="103" id="4nf-QF-0Mn"/>
-                            <constraint firstItem="eP7-y9-mkm" firstAttribute="top" secondItem="e9v-Xd-I0s" secondAttribute="bottom" constant="100" id="7gU-ay-aax"/>
-                            <constraint firstItem="WMW-IY-Vnn" firstAttribute="top" secondItem="e9v-Xd-I0s" secondAttribute="bottom" constant="100" id="8in-pq-LQB"/>
-                            <constraint firstItem="dxM-kV-y21" firstAttribute="centerX" secondItem="m15-Qr-CBv" secondAttribute="centerX" id="AgH-36-KcV"/>
-                            <constraint firstItem="53T-zk-hAb" firstAttribute="leading" secondItem="e9v-Xd-I0s" secondAttribute="trailing" constant="8" symbolic="YES" id="GuL-Ei-gxJ"/>
-                            <constraint firstItem="eP7-y9-mkm" firstAttribute="leading" secondItem="WMW-IY-Vnn" secondAttribute="trailing" constant="18" id="Jek-bJ-QcE"/>
-                            <constraint firstItem="WMW-IY-Vnn" firstAttribute="leading" secondItem="m15-Qr-CBv" secondAttribute="leading" constant="115" id="MZi-zl-NfY"/>
-                            <constraint firstItem="4fg-Ob-Ueq" firstAttribute="top" secondItem="dxM-kV-y21" secondAttribute="bottom" constant="30" id="QOm-iY-uxr"/>
-                            <constraint firstItem="4W1-cX-1cT" firstAttribute="top" secondItem="e9v-Xd-I0s" secondAttribute="bottom" constant="12" id="evP-wA-Kdt"/>
-                            <constraint firstItem="4fg-Ob-Ueq" firstAttribute="centerX" secondItem="m15-Qr-CBv" secondAttribute="centerX" id="jlj-UC-djt"/>
-                            <constraint firstItem="dxM-kV-y21" firstAttribute="top" secondItem="WMW-IY-Vnn" secondAttribute="bottom" constant="23.666666666666686" id="meI-qd-DbE"/>
-                            <constraint firstItem="4W1-cX-1cT" firstAttribute="centerX" secondItem="m15-Qr-CBv" secondAttribute="centerX" id="oPa-4Y-Waa"/>
-                            <constraint firstItem="e9v-Xd-I0s" firstAttribute="centerX" secondItem="m15-Qr-CBv" secondAttribute="centerX" constant="-30" id="ric-Ha-UnI"/>
-                            <constraint firstItem="53T-zk-hAb" firstAttribute="centerY" secondItem="e9v-Xd-I0s" secondAttribute="centerY" id="zNn-YQ-imn"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="53T-zk-hAb" id="AXP-Id-X7z"/>
                         <outlet property="idTextField" destination="e9v-Xd-I0s" id="J7Z-h2-mNz"/>
                         <outlet property="nameLabel" destination="eP7-y9-mkm" id="4Kb-ZT-Xs7"/>
                         <outlet property="profileImageView" destination="dxM-kV-y21" id="MZc-Vq-joj"/>
-                        <outlet property="searchButton" destination="4W1-cX-1cT" id="U64-98-JNZ"/>
                         <outlet property="sendButton" destination="4fg-Ob-Ueq" id="sMY-jw-NKs"/>
                         <outlet property="sendInvitationButton" destination="4fg-Ob-Ueq" id="1Jd-zC-bEN"/>
+                        <outlet property="textStack" destination="Ih8-cS-32T" id="Rnj-6a-ERU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Si5-Hc-SVj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
