@@ -86,26 +86,19 @@ class PickResultViewController: UIViewController {
     }
     
     func fetchResult(pickID: String) {
-        FirebaseManager.shared.fetchResults(collection: mode.rawValue, pickerID: pickID) { result in
-            switch result {
-            case .success(let results):
-                self.pickerResults = results
-                self.organizeResult(data: self.pickerResults)
-            case .failure(let error):
-                print(error, "ERROR of getting picker results")
-            }
+        let resultRef = FirebaseManager.FirebaseCollectionRef.pickerResults(type: mode, pickerID: pickID).ref
+        FirebaseManager.shared.getDocuments(resultRef) { (results: [PickResult]) in
+            self.pickerResults = results
+            self.organizeResult(data: self.pickerResults)
             self.semaphore.signal()
         }
-
-        FirebaseManager.shared.fetchComments(collection: mode.rawValue, pickerID: pickID) { result in
-            switch result {
-            case .success(let comments):
-                self.pickerComments = comments
-            case .failure(let error):
-                print(error, "ERROR of getting picker comments")
-            }
+        
+        let commentRef = FirebaseManager.FirebaseCollectionRef.pickerComments(type: mode, pickerID: pickID).ref
+        FirebaseManager.shared.getDocuments(commentRef) { (comments: [Comment]) in
+            self.pickerComments = comments
             self.semaphore.signal()
         }
+        
         self.semaphore.wait()
         self.semaphore.wait()
         let userUUIDs = Set(self.pickerComments.map {
@@ -113,12 +106,10 @@ class PickResultViewController: UIViewController {
         })
         for uuid in userUUIDs {
             group.enter()
-            FirebaseManager.shared.getUserInfo(userUUID: uuid) { result in
-                switch result {
-                case .success(let user):
+            let userRef = FirebaseManager.FirebaseCollectionRef.users.ref.document(uuid)
+            FirebaseManager.shared.getDocument(userRef) { (user: User?) in
+                if let user = user {
                     self.users.append(user)
-                case .failure(let error):
-                    return print(error, "error of getting user info")
                 }
                 self.group.leave()
             }

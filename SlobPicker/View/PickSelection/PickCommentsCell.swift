@@ -11,8 +11,7 @@ class PickCommentsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
-    
-    // TODO: 這裡的parameter還需要一個User, 透過PickResultViewController抓取丟過來
+
     func configure(data: Comment, userInfo: User) {
         nameLabel.text = userInfo.userID
         commentLabel.text = data.comment

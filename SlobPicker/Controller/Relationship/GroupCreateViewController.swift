@@ -37,24 +37,22 @@ class GroupCreateViewController: UIViewController {
                 print("ERROR: FriendSelectViewController cannot be instantiated")
                 return
             }
-            friendsVC.groupName = groupName
             // Fetch friends info
-            group.enter()
-            FirebaseManager.shared.fetchAllFriendsID { result in
-                switch result {
-                case .success(let friends):
-                    let friendsUUID = friends.map { friend in
-                        friend.userUUID
-                    }
-                    friendsVC.friendsUUID = friendsUUID
-                    friendsVC.mode = .fromCreating
-                case .failure(let error):
-                    print(error, "ERROR of getting your friends' info")
-                }
-                self.group.leave()
+            guard let userUUID = FirebaseManager.auth.currentUser?.uid else {
+                fatalError("no uuid")
             }
-            group.notify(queue: DispatchQueue.main) {
-                self.show(friendsVC, sender: self)
+            let userFriendsQuery = FirebaseManager.FirebaseCollectionRef.usersFriends(userID: userUUID).ref.whereField("is_hidden", isEqualTo: false)
+            FirebaseManager.shared.getDocuments(userFriendsQuery) {
+                (friends: [Friend]) in
+                let friendsUUID = friends.map { friend in
+                    friend.userUUID
+                }
+                friendsVC.friendsUUID = friendsUUID
+                friendsVC.groupName = groupName
+                friendsVC.mode = .fromCreating
+                DispatchQueue.main.async {
+                    self.show(friendsVC, sender: self)
+                }
             }
         }
     }

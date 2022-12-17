@@ -30,17 +30,14 @@ class FriendSelectViewController: UIViewController {
     // pre-provided data
     var friendsUUID: [String]? {
         didSet {
-            // TODO: Use for loop to limit each request up to 10 friend ID
             if let friendsUUID = friendsUUID, !friendsUUID.isEmpty {
                 for uuid in friendsUUID {
                     group.enter()
-                    FirebaseManager.shared.getUserInfo(userUUID: uuid) { result in
-                        switch result {
-                        case .success(let user):
+                    let userRef = FirebaseManager.FirebaseCollectionRef.users.ref.document(uuid)
+                    FirebaseManager.shared.getDocument(userRef) { (user: User?) in
+                        if let user = user {
                             let object = FriendListObject(info: user, hasSelected: false)
                             self.friendsProfile.append(object)
-                        case .failure(let error):
-                            print(error, "error of getting friend's profile")
                         }
                         self.group.leave()
                     }
@@ -118,7 +115,12 @@ class FriendSelectViewController: UIViewController {
         })
         for uuid in uuids {
             group.enter()
-            FirebaseManager.shared.addUserGroupInfo(userUUID: uuid, groupID: id, groupName: "") {
+            let userGroupRef = FirebaseManager.FirebaseCollectionRef
+                .usersGroup(userID: uuid).ref.document(id)
+            FirebaseManager.shared.setData([
+                "group_name": "",
+                "group_id": id
+            ], at: userGroupRef) {
                 self.group.leave()
             }
         }
@@ -137,19 +139,24 @@ class FriendSelectViewController: UIViewController {
                 member.info.userUUID
             }
             guard let uuid = uuid else { fatalError("uuid in keychain is nil") }
-            // add yourself to group
+            // add user self to group
             membersUUID.append(uuid)
-            var newGroup = Group(title: groupName, members: membersUUID, pickersIDs: [], createdTime: Date().millisecondsSince1970)
-            FirebaseManager.shared.publishNewGroup(group: &newGroup) { result in
-                switch result {
-                case .success(let success):
-                    print(success)
-                case .failure(let error):
-                    print(error, "Publish new group fail")
-                }
-                DispatchQueue.main.async {
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
+            var newGroup = Group(title: groupName, members: membersUUID, pickersIDs: [], createdTime: Date.dateManager.millisecondsSince1970)
+            let newGroupRef = FirebaseManager.FirebaseCollectionRef.groups.ref.document()
+            newGroup.id = newGroupRef.documentID
+            group.enter()
+            FirebaseManager.shared.setData(newGroup, at: newGroupRef) { self.group.leave() }
+            newGroup.members.forEach {
+                group.enter()
+                let userGroupRef = FirebaseManager.FirebaseCollectionRef
+                    .usersGroup(userID: $0).ref.document(newGroupRef.documentID)
+                FirebaseManager.shared.setData([
+                    "group_name": newGroup.title,
+                    "group_id": newGroupRef.documentID
+                ], at: userGroupRef) { self.group.leave() }
+            }
+            group.notify(queue: .main) {
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }

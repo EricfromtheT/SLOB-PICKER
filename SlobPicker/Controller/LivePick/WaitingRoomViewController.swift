@@ -115,7 +115,6 @@ class WaitingRoomViewController: UIViewController {
     }
     
     func addWaitingListener() {
-        // TODO: get document ID
         guard let livePicker = livePicker, let pickerID = livePicker.pickerID
         else { fatalError("error of missing livePicker's ID") }
         waitingListener = FirebaseManager.shared.database.collection("livePickers").document(pickerID).collection("attendees").addSnapshotListener { qrry, error in
@@ -168,15 +167,11 @@ class WaitingRoomViewController: UIViewController {
     
     @IBAction func startGame() {
         if let livePicker = livePicker, let pickerID = livePicker.pickerID {
-            FirebaseManager.shared.startLivePick(livePickerID: pickerID, status: "voting") {
-                result in
-                switch result {
-                case .success(let success):
-                    print(success)
-                case .failure(let error):
-                    print(error, "error of updating status to gaming")
-                }
-            }
+            let livePickRef = FirebaseManager.FirebaseCollectionRef.pickers(type: .forLive).ref.document(pickerID)
+            FirebaseManager.shared.setData([
+                "status": "voting",
+                "start_time": Date.dateManager.millisecondsSince1970 + 4500
+            ], at: livePickRef) {}
         }
     }
     
@@ -191,13 +186,9 @@ class WaitingRoomViewController: UIViewController {
     
     func confirmToleave() {
         if let livePicker = livePicker, let pickerID = livePicker.pickerID {
-            FirebaseManager.shared.leaveLiveRoom(pickerID: pickerID) { result in
-                switch result {
-                case .success(let success):
-                    print(success)
-                case .failure(let error):
-                    print(error, "error of deleting attendee")
-                }
+            guard let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey) else { fatalError("no userID in UserDefaults") }
+            let livePickRef = FirebaseManager.FirebaseCollectionRef.livePickAttendees(pickerID: pickerID).ref.document(userID)
+            FirebaseManager.shared.delete(livePickRef) {
                 self.dismiss(animated: true)
             }
         }

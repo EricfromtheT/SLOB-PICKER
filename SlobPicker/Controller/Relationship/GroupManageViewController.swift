@@ -56,31 +56,31 @@ class GroupManageViewController: UIViewController {
     }
     
     func fetchGroupData() {
-        FirebaseManager.shared.fetchUserCurrentGroups() { result in
-            switch result {
-            case .success(let groupsInfo):
-                self.usergroup = groupsInfo
-            case .failure(let error):
-                print(error, "error of getting current user's group data")
-            }
-            self.semaphore.signal()
+        guard let userUUID = FirebaseManager.auth.currentUser?.uid else {
+            fatalError("no uid")
         }
-        semaphore.wait()
+        group.enter()
+        let userGroupRed = FirebaseManager.FirebaseCollectionRef.usersGroup(userID: userUUID).ref
+        FirebaseManager.shared.getDocuments(userGroupRed) { (groupsInfo: [GroupInfo]) in
+            self.usergroup = groupsInfo
+            self.group.leave()
+        }
+        group.wait()
         for info in usergroup {
             group.enter()
-            FirebaseManager.shared.fetchGroupInfo(groupID: info.groupID) {
-                result in
-                switch result {
-                case .success(let group):
+            let groupRef = FirebaseManager.FirebaseCollectionRef.groups.ref.document(info.groupID)
+            FirebaseManager.shared.getDocument(groupRef) { (group: Group?) in
+                if let group = group {
                     self.groupInfo.append(group)
-                case .failure(let error):
-                    print(error, "error of getting single group infos")
+                    self.group.leave()
                 }
-                self.group.leave()
             }
         }
         group.notify(queue: .main) {
             self.filteredInfo = self.groupInfo
+            self.filteredInfo.sort {
+                $0.title < $1.title
+            }
             ProgressHUD.dismiss()
             self.groupTableView.reloadData()
         }
@@ -146,17 +146,23 @@ extension GroupManageViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             filteredInfo = groupInfo
+            filteredInfo.sort {
+                $0.title < $1.title
+            }
             groupTableView.reloadData()
         }
     }
     
     func search(_ searchTerm: String) {
         if searchTerm.isEmpty {
-            self.filteredInfo = self.groupInfo
+            filteredInfo = groupInfo
         } else {
             filteredInfo = groupInfo.filter {
                 $0.title.contains(searchTerm.lowercased())
             }
+        }
+        filteredInfo.sort {
+            $0.title < $1.title
         }
         groupTableView.reloadData()
     }
