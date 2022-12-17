@@ -34,29 +34,26 @@ class CurrentMemberViewController: UIViewController {
     func fetchUserInfo() {
         var _membersUUID: [String] = []
         if let groupData = groupData, let id = groupData.id {
-            FirebaseManager.shared.fetchGroupInfo(groupID: id) {
-                result in
-                switch result {
-                case .success(let group):
+            let groupRef = FirebaseManager.FirebaseCollectionRef
+                .groups.ref.document(id)
+            FirebaseManager.shared.getDocument(groupRef) {
+                (group: Group?) in
+                if let group = group {
                     _membersUUID = group.members
-                case.failure(let error):
-                    print(error, "error of getting groupData")
-                }
-                for userUUID in _membersUUID {
-                    self.group.enter()
-                    self.membersUUID.update(with: userUUID)
-                    FirebaseManager.shared.getUserInfo(userUUID: userUUID) { result in
-                        switch result {
-                        case.success(let user):
-                            self.groupMemberInfo.append(user)
-                        case .failure(let error):
-                            print(error, "error of getting user info")
+                    for userUUID in _membersUUID {
+                        self.membersUUID.update(with: userUUID)
+                        let userRef = FirebaseManager.FirebaseCollectionRef
+                            .users.ref.document(userUUID)
+                        FirebaseManager.shared.getDocument(userRef) {
+                            (user: User?) in
+                            if let user = user {
+                                self.groupMemberInfo.append(user)
+                            }
+                            DispatchQueue.main.async {
+                                self.currentMemberTableView.reloadData()
+                            }
                         }
-                        self.group.leave()
                     }
-                }
-                self.group.notify(queue: .main) {
-                    self.currentMemberTableView.reloadData()
                 }
             }
         }
@@ -72,22 +69,22 @@ extension CurrentMemberViewController: UITableViewDelegate {
                     as? FriendSelectViewController else {
                 fatalError("error of instantiating FriendSelectViewController")
             }
-            FirebaseManager.shared.fetchAllFriendsID() { result in
-                switch result {
-                case .success(let friends):
-                    let friendsUUID = friends.filter {
-                        !self.membersUUID.contains($0.userUUID)
-                    }.map {
-                        $0.userUUID
-                    }
-                    friendSelectVC.friendsUUID = friendsUUID
-                    friendSelectVC.mode = .fromManaging
-                    if let groupData = self.groupData,
-                        let id = groupData.id {
-                        friendSelectVC.currentGroupID = id
-                    }
-                case .failure(let error):
-                    return print(error, "error of fetching all friends info")
+            guard let userUUID = FirebaseManager.auth.currentUser?.uid else {
+                fatalError("no user uuid")
+            }
+            let allFriendsQuery = FirebaseManager.FirebaseCollectionRef.usersFriends(userID: userUUID).ref.whereField("is_hidden", isEqualTo: false)
+            FirebaseManager.shared.getDocuments(allFriendsQuery) {
+                (friends: [Friend]) in
+                let friendsUUID = friends.filter {
+                    !self.membersUUID.contains($0.userUUID)
+                }.map {
+                    $0.userUUID
+                }
+                friendSelectVC.friendsUUID = friendsUUID
+                friendSelectVC.mode = .fromManaging
+                if let groupData = self.groupData,
+                    let id = groupData.id {
+                    friendSelectVC.currentGroupID = id
                 }
                 DispatchQueue.main.async {
                     self.show(friendSelectVC, sender: self)

@@ -87,17 +87,14 @@ class SearchIDViewController: UIViewController {
             self.userInfo = nil
             self.isRealUser = false
             // Search firebase
-            FirebaseManager.shared.searchUser(userID: content) { result in
-                switch result {
-                case .success(let userInfo):
-                    self.userInfo = userInfo
+            let userQuery = FirebaseManager.FirebaseCollectionRef.users.ref.whereField("user_id", isEqualTo: content)
+            FirebaseManager.shared.getDocuments(userQuery) {
+                (userInfo: [User]) in
+                if userInfo.isEmpty {
+                    self.showNoUserPrompt()
+                } else {
+                    self.userInfo = userInfo.first
                     self.isRealUser = true
-                case .failure(let error):
-                    if error as? UserError == .nodata {
-                        self.showNoUserPrompt()
-                    } else {
-                        print(error, "ERROR of fetching single user info")
-                    }
                 }
                 DispatchQueue.main.async {
                     if let userInfo = self.userInfo {
@@ -106,6 +103,7 @@ class SearchIDViewController: UIViewController {
                         self.profileImageView.loadImage(userInfo.profileURL, placeHolder: UIImage.asset(.user))
                     }
                 }
+                
             }
         }
     }

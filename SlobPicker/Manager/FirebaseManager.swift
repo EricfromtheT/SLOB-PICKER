@@ -32,7 +32,7 @@ class FirebaseManager {
         case reportedPost
         case users
         case usersFriends(userID: String)
-        case usersGroup(groupID: String)
+        case usersGroup(userID: String)
         case pickerComments(type: PrivacyMode, pickerID: String)
         case pickerResults(type: PrivacyMode, pickerID: String)
         case livePickAttendees(pickerID: String)
@@ -63,7 +63,7 @@ class FirebaseManager {
         }
     }
     
-    // MARK: Refactor function
+    // MARK: Firebase API method
     func getDocument<T: Decodable>(_ docRef: DocumentReference, completion: @escaping (T?) -> Void) {
         docRef.getDocument { snapshot, error in
             completion(self.parseDocument(snapshot: snapshot, error: error))
@@ -76,12 +76,14 @@ class FirebaseManager {
         }
     }
     
-    func delete(_ docRef: DocumentReference) {
+    func delete(_ docRef: DocumentReference, completion: (() -> Void)?) {
         docRef.delete()
+        completion?()
     }
 
-    func setData(_ documentData: [String : Any], at docRef: DocumentReference) {
+    func setData(_ documentData: [String : Any], at docRef: DocumentReference, completion: (() -> Void)?) {
         docRef.setData(documentData)
+        completion?()
     }
     
     func update(_ documentData: [String: Any], at docRef: DocumentReference, completion: @escaping (() -> Void)) {
@@ -137,46 +139,8 @@ class FirebaseManager {
         }
         return models
     }
-
     
     // MARK: Private picker
-    func fetchResults(collection: String, pickerID: String, completion: @escaping (Result<[PickResult], Error>) -> Void) {
-        database.collection(collection).document(pickerID).collection("results").getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let documents = querySnapshot?.documents {
-                do {
-                    let results = try documents.map { document in
-                        try document.data(as: PickResult.self)
-                    }
-                    completion(.success(results))
-                } catch {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
-    
-    
-    func fetchComments(collection: String, pickerID: String, completion: @escaping (Result<[Comment], Error>) -> Void) {
-        database.collection(collection).document(pickerID).collection("all_comment").getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let documents = querySnapshot?.documents {
-                do {
-                    let comments = try documents.map { document in
-                        try document.data(as: Comment.self)
-                    }
-                    completion(.success(comments))
-                } catch {
-                    completion(.failure(error))
-                    print("decoding error")
-                }
-            }
-        }
-    }
-    
     func updateGroupPickersID(groupID: String, pickersID: String) {
         database.collection("groups").document(groupID).updateData([
             "pickers_ids": FieldValue.arrayUnion([pickersID])
@@ -261,27 +225,8 @@ class FirebaseManager {
         }
     }
     
-    func searchUser(userID: String, completion: @escaping (Result<User, Error>) -> Void) {
-        database.collection("users").whereField("user_id", isEqualTo: userID).getDocuments { qrry, error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                do {
-                    if let userInfo = try qrry?.documents.first?.data(as: User.self) {
-                        completion(.success(userInfo))
-                    } else {
-                        completion(.failure(UserError.nodata))
-                    }
-                } catch {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
     func addFriend(userUUID: String) {
         // TODO: 不可讓雙方自動變為好友
-        // add to yourself's
         // FIXME: 問題點，要先拿到對方的uuid
         guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
         database.collection("users").document(uuid).collection("friends").document(userUUID).setData([
@@ -303,42 +248,11 @@ class FirebaseManager {
         }
     }
     
-    func fetchAllFriendsID(completion: @escaping (Result<[Friend], Error>) -> Void) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        database.collection("users").document(uuid).collection("friends")
-            .whereField("is_hidden", isEqualTo: false).getDocuments { qrry, error in
-                if let error = error {
-                    completion(.failure(error))
-                } else if let documents = qrry?.documents {
-                    do {
-                        let friends = try documents.map { document in
-                            try document.data(as: Friend.self)
-                        }
-                        completion(.success(friends))
-                    } catch {
-                        completion(.failure(error))
-                    }
-                }
-            }
-    }
-    
-    
     // MARK: Group
     func addGroupPeople(groupID: String, newMembersUUID: [String], completion: @escaping (Result<String, Error>) -> Void) {
         database.collection("groups").document(groupID).updateData([
             "members": FieldValue.arrayUnion(newMembersUUID)
         ]) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success("Success"))
-            }
-        }
-    }
-    
-    func leaveGroup(groupID: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        database.collection("users").document(uuid).collection("groups").document(groupID).delete() { error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -371,70 +285,6 @@ class FirebaseManager {
         }
     }
     
-    func publishNewGroup(group: inout Group, completion: @escaping (Result<String, Error>) -> Void) {
-        let document = groupRef.document()
-        let id = document.documentID
-        group.id = id
-        do {
-            try document.setData(from: group)
-            completion(.success("publish new group Successfully"))
-            for member in group.members {
-                addUserGroupInfo(userUUID: member, groupID: id, groupName: group.title) {
-                    print("Success")
-                }
-            }
-            
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    
-    func fetchGroupInfo(groupID: String, completion: @escaping (Result<Group, Error>) -> Void) {
-        database.collection("groups").document(groupID).getDocument { qrry, error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                do {
-                    if let groupInfo = try qrry?.data(as: Group.self) {
-                        completion(.success(groupInfo))
-                    }
-                } catch {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
-    func addUserGroupInfo(userUUID: String, groupID: String, groupName: String, completion: @escaping (() -> Void)) {
-        database.collection("users").document(userUUID).collection("groups").document(groupID).setData([
-            "group_name": groupName,
-            "group_id": groupID
-        ]) { error in
-            if let error = error {
-                print(error, "ERROR update group info")
-            } else {
-                completion()
-            }
-        }
-    }
-    
-    func fetchUserCurrentGroups(completion: @escaping (Result<[GroupInfo], Error>) -> Void) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        database.collection("users").document(uuid).collection("groups").getDocuments {
-            qrry, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let documents = qrry?.documents {
-                do {
-                    let groupInfos = try documents.map { try $0.data(as: GroupInfo.self) }
-                    completion(.success(groupInfos))
-                } catch {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
     // MARK: Public
     func fetchNewestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
         // newest picker
@@ -451,15 +301,10 @@ class FirebaseManager {
                     } catch {
                         completion(.failure(error))
                     }
-                }
             }
+        }
     }
-    //    whereField("created_time", isGreaterThan: mlseconds)
     func fetchHottestPublicPicker(completion: @escaping (Result<[Picker], Error>) -> Void) {
-        //        let calendar = Calendar.current
-        //        let date = Date()
-        //        let today = calendar.startOfDay(for: date)
-        //        let mlseconds = today.millisecondsSince1970
         database.collection("publicPickers").order(by: "picked_count", descending: true).getDocuments { qrry, error in
             if let error = error {
                 completion(.failure(error))
@@ -520,106 +365,6 @@ class FirebaseManager {
             "picked_ids": FieldValue.arrayUnion([uuid])
         ])
     }
-    // MARK: Live Picker
-    func publishLivePicker(picker: inout LivePicker, completion: (Result<String, Error>) -> Void) {
-        let document = database.collection("livePickers").document()
-        let pickerID = document.documentID
-        picker.pickerID = pickerID
-        do {
-            try document.setData(from: picker)
-            completion(.success("Success"))
-        } catch {
-            completion(.failure(error))
-        }
-        
-    }
-    
-    func fetchLivePicker(roomID: String, completion: @escaping (Result<LivePicker, Error>) -> Void) {
-        database.collection("livePickers").whereField("access_code", isEqualTo: roomID).whereField("status", isEqualTo: "waiting").getDocuments { qrry, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let documents = qrry?.documents {
-                if documents.isEmpty {
-                    completion(.failure(UserError.nodata))
-                    return
-                }
-                do {
-                    let livePicker = try documents[0].data(as: LivePicker.self)
-                    completion(.success(livePicker))
-                } catch {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
-    func fetchAttendees(documentID: String, completion: @escaping (Result<[Attendee], Error>) -> Void) {
-        database.collection("livePickers").document(documentID).collection("attendees").getDocuments {
-            qrry, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let documents = qrry?.documents {
-                do {
-                    let attendees = try documents.map {
-                        try $0.data(as: Attendee.self)
-                    }
-                    completion(.success(attendees))
-                } catch {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
-    func attendLivePick(livePickerID: String, user: User ,completion: @escaping (Result<String, Error>) -> Void) {
-        guard let userId = UserDefaults.standard.string(forKey: UserInfo.userIDKey) else { fatalError("No this user") }
-        database.collection("livePickers").document(livePickerID).collection("attendees").document(userId).setData([
-            "attend_time": Date().millisecondsSince1970,
-            "user_id": userId,
-            "profile_url": user.profileURL
-        ]) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success("Success"))
-            }
-        }
-    }
-    
-    func startLivePick(livePickerID: String, status: String , completion: @escaping (Result<String, Error>) -> Void) {
-        database.collection("livePickers").document(livePickerID).updateData([
-            "status": status,
-            "start_time": Date().millisecondsSince1970 + 4500
-        ]) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success("Success"))
-            }
-        }
-    }
-    
-    func voteForLivePicker(pickerID: String, choice: Int) {
-        guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
-        database.collection("livePickers").document(pickerID).collection("results").document(uuid).setData([
-            "choice": choice,
-            "user_uuid": uuid
-        ])
-    }
-    
-    func leaveLiveRoom(pickerID: String, completion: @escaping (Result<String, Error>) -> Void)  {
-        guard let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey) else {
-            fatalError("no userID in UserDefault")
-        }
-        database.collection("livePickers").document(pickerID).collection("attendees").document(userID).delete() { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success("Success"))
-            }
-        }
-    }
-    
     // MARK: Authentication
     func logOut() {
         do {

@@ -81,18 +81,16 @@ class NewUserViewController: UIViewController {
             searchCompletion?("format")
             return
         }
-        FirebaseManager.shared.searchUser(userID: searchID) { result in
-            switch result {
-            case .success( _):
+        let userIDQuery = FirebaseManager.FirebaseCollectionRef.users.ref
+            .whereField("user_id", isEqualTo: searchID)
+        FirebaseManager.shared.getDocuments(userIDQuery) {
+            (users: [User]) in
+            if users.isEmpty {
+                self.searchCompletion?("can")
+                self.willBeUploadedId = self.searchID
+            } else {
                 self.searchCompletion?("cannot")
                 self.willBeUploadedId = ""
-            case .failure(let error):
-                if error as? UserError == .nodata {
-                    self.searchCompletion?("can")
-                    self.willBeUploadedId = self.searchID
-                } else {
-                    print(error, "error of getting certain user info")
-                }
             }
         }
     }

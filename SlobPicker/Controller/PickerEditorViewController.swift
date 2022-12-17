@@ -13,20 +13,15 @@ class PickerEditorViewController: UIViewController {
     @IBOutlet weak var editorTableView: UITableView! {
         didSet {
             editorTableView.dataSource = self
-            FirebaseManager.shared.fetchUserCurrentGroups { result in
-                switch result {
-                case .success(let groupInfos):
-                    self.groupInfos = groupInfos
-                    self.editorTableView.reloadRows(at: [IndexPath(row: 2,
-                                                                   section: 0)],
-                                                    with: .none)
-                case .failure(let error):
-                    print(error, "ERROR of getting user's current groups")
-                }
+            guard let uuid = uuid else { fatalError("nil uuid") }
+            let userGroupsRef = FirebaseManager.FirebaseCollectionRef.usersGroup(userID: uuid).ref
+            FirebaseManager.shared.getDocuments(userGroupsRef) { (groupInfos: [GroupInfo]) in
+                self.groupInfos = groupInfos
+                self.editorTableView.reloadRows(at: [IndexPath(row: 2, section: 0)],
+                                                with: .none)
             }
         }
     }
-    // TODO: can be refactor to struct
     private var willBeUploadedImages: [UIImage]? = []
     private var willBeUploadedStrings: [String]? = []
     private var imagesDict: [Int: UIImage?] = [:]
@@ -183,19 +178,18 @@ class PickerEditorViewController: UIViewController {
                                            authorUUID: uuid,
                                            groupID: groupInfos[index].groupID,
                                            groupName: groupInfos[index].groupName)
-                FirebaseManager.shared.fetchGroupInfo(groupID: groupInfos[index].groupID) {
-                    result in
-                    switch result {
-                    case .success(let groupInfo):
+                FirebaseManager.shared.updateGroupPickersID(groupID: groupInfos[index].groupID,
+                                                            pickersID: pickerRef.documentID)
+                let groupRef = FirebaseManager.FirebaseCollectionRef.groups.ref.document(groupInfos[index].groupID)
+                FirebaseManager.shared.getDocument(groupRef) { (groupInfo: Group?) in
+                    if let groupInfo = groupInfo {
                         privatePicker.membersIDs = groupInfo.members
-                        FirebaseManager.shared.setData(privatePicker, at: pickerRef) {
-                            DispatchQueue.main.async {
-                                ProgressHUD.dismiss()
-                                self.navigationController?.popToRootViewController(animated: true)
-                            }
+                    }
+                    FirebaseManager.shared.setData(privatePicker, at: pickerRef) {
+                        DispatchQueue.main.async {
+                            ProgressHUD.dismiss()
+                            self.navigationController?.popToRootViewController(animated: true)
                         }
-                    case .failure(let error):
-                        print(error.localizedDescription, "error of gettign group info")
                     }
                 }
             case .forPublic:
@@ -221,21 +215,17 @@ class PickerEditorViewController: UIViewController {
                 }
             case .forLive:
                 let random = String(Int.random(in: 100000...999999))
+                let livePickerRef = FirebaseManager.FirebaseCollectionRef.pickers(type: .forLive).ref.document()
                 var livePicker = LivePicker(accessCode: random,
                                             authorID: userID,
                                             status: "waiting",
+                                            pickerID: livePickerRef.documentID,
                                             contents: contents,
                                             title: title,
                                             description: inputDp ?? "",
                                             type: type)
-                FirebaseManager.shared.publishLivePicker(picker: &livePicker) { result in
-                    switch result {
-                    case .success(let success):
-                        print(success)
-                        goToLiveWaitingRoom(roomID: random)
-                    case .failure(let error):
-                        print(error, "error of publising LivePicker")
-                    }
+                FirebaseManager.shared.setData(livePicker, at: livePickerRef) {
+                    goToLiveWaitingRoom(roomID: random)
                 }
             case .none:
                 break
@@ -246,55 +236,45 @@ class PickerEditorViewController: UIViewController {
     func goToLiveWaitingRoom(roomID: String) {
         var picker: LivePicker?
         var userInfo: User?
-        FirebaseManager.shared.fetchLivePicker(roomID: roomID) { result in
-            print(result)
-            switch result {
-            case .success(let livePicker):
-                picker = livePicker
-            case .failure(let error):
-                if error as? UserError == .nodata {
-                    let alert = UIAlertController(title: "No this Room",
-                                                  message: "No room with this ID",
-                                                  preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK",
-                                                  style: .cancel))
-                    self.present(alert, animated: true)
-                } else {
-                    print(error, "error of getting LivePicker")
-                }
+        let livePickQuery = FirebaseManager.FirebaseCollectionRef.pickers(type: .forLive).ref.whereField("access_code", isEqualTo: roomID).whereField("status", isEqualTo: "waiting")
+        FirebaseManager.shared.getDocuments(livePickQuery) { (livePicker: [LivePicker]) in
+            if livePicker.isEmpty {
+                let alert = UIAlertController(title: "No this Room",
+                                              message: "No room with this ID",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: .cancel))
+                self.present(alert, animated: true)
+            } else {
+                picker = livePicker[0]
             }
             guard let userID = UserDefaults.standard.string(forKey: UserInfo.userIDKey)
             else {
                 return print("user id is not in user default")
             }
-            FirebaseManager.shared.searchUser(userID: userID) {
-                result in
-                switch result {
-                case .success(let user):
-                    userInfo = user
-                case .failure(let error):
-                    return print(error, "error of getting userdata from firebase")
-                }
-                if let picker = picker,
-                   let pickerID = picker.pickerID,
+            let userQuery = FirebaseManager.FirebaseCollectionRef.users.ref.whereField("user_id", isEqualTo: userID)
+            FirebaseManager.shared.getDocuments(userQuery) { (users: [User]) in
+                userInfo = users[0]
+                if let picker = picker, let pickerID = picker.pickerID,
                    let userInfo = userInfo {
-                    FirebaseManager.shared.attendLivePick(livePickerID: pickerID,
-                                                          user: userInfo) {
-                        result in
-                        switch result {
-                        case .success( _):
-                            let storyboard = UIStoryboard.interaction
-                            guard let waitingVC = storyboard.instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)") as? WaitingRoomViewController else {
-                                fatalError("error cannot instantiate WaitingRoomViewController")
-                            }
-                            waitingVC.livePicker = picker
-                            waitingVC.modalTransitionStyle = .crossDissolve
-                            waitingVC.modalPresentationStyle = .fullScreen
-                            self.present(waitingVC, animated: true)
-                            self.navigationController?.popViewController(animated: true)
-                        case .failure(let error):
-                            print(error, "error of attending a live pick")
+                    let attendeeRef = FirebaseManager.FirebaseCollectionRef
+                        .livePickAttendees(pickerID: pickerID).ref.document(userID)
+                    FirebaseManager.shared.setData([
+                        "attend_time": Date.dateManager.millisecondsSince1970,
+                        "user_id": userID,
+                        "profile_url": userInfo.profileURL
+                    ], at: attendeeRef) {
+                        let storyboard = UIStoryboard.interaction
+                        guard let waitingVC = storyboard
+                            .instantiateViewController(withIdentifier: "\(WaitingRoomViewController.self)")
+                                as? WaitingRoomViewController else {
+                            fatalError("error cannot instantiate WaitingRoomViewController")
                         }
+                        waitingVC.livePicker = picker
+                        waitingVC.modalTransitionStyle = .crossDissolve
+                        waitingVC.modalPresentationStyle = .fullScreen
+                        self.present(waitingVC, animated: true)
+                        self.navigationController?.popViewController(animated: true)
                     }
                 }
             }

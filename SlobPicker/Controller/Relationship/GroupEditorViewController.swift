@@ -60,14 +60,8 @@ extension GroupEditorViewController: UITableViewDelegate {
                     guard let groupInfo = self.groupInfo,
                             let uuid = FirebaseManager.auth.currentUser?.uid
                     else { fatalError("uuid is nil") }
-                    FirebaseManager.shared.leaveGroup(groupID: groupInfo.groupID) {
-                        result in
-                        switch result {
-                        case .success( _):
-                            break
-                        case .failure(let error):
-                            print(error, "error of leave group")
-                        }
+                    let userGroupRef = FirebaseManager.FirebaseCollectionRef.usersGroup(userID: uuid).ref.document(groupInfo.groupID)
+                    FirebaseManager.shared.delete(userGroupRef) {
                         FirebaseManager.shared.groupDeleteUser(groupID: groupInfo.groupID,
                                                                userUUID: uuid) {
                             result in

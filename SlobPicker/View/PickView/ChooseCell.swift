@@ -48,7 +48,6 @@ class ChooseCell: UITableViewCell {
         stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10).isActive = true
     }
     
-    // TODO: layout a button on imageview to detect selection
     func layoutWithImageType(optionsURLString: [String]) {
         let stackView = UIStackView()
         self.contentView.addSubview(stackView)

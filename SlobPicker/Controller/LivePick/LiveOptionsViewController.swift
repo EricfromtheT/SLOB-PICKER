@@ -136,7 +136,12 @@ class LiveOptionsViewController: UIViewController {
     
     @IBAction func vote() {
         if let livePicker = livePicker, let chosenIndex = chosenIndex, let pickerID = livePicker.pickerID {
-            FirebaseManager.shared.voteForLivePicker(pickerID: pickerID, choice: chosenIndex)
+            guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError("uuid is nil") }
+            let livePickResultRef = FirebaseManager.FirebaseCollectionRef.pickerResults(type: .forLive, pickerID: pickerID).ref.document(uuid)
+            FirebaseManager.shared.setData([
+                "choice": chosenIndex,
+                "user_uuid": uuid
+            ], at: livePickResultRef, completion: {})
         }
         dismiss(animated: true)
     }
