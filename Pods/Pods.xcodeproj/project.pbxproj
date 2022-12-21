@@ -18373,11 +18373,7 @@
 		F342ECB424A5FA7BE534E996CFA791B6 /* FIRInstallationsHTTPError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstallationsHTTPError.h; path = FirebaseInstallations/Source/Library/Errors/FIRInstallationsHTTPError.h; sourceTree = "<group>"; };
 		F350EBEE125F489410C1404EC8A484CF /* FIRAdditionalUserInfo_Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRAdditionalUserInfo_Internal.h; path = FirebaseAuth/Sources/User/FIRAdditionalUserInfo_Internal.h; sourceTree = "<group>"; };
 		F3697EF134EDC15C2CCB064657F98A20 /* FIROptionsInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIROptionsInternal.h; path = FirebaseCore/Extension/FIROptionsInternal.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		F384564874AD5A3EF24DC69CE10871A7 /* Pods-SlobPicker */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SlobPicker"; path = Pods_SlobPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-=======
-		F384564874AD5A3EF24DC69CE10871A7 /* Pods_SlobPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SlobPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
->>>>>>> fix/livePicklistener
 		F395CF03BEF19494A2D6A3A68E54E2FA /* rbac.upbdefs.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = rbac.upbdefs.c; path = "src/core/ext/upbdefs-generated/envoy/config/rbac/v3/rbac.upbdefs.c"; sourceTree = "<group>"; };
 		F397E178537DC1597D05050C2B0824DC /* slice_string_helpers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = slice_string_helpers.h; path = src/core/lib/slice/slice_string_helpers.h; sourceTree = "<group>"; };
 		F3B19979338E7DEB5639BE575884903A /* FIRCLSHost.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRCLSHost.m; path = Crashlytics/Crashlytics/Components/FIRCLSHost.m; sourceTree = "<group>"; };
@@ -21355,7 +21351,7 @@
 				51BA97E8B5085EFFB47BC9C0B785CEA7 /* lottie-ios */,
 				0FB114E27F8414106022220B5B533895 /* MagicTimer */,
 				06FC5C9CF96D60C50FCD47D339C91951 /* nanopb */,
-				F384564874AD5A3EF24DC69CE10871A7 /* Pods_SlobPicker.framework */,
+				F384564874AD5A3EF24DC69CE10871A7 /* Pods-SlobPicker */,
 				0D3287058D2F13BD484A454154BEA62B /* ProgressHUD */,
 				3347A1AB6546F0A3977529B8F199DC41 /* PromisesObjC */,
 				D5E011D8AD8603675BA8A5634EC21B9B /* SwiftJWT */,
@@ -29669,7 +29665,7 @@
 			);
 			name = "Pods-SlobPicker";
 			productName = Pods_SlobPicker;
-			productReference = F384564874AD5A3EF24DC69CE10871A7 /* Pods_SlobPicker.framework */;
+			productReference = F384564874AD5A3EF24DC69CE10871A7 /* Pods-SlobPicker */;
 			productType = "com.apple.product-type.framework";
 		};
 		B490E7485944099E16C9CBD79119D1D4 /* IQKeyboardManagerSwift */ = {
@@ -35128,12 +35124,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EF37801A8905157867D63EC0BB9CDFF3 /* gRPC-C++.release.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/gRPC-C++";
-				DEVELOPMENT_TEAM = FV92TC3KA2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
 				IBSC_MODULE = grpcpp;
 				INFOPLIST_FILE = "Target Support Files/gRPC-C++/ResourceBundle-gRPCCertificates-Cpp-gRPC-C++-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "gRPCCertificates-Cpp";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -35285,12 +35285,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1EF27DC876714258D18629DF692B4B66 /* gRPC-C++.debug.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/gRPC-C++";
-				DEVELOPMENT_TEAM = FV92TC3KA2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
 				IBSC_MODULE = grpcpp;
 				INFOPLIST_FILE = "Target Support Files/gRPC-C++/ResourceBundle-gRPCCertificates-Cpp-gRPC-C++-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "gRPCCertificates-Cpp";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

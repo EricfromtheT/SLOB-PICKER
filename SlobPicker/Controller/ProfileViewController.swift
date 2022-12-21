@@ -81,8 +81,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let actor = MyCell.allCases[indexPath.row]
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: actor.cellIdentifier,
-                                                       for: indexPath) as? ProfileCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: actor.cellIdentifier, for: indexPath) as? ProfileCell,
               let data = data
         else {
             fatalError("error of dequeuing ProfileCell")
