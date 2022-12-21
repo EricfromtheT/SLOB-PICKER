@@ -168,7 +168,7 @@ class WaitingRoomViewController: UIViewController {
     @IBAction func startGame() {
         if let livePicker = livePicker, let pickerID = livePicker.pickerID {
             let livePickRef = FirebaseManager.FirebaseCollectionRef.pickers(type: .forLive).ref.document(pickerID)
-            FirebaseManager.shared.setData([
+            FirebaseManager.shared.update([
                 "status": "voting",
                 "start_time": Date.dateManager.millisecondsSince1970 + 4500
             ], at: livePickRef) {}
