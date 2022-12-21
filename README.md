@@ -61,7 +61,9 @@ Slob Picker is a voting app which makes the process of the discussion on an issu
 ## Release Notes
 | Version | Date | Notes |
 | -------- | -------- | -------- |
-| 1.0.1   | 2021.12.09     | New UI and optimized performance |
+| 1.1.2   | 2021.12.22     | fix live picker game starting problem |
+| 1.1.1   | 2021.12.16     | Adjust UI layout and fix picker editor data repeating problem |
+| 1.1   | 2021.12.09     | New UI and optimized performance |
 | 1.0.0   | 2022.11.30     | Released in App Store |
 ## Author
 Eric Kong
