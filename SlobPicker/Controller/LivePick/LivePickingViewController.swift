@@ -45,7 +45,7 @@ class LivePickingViewController: UIViewController {
     func setUpTimer() {
         var remainTime: Int = 0
         if let livePicker = livePicker, let startTime = livePicker.startTime {
-            let endTime = startTime + 10000
+            let endTime = startTime + 30000
             remainTime = endTime - Date().millisecondsSince1970
         }
         magicTimer.isActiveInBackground = true
@@ -187,7 +187,11 @@ extension LivePickingViewController: MagicTimerViewDelegate {
                 resultVC.mode = .forLive
                 resultVC.livePickInfo = livePicker
                 resultVC.modalPresentationStyle = .fullScreen
-                self.presentedViewController?.present(resultVC, animated: true)
+                if let presentedVC = self.presentedViewController {
+                    presentedVC.present(resultVC, animated: true)
+                } else {
+                    self.present(resultVC, animated: true)
+                }
             }
         }
     }

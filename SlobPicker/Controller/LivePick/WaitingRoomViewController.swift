@@ -176,9 +176,13 @@ class WaitingRoomViewController: UIViewController {
     }
     
     @IBAction func leave() {
-        let alert = UIAlertController(title: "是否確定離開?", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
-        alert.addAction(UIAlertAction(title: "確認", style: .default) { alert in
+        let alert = UIAlertController(title: "是否確定離開?",
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "取消",
+                                      style: .cancel))
+        alert.addAction(UIAlertAction(title: "確認",
+                                      style: .default) { alert in
             self.confirmToleave()
         })
         present(alert, animated: true)

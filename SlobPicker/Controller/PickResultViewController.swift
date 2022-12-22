@@ -44,7 +44,6 @@ class PickResultViewController: UIViewController {
             }
         }
     }
-    //
     var livePickInfo: LivePicker? {
         didSet {
             if let livePickInfo = livePickInfo, let pickID = livePickInfo.pickerID {
@@ -86,14 +85,16 @@ class PickResultViewController: UIViewController {
     }
     
     func fetchResult(pickID: String) {
-        let resultRef = FirebaseManager.FirebaseCollectionRef.pickerResults(type: mode, pickerID: pickID).ref
+        let resultRef = FirebaseManager.FirebaseCollectionRef
+            .pickerResults(type: mode, pickerID: pickID).ref
         FirebaseManager.shared.getDocuments(resultRef) { (results: [PickResult]) in
             self.pickerResults = results
             self.organizeResult(data: self.pickerResults)
             self.semaphore.signal()
         }
         
-        let commentRef = FirebaseManager.FirebaseCollectionRef.pickerComments(type: mode, pickerID: pickID).ref
+        let commentRef = FirebaseManager.FirebaseCollectionRef
+            .pickerComments(type: mode, pickerID: pickID).ref
         FirebaseManager.shared.getDocuments(commentRef) { (comments: [Comment]) in
             self.pickerComments = comments
             self.semaphore.signal()
@@ -106,7 +107,8 @@ class PickResultViewController: UIViewController {
         })
         for uuid in userUUIDs {
             group.enter()
-            let userRef = FirebaseManager.FirebaseCollectionRef.users.ref.document(uuid)
+            let userRef = FirebaseManager.FirebaseCollectionRef
+                .users.ref.document(uuid)
             FirebaseManager.shared.getDocument(userRef) { (user: User?) in
                 if let user = user {
                     self.users.append(user)
@@ -117,7 +119,10 @@ class PickResultViewController: UIViewController {
         group.notify(queue: DispatchQueue.main) {
             if let tableView = self.resultTableView {
                 tableView.reloadData()
-                UIView.animate(views: self.resultTableView.visibleCells, animations: self.animations, delay: 0.4, duration: 0.4)
+                UIView.animate(views: self.resultTableView.visibleCells,
+                               animations: self.animations,
+                               delay: 0.4,
+                               duration: 0.4)
                 ProgressHUD.dismiss()
             }
         }
@@ -168,7 +173,8 @@ class PickResultViewController: UIViewController {
 
 // MARK: TableView DataSource
 extension PickResultViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var contents: [String] = []
         var type = 0
         switch mode {
@@ -190,9 +196,11 @@ extension PickResultViewController: UITableViewDataSource {
                 fatalError("ERROR of dequeuing pickResultTitleCell")
             }
             if let pickInfo = pickInfo {
-                cell.configure(title: pickInfo.title, description: pickInfo.description)
+                cell.configure(title: pickInfo.title,
+                               description: pickInfo.description)
             } else if let pickInfo = livePickInfo {
-                cell.configure(title: pickInfo.title, description: pickInfo.description)
+                cell.configure(title: pickInfo.title,
+                               description: pickInfo.description)
             }
             return cell
         } else if indexPath.row <= contents.count {
@@ -202,13 +210,21 @@ extension PickResultViewController: UITableViewDataSource {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
             if type == 0 {
-                cell.configureText(content: contents[voteResults[indexPath.row-1].choice], votes: voteResults[indexPath.row-1].votes, total: pickerResults.count, index: indexPath.row-1)
+                cell.configureText(content: contents[voteResults[indexPath.row-1].choice],
+                                   votes: voteResults[indexPath.row-1].votes,
+                                   total: pickerResults.count,
+                                   index: indexPath.row-1)
             } else {
-                cell.configureImage(content: contents[voteResults[indexPath.row-1].choice], votes: voteResults[indexPath.row-1].votes, total: pickerResults.count, index: indexPath.row-1)
+                cell.configureImage(content: contents[voteResults[indexPath.row-1].choice],
+                                    votes: voteResults[indexPath.row-1].votes,
+                                    total: pickerResults.count,
+                                    index: indexPath.row-1)
             }
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickCommentsCell.self)", for: indexPath) as? PickCommentsCell else {
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: "\(PickCommentsCell.self)",
+                                     for: indexPath) as? PickCommentsCell else {
                 fatalError("ERROR of dequeuing pickResultCell")
             }
             let userInfo = self.users.filter {
