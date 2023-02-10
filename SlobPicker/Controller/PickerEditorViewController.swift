@@ -60,30 +60,15 @@ class PickerEditorViewController: UIViewController {
     
     @objc func uploadContent() {
         if inputTitle == nil || inputTitle == "" {
-            let alert = UIAlertController(title: "請填入主題",
-                                          message: "picker必須包含主題",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "好的",
-                                          style: .cancel))
-            present(alert, animated: true)
+            showAlert(title: "請填入主題", message: "Picker必須包含主題")
             return
         }
         if target == nil {
-            let alert = UIAlertController(title: "請選擇對象",
-                                          message: nil,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "好的",
-                                          style: .cancel))
-            present(alert, animated: true)
+            showAlert(title: "請選擇對象", message: nil)
             return
         }
         if target == .forPrivate && selectedGroupIndex == nil {
-            let alert = UIAlertController(title: "請選擇目標群組",
-                                          message: nil,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "好的",
-                                          style: .cancel))
-            present(alert, animated: true)
+            showAlert(title: "請選擇目標群組", message: nil)
             return
         }
         
@@ -94,12 +79,7 @@ class PickerEditorViewController: UIViewController {
             }
         }
         if mode == .imageType, willBeUploadedImages?.count == 0 {
-            let alert = UIAlertController(title: "選項不足",
-                                          message: "請至少新增一選項",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "好的",
-                                          style: .cancel))
-            present(alert, animated: true)
+            showAlert(title: "選項不足", message: "請至少新增一張圖片")
             ProgressHUD.dismiss()
             return
         }
@@ -139,12 +119,7 @@ class PickerEditorViewController: UIViewController {
             }
         }
         if mode == .textType, willBeUploadedStrings?.count == 0 {
-            let alert = UIAlertController(title: "選項不足",
-                                          message: "請至少新增一選項",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "好的",
-                                          style: .cancel))
-            present(alert, animated: true)
+            showAlert(title: "選項不足", message: "請至少新增一選項")
             ProgressHUD.dismiss()
             return
         }
@@ -241,12 +216,7 @@ class PickerEditorViewController: UIViewController {
         let livePickQuery = FirebaseManager.FirebaseCollectionRef.pickers(type: .forLive).ref.whereField("access_code", isEqualTo: roomID).whereField("status", isEqualTo: "waiting")
         FirebaseManager.shared.getDocuments(livePickQuery) { (livePicker: [LivePicker]) in
             if livePicker.isEmpty {
-                let alert = UIAlertController(title: "No this Room",
-                                              message: "No room with this ID",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK",
-                                              style: .cancel))
-                self.present(alert, animated: true)
+                self.showAlert(title: "沒有此房間", message: "請輸入正確ID")
             } else {
                 picker = livePicker[0]
             }
