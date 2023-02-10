@@ -14,6 +14,7 @@ class ImageOptionsCell: UITableViewCell {
     @IBOutlet var deleteView: [UIImageView]!
     weak var superVC: PickerEditorViewController?
     var deleteCompletion: ((Int) -> Void)?
+    private var firstInit = true
     
 //    func configure(superVC: PickerEditorViewController) {
 //        self.superVC = superVC
@@ -37,12 +38,14 @@ class ImageOptionsCell: UITableViewCell {
             imgView.contentMode = .scaleAspectFill
             imgView.clipsToBounds = true
             imageNameLabels[idx].text = "請上傳照片"
-            imagePickView[idx].image = UIImage.asset(.upload)
-            deleteView[idx].isHidden = true
+            if firstInit {
+                deleteView[idx].isHidden = true
+            }
             deleteView[idx].tag = idx
             deleteView[idx].isUserInteractionEnabled = true
             deleteView[idx].addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deletePic)))
         }
+        firstInit = false
         superVC.imageUploadCompletely = { filename, image, index in
             self.imageNameLabels[index].text = filename
             self.imagePickView[index].image = image

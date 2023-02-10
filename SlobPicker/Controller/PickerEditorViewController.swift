@@ -54,11 +54,11 @@ class PickerEditorViewController: UIViewController {
         navigationItem.title = "編輯新picker"
     }
     
-    func setUpNavigation() {
+    private func setUpNavigation() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "發布", style: .done, target: self, action: #selector(uploadContent))
     }
     
-    @objc func uploadContent() {
+    @objc private func uploadContent() {
         if inputTitle == nil || inputTitle == "" {
             showAlert(title: "請填入主題", message: "Picker必須包含主題")
             return
@@ -71,25 +71,36 @@ class PickerEditorViewController: UIViewController {
             showAlert(title: "請選擇目標群組", message: nil)
             return
         }
-        
         ProgressHUD.show()
         for index in 0...3 {
             if let image = imagesDict[index], let image = image {
                 willBeUploadedImages?.append(image)
             }
         }
-        if mode == .imageType, willBeUploadedImages?.count == 0 {
-            showAlert(title: "選項不足", message: "請至少新增一張圖片")
-            ProgressHUD.dismiss()
-            return
+        
+        if mode == .imageType {
+            if willBeUploadedImages?.count == 0 {
+                showAlert(title: "選項不足", message: "請至少新增一張圖片")
+                ProgressHUD.dismiss()
+                return
+            }
+            guard let data = willBeUploadedImages else {
+                fatalError("UIImages have not been found") }
+            uploadImageToStorage(data: data) {
+                self.publishPicker()
+            }
+        } else {
+            self.publishPicker()
         }
-        guard let data = willBeUploadedImages else { fatalError("UIImages have not been found") }
+
+    }
+    
+    private func uploadImageToStorage(data: [UIImage], completion: @escaping () -> Void) {
         for image in data {
             // transform image file type
             if let uploadData = image.jpegData(compressionQuality: 0) {
                 // Deal with png file uploading
                 let uniqueString = UUID().uuidString
-                group.enter()
                 let dataRef = FirebaseManager.shared.storageRef.child("\(uniqueString).jpeg")
                 dataRef.putData(uploadData) { data, error in
                     if let error = error {
@@ -97,22 +108,19 @@ class PickerEditorViewController: UIViewController {
                     } else {
                         dataRef.downloadURL { url, error in
                             guard let downloadURL = url else {
-                                print(error, "ERROR: URL uploading issue")
+                                print("ERROR: URL uploading issue")
                                 return
                             }
                             self.urlStrings?.append(downloadURL.absoluteString)
-                            self.group.leave()
+                            completion()
                         }
                     }
                 }
             }
         }
-        group.notify(queue: DispatchQueue.main) {
-            self.publishPicker()
-        }
     }
     
-    func publishPicker() {
+    private func publishPicker() {
         for index in 0...3 {
             if let string = stringsDict[index], let string = string {
                 willBeUploadedStrings?.append(string)
@@ -210,7 +218,7 @@ class PickerEditorViewController: UIViewController {
         }
     }
     
-    func goToLiveWaitingRoom(roomID: String) {
+    private func goToLiveWaitingRoom(roomID: String) {
         var picker: LivePicker?
         var userInfo: User?
         let livePickQuery = FirebaseManager.FirebaseCollectionRef.pickers(type: .forLive).ref.whereField("access_code", isEqualTo: roomID).whereField("status", isEqualTo: "waiting")
@@ -271,7 +279,6 @@ extension PickerEditorViewController: UITableViewDataSource {
         } else if row == 1 {
             switch mode {
             case .textType:
-                self.imagesDict = [:]
                 guard let cell = tableView.dequeueReusableCell(withIdentifier:
                                                                 "\(TextOptionsCell.self)",
                                                                for: indexPath)
@@ -284,7 +291,6 @@ extension PickerEditorViewController: UITableViewDataSource {
                 }
                 return cell
             case .imageType:
-                self.stringsDict = [:]
                 guard let cell = tableView
                     .dequeueReusableCell(withIdentifier: "\(ImageOptionsCell.self)",
                                          for: indexPath)

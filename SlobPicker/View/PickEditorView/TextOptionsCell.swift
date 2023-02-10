@@ -17,18 +17,12 @@ class TextOptionsCell: UITableViewCell {
             textField.layer.cornerRadius = 5
             textField.layer.borderColor = UIColor.asset(.navigationbar2)?.cgColor
             textField.delegate = self
-            textField.text = nil
             textField.tag = idx
         }
     }
 }
 
 extension TextOptionsCell: UITextFieldDelegate {
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if let content = textField.text {
-//            self.completion?(content, textField.tag)
-//        }
-//    }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if let content = textField.text {
