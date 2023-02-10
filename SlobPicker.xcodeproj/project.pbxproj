@@ -47,6 +47,7 @@
 		37A7C9592925183700604A4A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A7C9582925183700604A4A /* UIImage+Extension.swift */; };
 		37B27DDF293749CB00C30D98 /* waiting.json in Resources */ = {isa = PBXBuildFile; fileRef = 37B27DDE293749CB00C30D98 /* waiting.json */; };
 		37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */; };
+		37B71E2829962A4B00F0ABCC /* UIViewController+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B71E2729962A4B00F0ABCC /* UIViewController+Ex.swift */; };
 		37C8000129417F4E00A84AB7 /* DeleteAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8000029417F4E00A84AB7 /* DeleteAccountCell.swift */; };
 		37C800042941818B00A84AB7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C800032941818B00A84AB7 /* Profile.swift */; };
 		37C8FFE5293A0CDF00A84AB7 /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */; };
@@ -157,6 +158,7 @@
 		37A7C9642927350100604A4A /* SlobPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SlobPicker.entitlements; sourceTree = "<group>"; };
 		37B27DDE293749CB00C30D98 /* waiting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waiting.json; sourceTree = "<group>"; };
 		37B5D8962911FC1800A7BC98 /* PickerEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerEditorViewController.swift; sourceTree = "<group>"; };
+		37B71E2729962A4B00F0ABCC /* UIViewController+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ex.swift"; sourceTree = "<group>"; };
 		37C8000029417F4E00A84AB7 /* DeleteAccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountCell.swift; sourceTree = "<group>"; };
 		37C800032941818B00A84AB7 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		37C8FFE4293A0CDF00A84AB7 /* GroupNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				3759D312294211EC00AAAD54 /* UITableViewCell+Extension.swift */,
 				37DE8AFF2910C70E00F737A7 /* Date+Extension.swift */,
 				37E9AFA329485B4C00DB78C0 /* UIStoryboard+Extension.swift */,
+				37B71E2729962A4B00F0ABCC /* UIViewController+Ex.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				37C8FFF3293CD3EA00A84AB7 /* GroupMemberCell.swift in Sources */,
 				37DE8AFD2910B22F00F737A7 /* PickObject.swift in Sources */,
 				37DF709E2939F0D3003A6713 /* GroupManageCell.swift in Sources */,
+				37B71E2829962A4B00F0ABCC /* UIViewController+Ex.swift in Sources */,
 				370050CE29227F6400E1EA35 /* UIColor+Extension.swift in Sources */,
 				37DE8AE3290EBC3300F737A7 /* PickViewController.swift in Sources */,
 				37C8000129417F4E00A84AB7 /* DeleteAccountCell.swift in Sources */,
