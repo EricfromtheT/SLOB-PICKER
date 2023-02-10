@@ -9,7 +9,7 @@ import UIKit
 import DGElasticPullToRefresh
 import ViewAnimator
 
-class PickerSelectionViewController: UIViewController {
+class PrivateViewController: UIViewController {
     @IBOutlet weak var pickersTableView: UITableView! {
         didSet {
             pickersTableView.dataSource = self
@@ -29,11 +29,12 @@ class PickerSelectionViewController: UIViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(loadData), name: NSNotification.Name("private"), object: nil)
         setUpDGE()
     }
     
     // MARK: SetUp
-    func loadData() {
+    @objc func loadData() {
         guard let uuid = FirebaseManager.auth.currentUser?.uid else { fatalError() }
         let query = FirebaseManager.shared.privatePickersRef.whereField("members_ids", arrayContains: uuid).order(by: "created_time", descending: true)
         FirebaseManager.shared.getDocuments(query) { (pickers: [Picker]) in
@@ -111,7 +112,7 @@ class PickerSelectionViewController: UIViewController {
 }
 
 // MARK: TableView Datasource
-extension PickerSelectionViewController: UITableViewDataSource {
+extension PrivateViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(PickSelectionCell.self)", for: indexPath)
                 as? PickSelectionCell else {

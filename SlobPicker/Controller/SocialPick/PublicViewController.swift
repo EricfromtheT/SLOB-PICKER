@@ -28,6 +28,7 @@ class PublicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchPublicData), name: NSNotification.Name("public"), object: nil)
         setUpDGE()
         FirebaseManager.auth.addStateDidChangeListener { auth, user in
             if user != nil {
@@ -54,7 +55,7 @@ class PublicViewController: UIViewController {
         hotTableView.dg_setPullToRefreshBackgroundColor(hotTableView.backgroundColor!)
     }
     
-    func fetchPublicData() {
+    @objc func fetchPublicData() {
         group.enter()
         FirebaseManager.shared.fetchNewestPublicPicker(completion: { result in
             switch result {

@@ -188,6 +188,7 @@ class PickerEditorViewController: UIViewController {
                     FirebaseManager.shared.setData(privatePicker, at: pickerRef) {
                         DispatchQueue.main.async {
                             ProgressHUD.dismiss()
+                            NotificationCenter.default.post(name: NSNotification.Name("private"), object: self)
                             self.navigationController?.popToRootViewController(animated: true)
                         }
                     }
@@ -210,6 +211,7 @@ class PickerEditorViewController: UIViewController {
                 FirebaseManager.shared.setData(publicPicker, at: pickerRef) {
                     DispatchQueue.main.async {
                         ProgressHUD.dismiss()
+                        NotificationCenter.default.post(name: NSNotification.Name("public"), object: self)
                         self.navigationController?.popToRootViewController(animated: true)
                     }
                 }

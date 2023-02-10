@@ -66,7 +66,7 @@
 		37D05E0E292DCA3700D8A2AA /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D05E0D292DCA3700D8A2AA /* String+Extension.swift */; };
 		37D575812913A1C600DC344D /* PickerSelection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575802913A1C600DC344D /* PickerSelection.storyboard */; };
 		37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575832913AFEA00DC344D /* PickSelectionCell.swift */; };
-		37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575852913B02900DC344D /* PickerSelectionViewController.swift */; };
+		37D575862913B02900DC344D /* PrivateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575852913B02900DC344D /* PrivateViewController.swift */; };
 		37D575882914B51F00DC344D /* Relationship.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37D575872914B51F00DC344D /* Relationship.storyboard */; };
 		37D5758A2914C25300DC344D /* PickResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D575892914C25300DC344D /* PickResultCell.swift */; };
 		37D5758C2914DFF800DC344D /* PickResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5758B2914DFF800DC344D /* PickResultViewController.swift */; };
@@ -176,7 +176,7 @@
 		37D05E0D292DCA3700D8A2AA /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		37D575802913A1C600DC344D /* PickerSelection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickerSelection.storyboard; sourceTree = "<group>"; };
 		37D575832913AFEA00DC344D /* PickSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSelectionCell.swift; sourceTree = "<group>"; };
-		37D575852913B02900DC344D /* PickerSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSelectionViewController.swift; sourceTree = "<group>"; };
+		37D575852913B02900DC344D /* PrivateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateViewController.swift; sourceTree = "<group>"; };
 		37D575872914B51F00DC344D /* Relationship.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Relationship.storyboard; sourceTree = "<group>"; };
 		37D575892914C25300DC344D /* PickResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultCell.swift; sourceTree = "<group>"; };
 		37D5758B2914DFF800DC344D /* PickResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickResultViewController.swift; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		37C8FFED293B07C600A84AB7 /* SocialPick */ = {
 			isa = PBXGroup;
 			children = (
-				37D575852913B02900DC344D /* PickerSelectionViewController.swift */,
+				37D575852913B02900DC344D /* PrivateViewController.swift */,
 				3708B0342918FC6B00397035 /* PublicViewController.swift */,
 				37DE8AE2290EBC3300F737A7 /* PickViewController.swift */,
 			);
@@ -774,7 +774,7 @@
 				37C8FFF929417ED500A84AB7 /* ProfileImageCell.swift in Sources */,
 				37B5D8972911FC1800A7BC98 /* PickerEditorViewController.swift in Sources */,
 				3711415029169CFB00C567EF /* Group.swift in Sources */,
-				37D575862913B02900DC344D /* PickerSelectionViewController.swift in Sources */,
+				37D575862913B02900DC344D /* PrivateViewController.swift in Sources */,
 				37192988292BAF2400722759 /* CustomChooseCell.swift in Sources */,
 				37D05E03292C7EDD00D8A2AA /* NewUserViewController.swift in Sources */,
 				37D575842913AFEA00DC344D /* PickSelectionCell.swift in Sources */,
@@ -993,11 +993,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SlobPicker/Info.plist;
@@ -1016,7 +1014,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1034,11 +1031,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SlobPicker/SlobPicker.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FV92TC3KA2;
+				DEVELOPMENT_TEAM = FV92TC3KA2;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SlobPicker/Info.plist;
@@ -1057,7 +1052,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.EricKong.SlobPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SLOB for Distribution";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
